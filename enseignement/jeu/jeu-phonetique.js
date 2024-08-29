@@ -32,20 +32,17 @@
                 }
             }
 
-        document.getElementById('submit-answer').addEventListener('click', function() {
-            const checkedOption = document.querySelector('input[name="option"]:checked');
-            if (checkedOption) {
-                checkedOption.checked = false;
-            }
-            if (selectedOption) {
-                const question = questions[currentQuestion];
-                const isCorrect = selectedOption.value === question.correctOption;
-                document.getElementById('result').textContent = isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse.';
-                currentQuestion++;
-                setTimeout(loadQuestion, 2000);
-            } else {
-                document.getElementById('result').textContent = 'Veuillez sélectionner une option.';
-            }
-        });
+document.getElementById('submit-answer').addEventListener('click', function() {
+    const selectedOption = document.querySelector('input[name="option"]:checked');
+    if (selectedOption) {
+        const question = questions[currentQuestion];
+        const isCorrect = selectedOption.value === question.correctOption;
+        document.getElementById('result').textContent = isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse.';
+        currentQuestion++;
+        setTimeout(loadQuestion, 2000);
+    } else {
+        document.getElementById('result').textContent = 'Veuillez sélectionner une option.';
+    }
+});
 
         loadQuestions();
