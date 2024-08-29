@@ -12,18 +12,25 @@
             loadQuestion();
         }
 
-        function loadQuestion() {
-            if (currentQuestion < questions.length) {
-                const question = questions[currentQuestion];
-                document.getElementById('audio-player').src = question.audioFile;
-                document.getElementById('label-option1').textContent = question.option1;
-                document.getElementById('label-option2').textContent = question.option2;
-                document.querySelector('input[name="option"]:checked')?.checked = false;
-                document.getElementById('result').textContent = '';
-            } else {
-                document.getElementById('game-container').innerHTML = '<h2>Vous avez terminé le jeu !</h2>';
+            function loadQuestion() {
+                if (currentQuestion < questions.length) {
+                    const question = questions[currentQuestion];
+                    console.log('Loading audio:', question.audioFile); // Pour vérifier quel fichier audio est en cours de chargement
+                    document.getElementById('audio-player').src = question.audioFile;
+                    document.getElementById('label-option1').textContent = question.option1;
+                    document.getElementById('label-option2').textContent = question.option2;
+                    
+                    // Remplacer l'utilisation de l'opérateur `?.` pour éviter l'erreur
+                    const selectedOption = document.querySelector('input[name="option"]:checked');
+                    if (selectedOption) {
+                        selectedOption.checked = false;
+                    }
+                    
+                    document.getElementById('result').textContent = '';
+                } else {
+                    document.getElementById('game-container').innerHTML = '<h2>Vous avez terminé le jeu !</h2>';
+                }
             }
-        }
 
         document.getElementById('submit-answer').addEventListener('click', function() {
             const checkedOption = document.querySelector('input[name="option"]:checked');
