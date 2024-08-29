@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À la découverte du campus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+
+        .map-container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
+            background-image: url('path-to-your-map-image.jpg');
+            background-size: cover;
+            border: 1px solid #ccc;
+        }
+
+        .label {
+            position: absolute;
+            padding: 8px 12px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ddd;
+            cursor: grab;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>À la découverte du campus</h1>
+    <div class="map-container" id="map">
+        <!-- Les étiquettes seront dynamiquement ajoutées ici -->
+    </div>
+    <script src="jeu-campus.js"></script>
+</body>
+</html>
