@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const mapContainer = document.getElementById('map');
+    const mapContainer = document.getElementById('map-container');
 
     // Charger les données à partir du CSV
     fetch('questions-campus.csv')
@@ -7,30 +7,46 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             const labels = parseCSV(data);
             labels.forEach(label => {
-                createDraggableLabel(label.text, label.x, label.y);
+                addMultipleLabelsToRectangle(label.text, label.coordinates);
             });
         });
 
     function parseCSV(data) {
         const rows = data.split('\n');
         return rows.map(row => {
-            const [text, x, y] = row.split(',');
-            return { text, x: parseInt(x, 10), y: parseInt(y, 10) };
+            const [text, x1, y1, x2, y2] = row.split(',');
+            return {
+                text,
+                coordinates: [parseInt(x1, 10), parseInt(y1, 10), parseInt(x2, 10), parseInt(y2, 10)]
+            };
         });
     }
 
-    function createDraggableLabel(text, x, y) {
+    function addMultipleLabelsToRectangle(labelText, coords) {
+        const [x1, y1, x2, y2] = coords;
+
+        // Calculer la largeur et la hauteur du rectangle
+        const width = Math.abs(x2 - x1);
+        const height = Math.abs(y2 - y1);
+
+        // Créer et positionner l'étiquette au centre du rectangle
         const label = document.createElement('div');
         label.className = 'label';
-        label.textContent = text;
-        label.style.left = `${x}px`;
-        label.style.top = `${y}px`;
-        label.draggable = true;
+        label.textContent = labelText;
 
+        const centerX = x1 + width / 2;
+        const centerY = y1 + height / 2;
+
+        label.style.left = `${centerX}px`;
+        label.style.top = `${centerY}px`;
+
+        // Ajouter l'étiquette à la carte
+        mapContainer.appendChild(label);
+
+        // Ajouter la fonctionnalité de drag-and-drop
+        label.draggable = true;
         label.addEventListener('dragstart', dragStart);
         label.addEventListener('dragend', dragEnd);
-
-        mapContainer.appendChild(label);
     }
 
     function dragStart(e) {
