@@ -17,31 +17,31 @@
             flex-direction: column;
             align-items: center;
         }
-        .drag-container, .drop-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
+        #audio-player {
+            margin-bottom: 20px;
         }
-        .draggable {
+        #options {
+            margin-bottom: 20px;
+        }
+        #options input[type="radio"] {
+            margin-right: 10px;
+        }
+        #submit-answer {
             padding: 10px 20px;
-            margin: 10px;
             background-color: #4CAF50;
             color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            border-radius: 5px;
+            font-size: 16px;
         }
-        .droppable {
-            padding: 20px;
-            margin: 10px;
-            background-color: #ddd;
-            border: 2px dashed #ccc;
-            border-radius: 5px;
-            min-width: 150px;
-            min-height: 50px;
+        #submit-answer:hover {
+            background-color: #45a049;
         }
-        #score {
-            font-size: 1.2em;
+        #result {
             margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
         }
         footer {
             font-family: Arial, sans-serif;
@@ -53,11 +53,10 @@
 </head>
 <body>
     <h1>Jeu de discrimination phonétique</h1>
-    <div id="game-container">
+    <div id="game-container" class="container">
         <audio id="audio-player" controls>
             Votre navigateur ne supporte pas l'élément <code>audio</code>.
         </audio>
-        <br><br>
         <div id="options">
             <input type="radio" name="option" value="1" id="option1">
             <label for="option1" id="label-option1"></label>
@@ -65,11 +64,9 @@
             <input type="radio" name="option" value="2" id="option2">
             <label for="option2" id="label-option2"></label>
         </div>
-        <br>
         <button id="submit-answer">Valider</button>
         <p id="result"></p>
     </div>
-    <script src="/gouez_f/enseignement/jeu/jeu-phonetique.js"></script>
-
+    <script src="jeu-phonetique.js"></script>
 </body>
 </html>

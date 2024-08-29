@@ -26,7 +26,10 @@
         }
 
         document.getElementById('submit-answer').addEventListener('click', function() {
-            const selectedOption = document.querySelector('input[name="option"]:checked');
+            const checkedOption = document.querySelector('input[name="option"]:checked');
+            if (checkedOption) {
+                checkedOption.checked = false;
+            }
             if (selectedOption) {
                 const question = questions[currentQuestion];
                 const isCorrect = selectedOption.value === question.correctOption;
