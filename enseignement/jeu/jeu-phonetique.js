@@ -5,9 +5,9 @@
             const response = await fetch('/gouez_f/enseignement/jeu/question-phonetique.csv');
             const data = await response.text();
             const lines = data.split('\n').filter(line => line.trim() !== '');
-            for (let line of lines) {
-                const [audioFile, option1, option2, correctOption] = line.split(',');
-                questions.push({ audioFile, option1, option2, correctOption });
+    for (let i = 1; i < lines.length; i++) {
+        const [audioFile, option1, option2, correctOption] = lines[i].split(',');
+        questions.push({ audioFile, option1, option2, correctOption });
             }
             loadQuestion();
         }
@@ -19,8 +19,6 @@
                     document.getElementById('audio-player').src = question.audioFile;
                     document.getElementById('label-option1').textContent = question.option1;
                     document.getElementById('label-option2').textContent = question.option2;
-                    
-                    // Remplacer l'utilisation de l'opérateur `?.` pour éviter l'erreur
                     const selectedOption = document.querySelector('input[name="option"]:checked');
                     if (selectedOption) {
                         selectedOption.checked = false;
@@ -37,7 +35,7 @@ document.getElementById('submit-answer').addEventListener('click', function() {
     if (selectedOption) {
         const question = questions[currentQuestion];
         const isCorrect = selectedOption.value === question.correctOption;
-        document.getElementById('result').textContent = isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse.';
+        document.getElementById('result').textContent = isCorrect ? 'Bonne réponse ! :)' : 'Mauvaise réponse! :(';
         currentQuestion++;
         setTimeout(loadQuestion, 2000);
     } else {

@@ -1,8 +1,7 @@
-Texte,X1,Y1,X2,Y2
-Le bâtiment d’enseignement 1,4156,6692,4733,6449
-La banque,5178,6378,5826,6672,
-L’auditorium,4753,4404,4125,4019,
-Le stade,2080,8342,3133,10073,
-Le musée d’histoire de l’université,5087,5102,5664,5497
-Les dortoirs,5023,1589,6714,3178
-Le restaurant universitaire (Nord),5819,3643,5030,3217
+Texte à déplacer,X,Y
+Le bâtiment d’enseignement 1,100,200
+Le bâtiment d’enseignement 2,300,400
+L’auditorium,500,350
+La banque, , 
+Le service enseignants et étudiants , ,
+Le stade
