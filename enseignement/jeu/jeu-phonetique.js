@@ -9,7 +9,10 @@
         const [audioFile, option1, option2, correctOption] = lines[i].split(',');
         questions.push({ audioFile, option1, option2, correctOption });
             }
-            loadQuestion();
+    // Shuffle the questions
+    questions = questions.sort(() => Math.random() - 0.5);
+
+    loadQuestion();
         }
 
             function loadQuestion() {
