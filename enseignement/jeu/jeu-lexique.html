@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu d'association</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .game-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .column {
+            width: 45%;
+        }
+        .item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .item.incorrect {
+            background-color: red;
+        }
+        .hidden {
+            display: none;
+        }
+        #score-popup, #level-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            display: none;
+            z-index: 100;
+        }
+        .level-select {
+            display: flex;
+            flex-direction: column;
+        }
+        .level-select button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Jeu d'association</h1>
+
+    <div id="level-popup">
+        <h2>Choisissez un semestre</h2>
+        <div id="semesters">
+            <button class="semestre-btn" data-semestre="1">Semestre 1</button>
+            <button class="semestre-btn" data-semestre="2">Semestre 2</button>
+            <button class="semestre-btn" data-semestre="3">Semestre 3</button>
+            <button class="semestre-btn" data-semestre="4">Semestre 4</button>
+        </div>
+
+        <div id="sous-niveaux" class="hidden">
+            <h2>Choisissez un sous-niveau</h2>
+            <div id="levels">
+                <button class="niveau-btn" data-niveau="U1">U1</button>
+                <button class="niveau-btn" data-niveau="U2">U2</button>
+                <button class="niveau-btn" data-niveau="U3">U3</button>
+                <button class="niveau-btn" data-niveau="U4">U4</button>
+                <button class="niveau-btn" data-niveau="U5">U5</button>
+                <button class="niveau-btn" data-niveau="U6">U6</button>
+                <button class="niveau-btn" data-niveau="U7">U7</button>
+                <button class="niveau-btn" data-niveau="U8">U8</button>
+                <button class="niveau-btn" data-niveau="U9">U9</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container hidden" id="game-container">
+        <div class="column" id="column-left"></div>
+        <div class="column" id="column-right"></div>
+    </div>
+
+    <div id="score-popup">
+        <h2>Résultat</h2>
+        <p id="score-result"></p>
+        <button id="replay-btn">Rejouer</button>
+        <button id="share-btn">Partager</button>
+    </div>
+
+    <script src="jeu-association.js"></script>
+
+</body>
+</html>
