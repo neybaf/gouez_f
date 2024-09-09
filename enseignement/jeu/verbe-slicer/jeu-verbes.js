@@ -1,4 +1,4 @@
-let canvas, ctx, score, verbesPremierGroupe, motsDivers, currentVerbes;
+let canvas, ctx, score, verbesIrreguliers, motsDivers, currentVerbes;
 let fallingWords = [];
 let gameInterval;
 let isGameRunning = false;
@@ -22,9 +22,9 @@ function initGame() {
     fetch('jeu-verbes.json')
         .then(response => response.json())
         .then(data => {
-            verbesPremierGroupe = data.verbesPremierGroupe;
+            verbesIrreguliers = data.verbesIrreguliers;
             motsDivers = data.motsDivers;
-            currentVerbes = [...verbesPremierGroupe.infinitif, ...motsDivers]; // Commencer par l'infinitif
+            currentVerbes = [...verbesIrreguliers.infinitif, ...motsDivers]; // Commencer par l'infinitif
             spawnWord();
         })
         .catch(error => {
@@ -71,14 +71,14 @@ function updateGame() {
 function checkWordClick(x, y) {
     fallingWords.forEach((wordObj, index) => {
         if (x > wordObj.x && x < wordObj.x + ctx.measureText(wordObj.text).width && y > wordObj.y - 30 && y < wordObj.y) {
-            // Vérifier si c'est un verbe du premier groupe à n'importe quel temps
-            if (Object.values(verbesPremierGroupe).flat().includes(wordObj.text)) {
+            // Vérifier si c'est un verbe irrégulier à n'importe quel temps
+            if (Object.values(verbesIrreguliers).flat().includes(wordObj.text)) {
                 score++;
                 updateScore();
                 fallingWords.splice(index, 1);
                 spawnWord();
             } else {
-                // Penalité si ce n'est pas un verbe du premier groupe
+                // Penalité si ce n'est pas un verbesIrreguliers
                 score--;
                 updateScore();
             }
@@ -89,22 +89,22 @@ function checkWordClick(x, y) {
 function adjustDifficulty() {
     // Augmenter progressivement la vitesse et changer la liste des verbes
     if (score >= 25 && score < 50) {
-        currentVerbes = [...verbesPremierGroupe.participe_passe, ...motsDivers];
+        currentVerbes = [...verbesIrreguliers.participe_passe, ...motsDivers];
         gameSpeed = 45;
         clearInterval(gameInterval);
         gameInterval = setInterval(updateGame, gameSpeed);
     } else if (score >= 50 && score < 75) {
-        currentVerbes = [...verbesPremierGroupe.futur, ...motsDivers];
+        currentVerbes = [...verbesIrreguliers.futur, ...motsDivers];
         gameSpeed = 40;
         clearInterval(gameInterval);
         gameInterval = setInterval(updateGame, gameSpeed);
     } else if (score >= 75 && score < 100) {
-        currentVerbes = [...verbesPremierGroupe.imparfait, ...motsDivers];
+        currentVerbes = [...verbesIrreguliers.imparfait, ...motsDivers];
         gameSpeed = 35;
         clearInterval(gameInterval);
         gameInterval = setInterval(updateGame, gameSpeed);
     } else if (score >= 100) {
-        currentVerbes = [...verbesPremierGroupe.subjonctif, ...motsDivers];
+        currentVerbes = [...verbesIrreguliers.subjonctif, ...motsDivers];
         gameSpeed = 30;
         clearInterval(gameInterval);
         gameInterval = setInterval(updateGame, gameSpeed);
