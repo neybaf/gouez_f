@@ -19,7 +19,7 @@ function initGame() {
     canvas.height = window.innerHeight;
 
     // Charger les verbes depuis le fichier JSON
-    fetch('verbes.json')
+    fetch('jeu-verbes.json')
         .then(response => response.json())
         .then(data => {
             verbesPremierGroupe = data.verbesPremierGroupe;
