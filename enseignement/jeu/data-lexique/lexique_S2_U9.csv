@@ -1,25 +1,25 @@
 text,audio,image
 "à bord",/data-lexique/INS2/U9/à bord.m4a,
-"un capitaine",/data-lexique/INS2/U9/un capitaine.m4a,
-"un cargo",/data-lexique/INS2/U9/un cargo.m4a,
-"un équipage",/data-lexique/INS2/U9/un équipage.m4a,
-"un lever de soleil",/data-lexique/INS2/U9/un lever de soleil.m4a,
-"un coucher de soleil",/data-lexique/INS2/U9/un coucher de soleil.m4a,
+"un capitaine",/data-lexique/INS2/U9/un capitaine.m4a,/data-lexique/INS2/U9/capitaine-bateau.jpeg
+"un cargo",/data-lexique/INS2/U9/un cargo.m4a,/data-lexique/INS2/U9/un cargo.jpeg
+"un équipage",/data-lexique/INS2/U9/un équipage.m4a,/data-lexique/INS2/U9/equipage-bateau.jpeg
+"un lever de soleil",/data-lexique/INS2/U9/un lever de soleil.m4a,/data-lexique/INS2/U9/lever-soleil.jpeg
+"un coucher de soleil",/data-lexique/INS2/U9/un coucher de soleil.m4a,/data-lexique/INS2/U9/coucher-soleil.jpeg
 "la marine",/data-lexique/INS2/U9/la marine.m4a,
 "un navire",/data-lexique/INS2/U9/un navire.m4a,
-"un océan",/data-lexique/INS2/U9/un océan.mp3,
+"un océan",/data-lexique/INS2/U9/un océan.mp3,/data-lexique/INS2/U9/un ocean.jpeg
 "un officier",/data-lexique/INS2/U9/un officier.mp3,
 "une passerelle",/data-lexique/INS2/U9/une passerelle.mp3,
-"un port",/data-lexique/INS2/U9/un port.mp3,
+"un port",/data-lexique/INS2/U9/un port.mp3,/Users/fabiengouez/Documents/GitHub/blog/enseignement/jeu/data-lexique/INS2/U9/port.jpeg
 "une route maritime",/data-lexique/INS2/U9/une route maritime.mp3,
 "une traversée",/data-lexique/INS2/U9/une traversée.mp3,
-"une baleine",/data-lexique/INS2/U9/une baleine.mp3,
-"un dauphin",/data-lexique/INS2/U9/un dauphin.mp3,
-"un poisson volant",/data-lexique/INS2/U9/un poisson volant.mp3,
+"une baleine",/data-lexique/INS2/U9/une baleine.mp3,/data-lexique/INS2/U9/une baleine.jpeg
+"un dauphin",/data-lexique/INS2/U9/un dauphin.mp3,/data-lexique/INS2/U9/un dauphin.jpeg
+"un poisson volant",/data-lexique/INS2/U9/un poisson volant.mp3,/data-lexique/INS2/U9/un poisson volant.jpeg
 
 "une arrivée",/data-lexique/INS2/U9/une arrivée.mp3,
 "une aventure",/data-lexique/INS2/U9/en train.mp3,
-"une cabine",/data-lexique/INS2/U9/une cabine.mp3,
+"une cabine",/data-lexique/INS2/U9/une cabine.mp3,/data-lexique/INS2/U9/cabine-bateau.jpeg
 "un continent",/data-lexique/INS2/U9/un continent.mp3,
 "un départ",/data-lexique/INS2/U9/un départ.mp3,
 "une destination",/data-lexique/INS2/U9/une destination.mp3,
@@ -27,7 +27,46 @@ text,audio,image
 "une escale",/data-lexique/INS2/U9/une escale.mp3,
 "un passager",/data-lexique/INS2/U9/un passager.mp3,
 "une passagère",/data-lexique/INS2/U9/une passagère.mp3,
-"en avion",/data-lexique/INS2/U9/en avion.mp3,
-"en bateau",/data-lexique/INS2/U9/en bateau.mp3,
-"en car",/data-lexique/INS2/U9/en car.mp3,
-"en train",/data-lexique/INS2/U9/une aventure.mp3,
+"en avion",/data-lexique/INS2/U9/en avion.mp3,/data-lexique/INS2/U9/en-avion.jpeg
+"en bateau",/data-lexique/INS2/U9/en bateau.mp3,/data-lexique/INS2/U9/en-bateau.jpeg
+"en car",/data-lexique/INS2/U9/en car.mp3,/data-lexique/INS2/U9/en-car.jpeg
+"en train",/data-lexique/INS2/U9/une aventure.mp3,/data-lexique/INS2/U9/en-train.jpeg
+
+"un guide",/data-lexique/INS2/U9/un guide.mp3,
+"un guide (touristique)",/data-lexique/INS2/U9/un guide touristique.mp3,
+"les préparatifs",/data-lexique/INS2/U9/les préparatifs.mp3,
+"un risque",/data-lexique/INS2/U9/un risque.mp3,
+"un sac",/data-lexique/INS2/U9/un sac.mp3,
+"une valise",/data-lexique/INS2/U9/une valise.mp3,/data-lexique/INS2/U9/valise.jpeg
+"se débrouiller",/data-lexique/INS2/U9/se débrouiller.mp3,
+
+"guider",/data-lexique/INS2/U9/guider.mp3,
+"un billet",/data-lexique/INS2/U9/un billet.mp3,
+"un chemin",/data-lexique/INS2/U9/un chemin.mp3,
+"une étape",/data-lexique/INS2/U9/une étape.mp3,
+"un itinéraire",/data-lexique/INS2/U9/un itinéraire.mp3,
+"un kilomètre (km)",/data-lexique/INS2/U9/un kilomètre.mp3,/data-lexique/INS2/U9/un kilomètre.jpeg
+"une petite route",/data-lexique/INS2/U9/une petite route.mp3,/data-lexique/INS2/U9/une petite route.jpeg
+"une route principale",/data-lexique/INS2/U9/une route principale.mp3,
+"longer",/data-lexique/INS2/U9/longer.mp3,
+"passer par",/data-lexique/INS2/U9/passer par.mp3,
+"rejoindre",/data-lexique/INS2/U9/rejoindre.mp3,
+"remonter",/data-lexique/INS2/U9/remonter.mp3,
+"s'arrêter à",/data-lexique/INS2/U9/s'arrêter à.mp3,
+"en ligne droite",/data-lexique/INS2/U9/en ligne droite.mp3,
+"à vélo",/data-lexique/INS2/U9/à vélo.mp3,/data-lexique/INS2/U9/en-vélo.jpeg
+"en bus",/data-lexique/INS2/U9/en bus.mp3,/data-lexique/INS2/U9/en-bus.jpeg
+"en voiture",/data-lexique/INS2/U9/en voiture.mp3,/data-lexique/INS2/U9/en-voiture.jpeg
+
+"l'hébergement",/data-lexique/INS2/U9/l'hébergement.mp3,
+"une auberge",/data-lexique/INS2/U9/une auberge.mp3,
+"le camping",/data-lexique/INS2/U9/le camping.mp3,/data-lexique/INS2/U9/camping.jpeg
+"le couchsurfing",/data-lexique/INS2/U9/le couchsurfing.mp3,/data-lexique/INS2/U9/couchsurfing.jpeg
+"chez l'habitant",/data-lexique/INS2/U9/chez l'habitant.mp3,
+"un hôte",/data-lexique/INS2/U9/un hôte.mp3,
+"une hôte",/data-lexique/INS2/U9/une hôte.mp3,
+"une pension",/data-lexique/INS2/U9/une pension.mp3,
+"une résidence",/data-lexique/INS2/U9/une résidence.mp3,
+"dormir à la belle étoile",/data-lexique/INS2/U9/dormir à la belle étoile.mp3,/data-lexique/INS2/U9/dormir-belle-etoile.jpeg
+"accueillir",/data-lexique/INS2/U9/accueillir.mp3,
+"héberger",/data-lexique/INS2/U9/héberger.mp3,
