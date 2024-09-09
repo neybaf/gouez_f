@@ -1,8 +1,10 @@
 {
-  "verbesPremierGroupe": [
-    "manger", "parler", "aimer", "chanter", "travailler", "marcher", "jouer", "nager", "penser", "fermer"
-  ],
-  "motsDivers": [
-    "finir", "partir", "prendre", "courir", "dire", "voir", "vouloir", "pouvoir"
-  ]
+  "verbesIrreguliers": {
+    "infinitif": ["aller", "avoir", "être", "faire", "venir", "prendre", "mettre", "voir", "savoir", "vouloir", "rejoindre", "accueillir", "abattre", "s'asseoir", "abattre", "céder", "comprendre", "conduire", "connaître", "courir", "craindre", "dissoudre", "défaire","écrire", "dormir", "distraire", "employer", "éteindre", "exclure", "haïr", "jeter"],
+    "participe_passe": ["allé", "eu", "été", "fait", "venu", "pris", "mis", "vu", "su", "voulu", "eues", "prises", "éteintes", "abattu", "abattues", "assises", "compris", "connu"],
+    "futur": ["irai", "aurai", "serai", "ferai", "viendrai", "prendrai", "mettrai", "verrai", "saurai", "voudrai", "rejoindrai", "employé", "connu"],
+    "imparfait": ["allais", "avais", "étais", "faisais", "venais", "prenais", "mettais", "voyais", "savais", "voulais"],
+    "subjonctif": ["aille", "aie", "sois", "fasse", "vienne", "prenne", "mette", "voie", "sache", "veuille"]
+  },
+  "motsDivers": ["manger", "parler", "aimer", "chanter", "marcher", "jouer", "nager", "fermer", "penser", "travailler"]
 }
