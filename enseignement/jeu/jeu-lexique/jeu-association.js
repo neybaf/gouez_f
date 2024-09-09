@@ -6,8 +6,8 @@ let selectedSemestre = null;
 let selectedNiveau = null;
 
 async function loadQuestions() {
-    // gestion du CSV basé sur le semestre et le sous-niveau sélectionnés lexique_S1_U1
-    const response = await fetch(`data-lexique/lexique_S${selectedSemestre}_U${selectedNiveau}.csv`);
+    // gestion du CSV basé sur le semestre et le sous-niveau sélectionnés ex:lexique_S1_U1
+    const response = await fetch(`/gouez_f/enseignement/jeu/jeu-lexique/data-lexique/lexique_S${selectedSemestre}_U${selectedNiveau}.csv`);
     const data = await response.text();
     const lines = data.split('\n').filter(line => line.trim() !== ''); // Ignore les lignes vides
     
@@ -25,7 +25,6 @@ async function loadQuestions() {
     }
     startGame();
 }
-
 function startGame() {
     errors = 0;
     matchesMade = 0;
