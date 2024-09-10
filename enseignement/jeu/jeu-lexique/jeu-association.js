@@ -1,3 +1,31 @@
+// Gestion des boutons de sélection de semestre et de sous-niveau
+document.querySelectorAll('.semestre-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        // Enlever la classe 'selected' de tous les boutons de semestre
+        document.querySelectorAll('.semestre-btn').forEach(btn => btn.classList.remove('selected'));
+        // Ajouter la classe 'selected' au bouton cliqué
+        this.classList.add('selected');
+
+        selectedSemestre = this.dataset.semestre;
+        document.getElementById('semesters').classList.add('hidden');
+        document.getElementById('sous-niveaux').classList.remove('hidden');
+    });
+});
+
+document.querySelectorAll('.niveau-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        // Enlever la classe 'selected' de tous les boutons de sous-niveau
+        document.querySelectorAll('.niveau-btn').forEach(btn => btn.classList.remove('selected'));
+        // Ajouter la classe 'selected' au bouton cliqué
+        this.classList.add('selected');
+
+        selectedNiveau = this.dataset.niveau;
+        document.getElementById('sous-niveaux').classList.add('hidden');
+        document.getElementById('game-container').classList.remove('hidden');
+        loadQuestions();
+    });
+});
+
 let questions = [];
 let currentSet = [];
 let errors = 0;
