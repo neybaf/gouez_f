@@ -1,10 +1,10 @@
 text,audio,image
 "à bord",data-lexique/INS2/U9/à_bord.m4a,
-"un capitaine",data-lexique/INS2/U9/un_capitaine.m4a,data-lexique/INS2/U9/capitaine-bateau.jpeg
+"un capitaine",data-lexique/INS2/U9/un_capitaine.m4a,data-lexique/INS2/U9/capitaine_bateau.jpeg
 "un cargo",data-lexique/INS2/U9/un_cargo.m4a,data-lexique/INS2/U9/un_cargo.jpeg
-"un équipage",data-lexique/INS2/U9/un_équipage.m4a,data-lexique/INS2/U9/equipage-bateau.jpeg
-"un lever de soleil",data-lexique/INS2/U9/un_lever-soleil.m4a,data-lexique/INS2/U9/un_lever-soleil.jpeg
-"un coucher de soleil",data-lexique/INS2/U9/un_coucher-soleil.m4a,data-lexique/INS2/U9/un_coucher-soleil.jpeg
+"un équipage",data-lexique/INS2/U9/un_équipage.m4a,data-lexique/INS2/U9/equipage_bateau.jpeg
+"un lever de soleil",data-lexique/INS2/U9/un_lever_soleil.m4a,data-lexique/INS2/U9/un_lever_soleil.jpeg
+"un coucher de soleil",data-lexique/INS2/U9/un_coucher_soleil.m4a,data-lexique/INS2/U9/un_coucher_soleil.jpeg
 "la marine",data-lexique/INS2/U9/la_marine.m4a,
 "un navire",data-lexique/INS2/U9/un_navire.m4a,
 "un ocean",data-lexique/INS2/U9/un_ocean.mp3,data-lexique/INS2/U9/un_ocean.jpeg
@@ -18,7 +18,7 @@ text,audio,image
 "un poisson volant",data-lexique/INS2/U9/un_poisson_volant.mp3,data-lexique/INS2/U9/un_poisson_volant.jpeg
 "une arrivée",data-lexique/INS2/U9/une_arrivee.mp3,
 "une aventure",data-lexique/INS2/U9/en_train.mp3,
-"une cabine",data-lexique/INS2/U9/une_cabine.mp3,data-lexique/INS2/U9/cabine-bateau.jpeg
+"une cabine",data-lexique/INS2/U9/une_cabine.mp3,data-lexique/INS2/U9/cabine_bateau.jpeg
 "un continent",data-lexique/INS2/U9/un_continent.mp3,
 "un depart",data-lexique/INS2/U9/un_depart.mp3,
 "une destination",data-lexique/INS2/U9/une_destination.mp3,
@@ -26,10 +26,10 @@ text,audio,image
 "une escale",data-lexique/INS2/U9/une_escale.mp3,
 "un passager",data-lexique/INS2/U9/un_passager.mp3,
 "une passagère",data-lexique/INS2/U9/une_passagere.mp3,
-"en avion",data-lexique/INS2/U9/en_avion.mp3,data-lexique/INS2/U9/en-avion.jpeg
-"en bateau",data-lexique/INS2/U9/en_bateau.mp3,data-lexique/INS2/U9/en-bateau.jpeg
-"en car",data-lexique/INS2/U9/en_car.mp3,data-lexique/INS2/U9/en-car.jpeg
-"en train",data-lexique/INS2/U9/une_aventure.mp3,data-lexique/INS2/U9/en-train.jpeg
+"en avion",data-lexique/INS2/U9/en_avion.mp3,data-lexique/INS2/U9/en_avion.jpeg
+"en bateau",data-lexique/INS2/U9/en_bateau.mp3,data-lexique/INS2/U9/en_bateau.jpeg
+"en car",data-lexique/INS2/U9/en_car.mp3,data-lexique/INS2/U9/en_car.jpeg
+"en train",data-lexique/INS2/U9/une_aventure.mp3,data-lexique/INS2/U9/en_train.jpeg
 "un guide",data-lexique/INS2/U9/un_guide.mp3,
 "un guide (touristique)",data-lexique/INS2/U9/un_guide_touristique.mp3,
 "les préparatifs",data-lexique/INS2/U9/les_preparatifs.mp3,
@@ -51,9 +51,9 @@ text,audio,image
 "remonter",data-lexique/INS2/U9/remonter.mp3,
 "s_arrêter à",data-lexique/INS2/U9/s_arreter_a.mp3,
 "en ligne droite",data-lexique/INS2/U9/en_ligne_droite.mp3,
-"a velo",data-lexique/INS2/U9/a_velo.mp3,data-lexique/INS2/U9/en-vélo.jpeg
-"en bus",data-lexique/INS2/U9/en_bus.mp3,data-lexique/INS2/U9/en-bus.jpeg
-"en voiture",data-lexique/INS2/U9/en_voiture.mp3,data-lexique/INS2/U9/en-voiture.jpeg
+"a velo",data-lexique/INS2/U9/a_velo.mp3,data-lexique/INS2/U9/en_velo.jpeg
+"en bus",data-lexique/INS2/U9/en_bus.mp3,data-lexique/INS2/U9/en_bus.jpeg
+"en voiture",data-lexique/INS2/U9/en_voiture.mp3,data-lexique/INS2/U9/en_voiture.jpeg
 "l_hébergement",data-lexique/INS2/U9/l_hebergement.mp3,
 "une auberge",data-lexique/INS2/U9/une_auberge.mp3,
 "le camping",data-lexique/INS2/U9/le_camping.mp3,data-lexique/INS2/U9/camping.jpeg
@@ -63,6 +63,6 @@ text,audio,image
 "une hôte",data-lexique/INS2/U9/une_hote.mp3,
 "une pension",data-lexique/INS2/U9/une_pension.mp3,
 "une résidence",data-lexique/INS2/U9/une_residence.mp3,
-"dormir a la belle étoile",data-lexique/INS2/U9/dormir-belle-etoile.mp3,data-lexique/INS2/U9/dormir-belle-etoile.jpeg
+"dormir a la belle étoile",data-lexique/INS2/U9/dormir-belle-etoile.mp3,data-lexique/INS2/U9/dormir_belle_etoile.jpeg
 "accueillir",data-lexique/INS2/U9/accueillir.mp3,
 "héberger",data-lexique/INS2/U9/heberger.mp3,
