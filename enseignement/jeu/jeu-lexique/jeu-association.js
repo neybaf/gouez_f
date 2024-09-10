@@ -24,10 +24,35 @@ document.querySelectorAll('.niveau-btn').forEach(button => {
 
 let questions = [];
 let currentSet = [];
-let errors = 0;
-let matchesMade = 0;
+let errors = 0; // erreurs comptés
+let matchesMade = 0; // bonnes réponses
 let selectedSemestre = null;
 let selectedNiveau = null;
+let timer = 30; // Temps de départ
+let timerInterval;
+let score = 0
+
+// Fonction pour démarrer le timer
+function startTimer() {
+    timerInterval = setInterval(() => {
+        timer--;
+        document.getElementById('timer').textContent = `Temps restant : ${timer} sec`;
+
+        if (timer <= 0) {
+            clearInterval(timerInterval);
+            endGame();
+        }
+    }, 1000);  // Décrémenter chaque seconde
+}
+
+// Fonction de fin de partie
+function endGame() {
+    clearInterval(timerInterval);
+    alert(`Temps écoulé ! Votre score est de : ${score}, vous avez fait ${errors} erreurs`);
+    // Réinitialiser ou redémarrer le jeu
+    startGame();  // Recommencer la partie
+}
+
 
 async function loadQuestions() {
     const response = await fetch(`data-lexique/lexique_S${selectedSemestre}_U${selectedNiveau}.csv`);
@@ -35,7 +60,7 @@ async function loadQuestions() {
     const lines = data.split('\n').filter(line => line.trim() !== '');
     
     for (let i = 1; i < lines.length; i++) {
-        const [text, audioFile, imageFile] = lines[i].split(',');  // Réordonnancement correct
+        const [text, audioFile, imageFile] = lines[i].split(',');  // Ordre des colonnes
         if (imageFile || audioFile || text) {
             questions.push({
                 imageFile: imageFile || null,
@@ -50,8 +75,11 @@ async function loadQuestions() {
 function startGame() {
     errors = 0;
     matchesMade = 0;
+    timer = 30;  // Réinitialiser le timer à 30 secondes
+    score = 0;   // Réinitialiser le score
     currentSet = getRandomSet(5);
     renderColumns();
+    startTimer();  // Démarrer le timer
 }
 
 function getRandomSet(number) {
@@ -81,7 +109,7 @@ function renderColumns() {
 
         const rightItem = document.createElement('div');
         rightItem.classList.add('item');
-        rightItem.textContent = item.text || "Pas de texte disponible";
+        rightItem.textContent = item.text || "Oups! Pas de texte disponible";
         rightItem.dataset.index = index;
         rightColumn.appendChild(rightItem);
     });
@@ -95,14 +123,18 @@ function addClickHandlers() {
 
     document.querySelectorAll('#column-left .item').forEach(item => {
         item.addEventListener('click', function() {
+            if (selectedLeft) selectedLeft.classList.remove('selected');
             selectedLeft = item;
+            selectedLeft.classList.add('selected');
             checkMatch();
         });
     });
 
     document.querySelectorAll('#column-right .item').forEach(item => {
         item.addEventListener('click', function() {
+            if (selectedRight) selectedRight.classList.remove('selected');
             selectedRight = item;
+            selectedRight.classList.add('selected');
             checkMatch();
         });
     });
@@ -116,6 +148,8 @@ function addClickHandlers() {
                 matchesMade++;
                 selectedLeft.classList.add('hidden');
                 selectedRight.classList.add('hidden');
+                score += 1;  // Ajouter 10 points pour une bonne réponse
+                timer += 5;   // Ajouter 5 secondes pour une bonne réponse
             } else {
                 errors++;
                 selectedLeft.classList.add('incorrect');
@@ -124,14 +158,27 @@ function addClickHandlers() {
                     selectedLeft.classList.remove('incorrect');
                     selectedRight.classList.remove('incorrect');
                 }, 500);
+                timer -= 5;   // Retirer 5 secondes pour une mauvaise réponse
             }
 
             selectedLeft = null;
             selectedRight = null;
+            document.getElementById('score').textContent = `Score : ${score}`;
+            
+        // Si 3 bonnes correspondances sont faites, charger 3 nouvelles questions
+        if (matchesMade % 3 === 0) {
+            currentSet = getRandomSet(3);  // Charger 3 nouvelles questions
+            renderColumns();  // Recharger les colonnes avec les nouvelles questions
+        }
 
             if (matchesMade === currentSet.length) {
                 showScore();
             }
+            if (timer <= 0) {
+                clearInterval(timerInterval);
+                endGame();
+            }
+
         }
     }
 }
