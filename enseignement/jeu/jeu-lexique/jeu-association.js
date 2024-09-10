@@ -58,6 +58,12 @@ function startGame() {
     currentSet = getRandomSet(5);
     renderColumns();
 }
+
+function getRandomSet(number) {
+    const shuffled = questions.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, number);
+}
+
 function renderColumns() {
     const leftColumn = document.getElementById('column-left');
     const rightColumn = document.getElementById('column-right');
@@ -66,19 +72,18 @@ function renderColumns() {
     rightColumn.innerHTML = '';
 
     currentSet.forEach((item, index) => {
-        // Colonne gauche : Image ou son
         const leftItem = document.createElement('div');
         leftItem.classList.add('item');
         
         if (item.imageFile) {
             leftItem.innerHTML = `<img src="${item.imageFile}" alt="Image" width="100">`;
-        } else if (item.audioFile) {
+        }
+         else if (item.audioFile) {
             leftItem.innerHTML = `<audio controls src="${item.audioFile}"></audio>`;
         }
         leftItem.dataset.index = index;
         leftColumn.appendChild(leftItem);
 
-        // Colonne droite : Texte
         const rightItem = document.createElement('div');
         rightItem.classList.add('item');
         rightItem.textContent = item.text || "Pas de texte disponible";
@@ -90,6 +95,9 @@ function renderColumns() {
 }
 
 function addClickHandlers() {
+    let selectedLeft = null;
+    let selectedRight = null;
+
     document.querySelectorAll('#column-left .item').forEach(item => {
         item.addEventListener('click', function() {
             selectedLeft = item;
@@ -103,32 +111,32 @@ function addClickHandlers() {
             checkMatch();
         });
     });
-}
 
-function checkMatch() {
-    if (selectedLeft && selectedRight) {
-        const leftIndex = selectedLeft.dataset.index;
-        const rightIndex = selectedRight.dataset.index;
+    function checkMatch() {
+        if (selectedLeft && selectedRight) {
+            const leftIndex = selectedLeft.dataset.index;
+            const rightIndex = selectedRight.dataset.index;
 
-        if (leftIndex === rightIndex) {
-            matchesMade++;
-            selectedLeft.classList.add('hidden');
-            selectedRight.classList.add('hidden');
-        } else {
-            errors++;
-            selectedLeft.classList.add('incorrect');
-            selectedRight.classList.add('incorrect');
-            setTimeout(() => {
-                selectedLeft.classList.remove('incorrect');
-                selectedRight.classList.remove('incorrect');
-            }, 500);
-        }
+            if (leftIndex === rightIndex) {
+                matchesMade++;
+                selectedLeft.classList.add('hidden');
+                selectedRight.classList.add('hidden');
+            } else {
+                errors++;
+                selectedLeft.classList.add('incorrect');
+                selectedRight.classList.add('incorrect');
+                setTimeout(() => {
+                    selectedLeft.classList.remove('incorrect');
+                    selectedRight.classList.remove('incorrect');
+                }, 500);
+            }
 
-        selectedLeft = null;
-        selectedRight = null;
+            selectedLeft = null;
+            selectedRight = null;
 
-        if (matchesMade === currentSet.length) {
-            showScore();
+            if (matchesMade === currentSet.length) {
+                showScore();
+            }
         }
     }
 }
@@ -145,4 +153,24 @@ document.getElementById('replay-btn').addEventListener('click', function() {
     startGame();
 });
 
-loadQuestions();
+document.getElementById('share-btn').addEventListener('click', function() {
+    alert('Partage du score bientôt disponible!');
+});
+
+// Gestion des boutons de sélection de semestre et de sous-niveau
+document.querySelectorAll('.semestre-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        selectedSemestre = this.dataset.semestre;
+        document.getElementById('semesters').classList.add('hidden');
+        document.getElementById('sous-niveaux').classList.remove('hidden');
+    });
+});
+
+document.querySelectorAll('.niveau-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        selectedNiveau = this.dataset.niveau;
+        document.getElementById('sous-niveaux').classList.add('hidden');
+        document.getElementById('game-container').classList.remove('hidden');
+        loadQuestions();
+    });
+});
