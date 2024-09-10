@@ -77,7 +77,8 @@ function renderColumns() {
         
         if (item.imageFile) {
             leftItem.innerHTML = `<img src="${item.imageFile}" alt="Image" width="100">`;
-        } else if (item.audioFile) {
+        }
+         else if (item.audioFile) {
             leftItem.innerHTML = `<audio controls src="${item.audioFile}"></audio>`;
         }
         leftItem.dataset.index = index;
