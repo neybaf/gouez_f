@@ -1,9 +1,7 @@
 // Gestion des boutons de sélection de semestre et de sous-niveau
 document.querySelectorAll('.semestre-btn').forEach(button => {
     button.addEventListener('click', function() {
-        // Enlever la classe 'selected' de tous les boutons de semestre
         document.querySelectorAll('.semestre-btn').forEach(btn => btn.classList.remove('selected'));
-        // Ajouter la classe 'selected' au bouton cliqué
         this.classList.add('selected');
 
         selectedSemestre = this.dataset.semestre;
@@ -14,9 +12,7 @@ document.querySelectorAll('.semestre-btn').forEach(button => {
 
 document.querySelectorAll('.niveau-btn').forEach(button => {
     button.addEventListener('click', function() {
-        // Enlever la classe 'selected' de tous les boutons de sous-niveau
         document.querySelectorAll('.niveau-btn').forEach(btn => btn.classList.remove('selected'));
-        // Ajouter la classe 'selected' au bouton cliqué
         this.classList.add('selected');
 
         selectedNiveau = this.dataset.niveau;
@@ -38,14 +34,13 @@ async function loadQuestions() {
     const data = await response.text();
     const lines = data.split('\n').filter(line => line.trim() !== '');
     
-    const headers = lines[0].split(',');
     for (let i = 1; i < lines.length; i++) {
-        const [imageFile, audioFile, text] = lines[i].split(',');
+        const [text, audioFile, imageFile] = lines[i].split(',');  // Réordonnancement correct
         if (imageFile || audioFile || text) {
             questions.push({
-                imageFile: headers.includes('image') ? imageFile || null : null,
-                audioFile: headers.includes('audio') ? audioFile || null : null,
-                text: headers.includes('text') ? text || null : null
+                imageFile: imageFile || null,
+                audioFile: audioFile || null,
+                text: text || null
             });
         }
     }
@@ -78,7 +73,7 @@ function renderColumns() {
         if (item.imageFile) {
             leftItem.innerHTML = `<img src="${item.imageFile}" alt="Image" width="100">`;
         }
-         else if (item.audioFile) {
+        else if (item.audioFile) {
             leftItem.innerHTML = `<audio controls src="${item.audioFile}"></audio>`;
         }
         leftItem.dataset.index = index;
@@ -155,22 +150,4 @@ document.getElementById('replay-btn').addEventListener('click', function() {
 
 document.getElementById('share-btn').addEventListener('click', function() {
     alert('Partage du score bientôt disponible!');
-});
-
-// Gestion des boutons de sélection de semestre et de sous-niveau
-document.querySelectorAll('.semestre-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        selectedSemestre = this.dataset.semestre;
-        document.getElementById('semesters').classList.add('hidden');
-        document.getElementById('sous-niveaux').classList.remove('hidden');
-    });
-});
-
-document.querySelectorAll('.niveau-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        selectedNiveau = this.dataset.niveau;
-        document.getElementById('sous-niveaux').classList.add('hidden');
-        document.getElementById('game-container').classList.remove('hidden');
-        loadQuestions();
-    });
 });
