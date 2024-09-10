@@ -12,7 +12,7 @@ async function loadQuestions() {
     const lines = data.split('\n').filter(line => line.trim() !== ''); // Ignore les lignes vides
     
     const headers = lines[0].split(','); // Ignorer la première ligne des titres
-    for (let i = ; i < lines.length; i++) {
+    for (let i = 1; i < lines.length; i++) {
         const [imageFile, audioFile, text] = lines[i].split(',');
         // S'assurer qu'au moins un élément (image, audio ou texte) existe avant de l'ajouter
         if (imageFile || audioFile || text) {
