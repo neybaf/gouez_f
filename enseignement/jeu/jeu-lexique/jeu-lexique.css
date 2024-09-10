@@ -10,3 +10,15 @@ button.selected {
     background-color: green;
     color: white;
 }
+
+.selected {
+    border: 2px solid green;
+}
+
+.incorrect {
+    background-color: red;
+}
+
+.hidden {
+    visibility: hidden;
+}
