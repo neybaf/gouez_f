@@ -1,0 +1,12 @@
+/* Style pour les boutons */
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* Style lorsque le bouton est sélectionné */
+button.selected {
+    background-color: green;
+    color: white;
+}
