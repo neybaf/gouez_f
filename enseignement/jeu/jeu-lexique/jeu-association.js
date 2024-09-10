@@ -1,4 +1,5 @@
 // Gestion des boutons de sélection de semestre et de sous-niveau
+console.log("Le fichier script.js est bien chargé !");
 document.querySelectorAll('.semestre-btn').forEach(button => {
     button.addEventListener('click', function() {
         document.querySelectorAll('.semestre-btn').forEach(btn => btn.classList.remove('selected'));
@@ -25,12 +26,14 @@ document.querySelectorAll('.niveau-btn').forEach(button => {
 let questions = [];
 let currentSet = [];
 let errors = 0; // erreurs comptés
-let matchesMade = 0; // bonnes réponses
+let correctAnswers = 0;
+let matchesMade = 0; 
 let selectedSemestre = null;
 let selectedNiveau = null;
 let timer = 30; // Temps de départ
 let timerInterval;
 let score = 0
+
 
 // Fonction pour démarrer le timer
 function startTimer() {
@@ -50,7 +53,7 @@ function endGame() {
     clearInterval(timerInterval);
     alert(`Temps écoulé ! Votre score est de : ${score}, vous avez fait ${errors} erreurs`);
     // Réinitialiser ou redémarrer le jeu
-    startGame();  // Recommencer la partie
+    startGame();  // Recommencer la partie automatiquement à la fermeture du popup
 }
 
 
@@ -75,6 +78,7 @@ async function loadQuestions() {
 function startGame() {
     errors = 0;
     matchesMade = 0;
+    correctAnswers = 0;  // Réinitialiser le compteur de bonnes réponses
     timer = 30;  // Réinitialiser le timer à 30 secondes
     score = 0;   // Réinitialiser le score
     currentSet = getRandomSet(5);
@@ -146,19 +150,26 @@ function addClickHandlers() {
 
             if (leftIndex === rightIndex) {
                 matchesMade++;
+                correctAnswers++; // Incrémenter le compteur de bonnes réponses
+                score += 1;  // Ajouter 1 points pour une bonne réponse
+                timer += 5;   // Ajouter 5 secondes pour une bonne réponse
                 selectedLeft.classList.add('hidden');
                 selectedRight.classList.add('hidden');
-                score += 1;  // Ajouter 10 points pour une bonne réponse
-                timer += 5;   // Ajouter 5 secondes pour une bonne réponse
+                // Après 3 bonnes réponses, charger 3 nouvelles questions
+                if (correctAnswers === 3) {
+                    correctAnswers = 0; // Réinitialiser le compteur après chaque série
+                    currentSet = getRandomSet(3);  // Charger 3 nouvelles questions
+                    renderColumns();  // Recharger les colonnes
+                }
             } else {
                 errors++;
+                timer -= 5;   // Retirer 5 secondes pour une mauvaise réponse
                 selectedLeft.classList.add('incorrect');
                 selectedRight.classList.add('incorrect');
                 setTimeout(() => {
                     selectedLeft.classList.remove('incorrect');
                     selectedRight.classList.remove('incorrect');
                 }, 500);
-                timer -= 5;   // Retirer 5 secondes pour une mauvaise réponse
             }
 
             selectedLeft = null;
