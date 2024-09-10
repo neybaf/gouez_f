@@ -151,3 +151,66 @@ document.getElementById('replay-btn').addEventListener('click', function() {
 document.getElementById('share-btn').addEventListener('click', function() {
     alert('Partage du score bientôt disponible!');
 });
+function addClickHandlers() {
+    let selectedLeft = null;
+    let selectedRight = null;
+
+    // Écouteurs d'événements pour les éléments de la colonne de gauche
+    document.querySelectorAll('#column-left .item').forEach(item => {
+        item.addEventListener('click', function() {
+            // Si un élément gauche est déjà sélectionné, on l'annule pour permettre la sélection d'un nouveau
+            if (selectedLeft) {
+                selectedLeft.classList.remove('selected');
+            }
+            selectedLeft = item;
+            selectedLeft.classList.add('selected');
+            checkMatch();
+        });
+    });
+
+    // Écouteurs d'événements pour les éléments de la colonne de droite
+    document.querySelectorAll('#column-right .item').forEach(item => {
+        item.addEventListener('click', function() {
+            // Si un élément droit est déjà sélectionné, on l'annule pour permettre la sélection d'un nouveau
+            if (selectedRight) {
+                selectedRight.classList.remove('selected');
+            }
+            selectedRight = item;
+            selectedRight.classList.add('selected');
+            checkMatch();
+        });
+    });
+
+    // Fonction pour vérifier la correspondance entre l'élément sélectionné à gauche et celui à droite
+    function checkMatch() {
+        if (selectedLeft && selectedRight) {
+            const leftIndex = selectedLeft.dataset.index;
+            const rightIndex = selectedRight.dataset.index;
+
+            // Si les index correspondent, les éléments sont masqués
+            if (leftIndex === rightIndex) {
+                matchesMade++;
+                selectedLeft.classList.add('hidden');
+                selectedRight.classList.add('hidden');
+            } else {
+                // En cas d'erreur, on ajoute la classe "incorrect" temporairement
+                errors++;
+                selectedLeft.classList.add('incorrect');
+                selectedRight.classList.add('incorrect');
+                setTimeout(() => {
+                    selectedLeft.classList.remove('incorrect');
+                    selectedRight.classList.remove('incorrect');
+                }, 500);
+            }
+
+            // Réinitialisation des sélections
+            selectedLeft = null;
+            selectedRight = null;
+
+            // Affichage du score si toutes les correspondances sont faites
+            if (matchesMade === currentSet.length) {
+                showScore();
+            }
+        }
+    }
+}
