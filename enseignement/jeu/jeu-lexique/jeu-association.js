@@ -6,15 +6,13 @@ let selectedSemestre = null;
 let selectedNiveau = null;
 
 async function loadQuestions() {
-    // gestion du CSV basé sur le semestre et le sous-niveau sélectionnés ex:lexique_S1_U1
     const response = await fetch(`data-lexique/lexique_S${selectedSemestre}_U${selectedNiveau}.csv`);
     const data = await response.text();
-    const lines = data.split('\n').filter(line => line.trim() !== ''); // Ignore les lignes vides
+    const lines = data.split('\n').filter(line => line.trim() !== '');
     
-    const headers = lines[0].split(','); // Ignorer la première ligne des titres
+    const headers = lines[0].split(',');
     for (let i = 1; i < lines.length; i++) {
         const [imageFile, audioFile, text] = lines[i].split(',');
-        // S'assurer qu'au moins un élément (image, audio ou texte) existe avant de l'ajouter
         if (imageFile || audioFile || text) {
             questions.push({
                 imageFile: headers.includes('image') ? imageFile || null : null,
@@ -25,10 +23,11 @@ async function loadQuestions() {
     }
     startGame();
 }
+
 function startGame() {
     errors = 0;
     matchesMade = 0;
-    currentSet = getRandomSet(5);  // Nous sélectionnons 5 éléments aléatoirement
+    currentSet = getRandomSet(5);
     renderColumns();
 }
 
@@ -45,7 +44,6 @@ function renderColumns() {
     rightColumn.innerHTML = '';
 
     currentSet.forEach((item, index) => {
-        // Gérer les éléments dans la colonne de gauche (images ou sons)
         const leftItem = document.createElement('div');
         leftItem.classList.add('item');
         
@@ -57,14 +55,9 @@ function renderColumns() {
         leftItem.dataset.index = index;
         leftColumn.appendChild(leftItem);
 
-        // Gérer les éléments dans la colonne de droite (texte)
         const rightItem = document.createElement('div');
         rightItem.classList.add('item');
-        if (item.text) {
-            rightItem.textContent = item.text;
-        } else {
-            rightItem.textContent = "Pas de texte disponible";
-        }
+        rightItem.textContent = item.text || "Pas de texte disponible";
         rightItem.dataset.index = index;
         rightColumn.appendChild(rightItem);
     });
@@ -135,7 +128,7 @@ document.getElementById('share-btn').addEventListener('click', function() {
     alert('Partage du score bientôt disponible!');
 });
 
-// Gestion du popup de sélection de niveau
+// Gestion des boutons de sélection de semestre et de sous-niveau
 document.querySelectorAll('.semestre-btn').forEach(button => {
     button.addEventListener('click', function() {
         selectedSemestre = this.dataset.semestre;
@@ -147,7 +140,7 @@ document.querySelectorAll('.semestre-btn').forEach(button => {
 document.querySelectorAll('.niveau-btn').forEach(button => {
     button.addEventListener('click', function() {
         selectedNiveau = this.dataset.niveau;
-        document.getElementById('level-popup').style.display = 'none';
+        document.getElementById('sous-niveaux').classList.add('hidden');
         document.getElementById('game-container').classList.remove('hidden');
         loadQuestions();
     });

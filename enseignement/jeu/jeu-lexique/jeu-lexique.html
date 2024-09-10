@@ -3,93 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu d'association</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .game-container {
-            display: flex;
-            justify-content: space-between;
-        }
-        .column {
-            width: 45%;
-        }
-        .item {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-            cursor: pointer;
-            text-align: center;
-        }
-        .item.incorrect {
-            background-color: red;
-        }
-        .hidden {
-            display: none;
-        }
-        #score-popup, #level-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border: 1px solid #ccc;
-            display: none;
-            z-index: 100;
-        }
-        .level-select {
-            display: flex;
-            flex-direction: column;
-        }
-        .level-select button {
-            margin: 10px 0;
-        }
-    </style>
+    <title>Jeu d'association - Verbes</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <h1>Jeu d'association</h1>
-
-    <div id="level-popup">
+    <h1>Jeu d'association - Verbes</h1>
+    
+    <!-- Section pour choisir le semestre -->
+    <div id="semesters">
         <h2>Choisissez un semestre</h2>
-        <div id="semesters">
-            <button class="semestre-btn" data-semestre="1">Semestre 1</button>
-            <button class="semestre-btn" data-semestre="2">Semestre 2</button>
-            <button class="semestre-btn" data-semestre="3">Semestre 3</button>
-            <button class="semestre-btn" data-semestre="4">Semestre 4</button>
-        </div>
-
-        <div id="sous-niveaux" class="hidden">
-            <h2>Choisissez un sous-niveau</h2>
-            <div id="levels">
-                <button class="niveau-btn" data-niveau="U1">U1</button>
-                <button class="niveau-btn" data-niveau="U2">U2</button>
-                <button class="niveau-btn" data-niveau="U3">U3</button>
-                <button class="niveau-btn" data-niveau="U4">U4</button>
-                <button class="niveau-btn" data-niveau="U5">U5</button>
-                <button class="niveau-btn" data-niveau="U6">U6</button>
-                <button class="niveau-btn" data-niveau="U7">U7</button>
-                <button class="niveau-btn" data-niveau="U8">U8</button>
-                <button class="niveau-btn" data-niveau="U9">U9</button>
-            </div>
-        </div>
+        <button class="semestre-btn" data-semestre="1">Semestre 1</button>
+        <button class="semestre-btn" data-semestre="2">Semestre 2</button>
+        <button class="semestre-btn" data-semestre="3">Semestre 3</button>
+        <button class="semestre-btn" data-semestre="4">Semestre 4</button>
     </div>
 
-    <div class="game-container hidden" id="game-container">
-        <div class="column" id="column-left"></div>
-        <div class="column" id="column-right"></div>
+    <!-- Section pour choisir le sous-niveau -->
+    <div id="sous-niveaux" class="hidden">
+        <h2>Choisissez un sous-niveau</h2>
+        <button class="niveau-btn" data-niveau="1">U1</button>
+        <button class="niveau-btn" data-niveau="2">U2</button>
+        <button class="niveau-btn" data-niveau="3">U3</button>
+        <button class="niveau-btn" data-niveau="4">U4</button>
+        <!-- Ajoutez plus de niveaux selon les besoins -->
     </div>
 
-    <div id="score-popup">
+    <!-- Zone de jeu -->
+    <div id="game-container" class="hidden">
+        <div id="column-left" class="column"></div>
+        <div id="column-right" class="column"></div>
+    </div>
+
+    <!-- Popup de score -->
+    <div id="score-popup" class="hidden">
         <h2>Résultat</h2>
         <p id="score-result"></p>
         <button id="replay-btn">Rejouer</button>
         <button id="share-btn">Partager</button>
     </div>
 
-    <script src="jeu-association.js"></script>
-
+    <script src="game.js"></script>
 </body>
 </html>
