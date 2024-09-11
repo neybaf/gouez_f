@@ -151,20 +151,31 @@ function addClickHandlers() {
                 correctAnswers++;
                 score += 1;
                 timer += 5;
-                selectedLeft.classList.add('hidden');
-                selectedRight.classList.add('hidden');
                 
-                // Remplacer uniquement les bonnes réponses par de nouvelles questions
+                // Jouer le son pour la bonne réponse
+                const audio = new Audio('bonne_repoonse.m4a');
+                audio.play();
+                
+                // Ajout de l'animation de bonne réponse
+                selectedLeft.classList.add('correct');
+                selectedRight.classList.add('correct');
+                
+                setTimeout(() => {
+                    selectedLeft.classList.add('hidden');
+                    selectedRight.classList.add('hidden');
+                }, 500);  // Masquer après l'animation
+                
                 if (correctAnswers === 3) {
                     correctAnswers = 0;
                     currentSet = getRandomSet(3);  // Obtenir 3 nouvelles questions
-                    renderColumns();  // Réafficher les colonnes avec les 3 nouvelles et les restantes
+                    renderColumns();  // Réafficher les colonnes avec les nouvelles questions
                 }
             } else {
                 errors++;
                 timer -= 5;
                 selectedLeft.classList.add('incorrect');
                 selectedRight.classList.add('incorrect');
+                
                 setTimeout(() => {
                     selectedLeft.classList.remove('incorrect');
                     selectedRight.classList.remove('incorrect');
