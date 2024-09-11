@@ -41,7 +41,6 @@ img {
 }
 
 /* Style de la page et image de fond */
-
 body {
     background-image: url('lexique_background.png');
     background-size: cover; /* Pour que l'image couvre toute la page */
@@ -53,4 +52,39 @@ body {
     background-color: rgba(255, 255, 255, 0.8); /* Pour rendre les colonnes lisibles sur le fond */
     padding: 20px;
     border-radius: 10px;
+}
+#timer {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff5733; /* Couleur orange pour le timer */
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #ff5733;
+    border-radius: 10px;
+    width: 200px;
+    margin: 10px auto;
+}
+
+#score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #28a745; /* Couleur verte pour le score */
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #28a745;
+    border-radius: 10px;
+    width: 200px;
+    margin: 10px auto;
+}
+
+@keyframes correct-answer {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.correct {
+    animation: correct-answer 0.5s ease;
 }
