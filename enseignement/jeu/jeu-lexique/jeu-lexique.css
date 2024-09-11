@@ -109,3 +109,21 @@ audio, img {
         max-width: 100%; /* Ajuste les images pour les petits écrans */
     }
 }
+#endgame-popup {
+    position: fixed; /* position fixe */
+    top: 50%; /* centré */
+    left: 50%; /* centré */
+    transform: translate(-50%, -50%);  /* centré */
+    background-color: white; /* couleur*/
+    border: 2px solid #333;  /* épaisseur style couleur */
+    padding: 20px; /* espace autour du contenu */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* ombre */
+    border-radius: 10px; /* arrondit les  coins */
+    z-index: 1000; /*popup au-dessus des autres éléments */
+    width: 300px; /* taille */
+    text-align: center; /*  txt centré */
+}
+
+#endgame-popup button {
+    margin: 10px 5px; /* Espacement entre les boutons */
+}
