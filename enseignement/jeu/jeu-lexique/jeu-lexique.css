@@ -23,7 +23,9 @@ button.selected {
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
 }
-
+.item {
+    transition: background-color 0.5s ease;  /* Transition douce pour le changement de couleur */
+}
 .incorrect {
     background-color: red;
     transition: background-color 0.3s ease;
