@@ -64,7 +64,14 @@ function endGame() {
     
     // Gestion du bouton "Partager"
     document.getElementById('share-btn').addEventListener('click', function() {
-        alert('Partage du score bientôt disponible!');
+        const scoreMessage = `J'ai obtenu un score de ${score} points dans ce jeu !`;
+        const textArea = document.createElement('textarea');
+        textArea.value = scoreMessage;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Score copié ! Collez-le dans une conversation WeChat.');
     });
     
     // Gestion du bouton "Rejouer"
@@ -80,7 +87,6 @@ function endGame() {
         document.getElementById('semesters').classList.remove('hidden'); // Retour à la sélection des niveaux
     });
 }
-
 async function loadQuestions() {
     const response = await fetch(`data-lexique/lexique_S${selectedSemestre}_U${selectedNiveau}.csv`);
     const data = await response.text();
@@ -230,17 +236,7 @@ function showScore() {
     scoreResult.textContent = `Erreurs: ${errors}. Score: ${score}`;
     scorePopup.style.display = 'block';
 }
-document.getElementById('share-btn').addEventListener('click', function() {
-    const playerName = document.getElementById('player-name').value || 'Joueur';
-    const scoreMessage = `${playerName} a obtenu un score de ${score} points dans ce jeu !`;
-    const textArea = document.getElementById('share-message');
-    textArea.value = scoreMessage;
-    textArea.style.display = 'block';
-    textArea.select();
-    document.execCommand('copy');
-    textArea.style.display = 'none';
-    alert('Score copié ! Collez-le dans votre conversation WeChat.');
-});
+
 
 document.getElementById('replay-btn').addEventListener('click', function() {
     document.getElementById('score-popup').style.display = 'none';
