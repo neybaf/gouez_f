@@ -1,18 +1,25 @@
-// Fonction générique pour gérer les clics sur les boutons semestre et niveau
-function handleButtonClick(btnClass, targetElement, nextElement) {
-    document.querySelectorAll(btnClass).forEach(button => {
-        button.addEventListener('click', function() {
-            document.querySelectorAll(btnClass).forEach(btn => btn.classList.remove('selected'));
-            this.classList.add('selected');  // Sélectionner le bouton cliqué
-            targetElement.classList.add('hidden');  // Cacher la section actuelle
-            nextElement.classList.remove('hidden'); // Afficher la section suivante
-        });
+// Gestion des boutons de sélection de semestre et de sous-niveau
+document.querySelectorAll('.semestre-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        document.querySelectorAll('.semestre-btn').forEach(btn => btn.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedSemestre = this.dataset.semestre;
+        document.getElementById('semesters').classList.add('hidden');
+        document.getElementById('sous-niveaux').classList.remove('hidden');
     });
-}
+});
 
-// Gestion des boutons "Semestre" et "Niveau"
-handleButtonClick('.semestre-btn', document.getElementById('semesters'), document.getElementById('sous-niveaux'));
-handleButtonClick('.niveau-btn', document.getElementById('sous-niveaux'), document.getElementById('game-container'));
+document.querySelectorAll('.niveau-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        document.querySelectorAll('.niveau-btn').forEach(btn => btn.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedNiveau = this.dataset.niveau;
+        document.getElementById('sous-niveaux').classList.add('hidden');
+        document.getElementById('game-container').classList.remove('hidden');
+        loadQuestions();
+    });
+});
+
 
 let questions = [];
 let currentSet = [];
@@ -33,12 +40,12 @@ function startTimer() {
 
         if (timer <= 0) {
             clearInterval(timerInterval);
-            endGame();  // Appel de la fonction de fin de partie
+            endGame();
         }
     }, 1000);  
 }
 
-// Fonction de fin de partie avec popup et options
+// Fonction de fin de partie
 function endGame() {
     clearInterval(timerInterval);
     
@@ -55,7 +62,7 @@ function endGame() {
     
     document.body.appendChild(popup);
     
-    // Gestion du bouton "Partager" pour copier le score
+    // Gestion du bouton "Partager"
     document.getElementById('share-btn').addEventListener('click', function() {
         const scoreMessage = `J'ai obtenu un score de ${score} points dans ce jeu !`;
         const textArea = document.createElement('textarea');
@@ -80,8 +87,6 @@ function endGame() {
         document.getElementById('semesters').classList.remove('hidden'); // Retour à la sélection des niveaux
     });
 }
-
-// Fonction pour charger les questions depuis le fichier CSV
 async function loadQuestions() {
     const response = await fetch(`data-lexique/lexique_S${selectedSemestre}_U${selectedNiveau}.csv`);
     const data = await response.text();
@@ -97,10 +102,9 @@ async function loadQuestions() {
             });
         }
     }
-    startGame(); // Démarrer le jeu après avoir chargé les questions
+    startGame();
 }
 
-// Fonction pour démarrer une nouvelle partie
 function startGame() {
     errors = 0;
     matchesMade = 0;
@@ -108,18 +112,16 @@ function startGame() {
     timer = 30;
     score = 0;
     document.getElementById('score').textContent = `Score : ${score}`;
-    currentSet = getRandomSet(5);  // Obtenir 5 questions aléatoires
-    renderColumns();  // Afficher les questions
-    startTimer();  // Démarrer le timer
+    currentSet = getRandomSet(5);
+    renderColumns();
+    startTimer();
 }
 
-// Sélectionner un ensemble aléatoire de questions
 function getRandomSet(number) {
     const shuffled = questions.sort(() => Math.random() - 0.5);
     return shuffled.slice(0, number);
 }
 
-// Affichage des colonnes (gauche et droite) avec les questions mélangées
 function renderColumns() {
     const leftColumn = document.getElementById('column-left');
     const rightColumn = document.getElementById('column-right');
@@ -150,84 +152,94 @@ function renderColumns() {
         rightColumn.appendChild(rightItem);
     });
     
-    addClickHandlers();  // Ajouter les gestionnaires de clic
+    addClickHandlers();
 }
 
-// Fonction pour gérer les clics sur les questions et réponses
 function addClickHandlers() {
-    let selectedLeft = null, selectedRight = null;
-
-    function handleClick(item, side) {
-        if (side === 'left') {
-            if (selectedLeft) selectedLeft.classList.remove('selected');
-            selectedLeft = item;
-        } else {
-            if (selectedRight) selectedRight.classList.remove('selected');
-            selectedRight = item;
-        }
-        item.classList.add('selected');
-        checkMatch();  // Vérifier si les éléments sélectionnés correspondent
-    }
+    let selectedLeft = null;
+    let selectedRight = null;
 
     document.querySelectorAll('#column-left .item').forEach(item => {
-        item.addEventListener('click', () => handleClick(item, 'left'));
+        item.addEventListener('click', function() {
+            if (selectedLeft) selectedLeft.classList.remove('selected');
+            selectedLeft = item;
+            selectedLeft.classList.add('selected');
+            checkMatch();
+        });
     });
 
     document.querySelectorAll('#column-right .item').forEach(item => {
-        item.addEventListener('click', () => handleClick(item, 'right'));
+        item.addEventListener('click', function() {
+            if (selectedRight) selectedRight.classList.remove('selected');
+            selectedRight = item;
+            selectedRight.classList.add('selected');
+            checkMatch();
+        });
     });
 
     function checkMatch() {
         if (selectedLeft && selectedRight) {
             const leftIndex = selectedLeft.dataset.index;
             const rightIndex = selectedRight.dataset.index;
-
+            
             if (leftIndex === rightIndex) {
                 matchesMade++;
                 correctAnswers++;
-                score++;
+                score += 1;
                 timer += 5;
-
-                playSound('bonne_reponse.m4a'); // Jouer un son pour la bonne réponse
-
+                
+                // Jouer le son pour la bonne réponse
+                const audio = new Audio('bonne_reponse.m4a');
+                audio.play();
+                
+                // Ajout de l'animation de bonne réponse
                 selectedLeft.classList.add('correct');
                 selectedRight.classList.add('correct');
-
+                
                 setTimeout(() => {
                     selectedLeft.classList.add('hidden');
                     selectedRight.classList.add('hidden');
                 }, 500);  // Masquer après l'animation
-
+                
                 if (correctAnswers === 5) {
                     correctAnswers = 0;
-                    currentSet = getRandomSet(5);  // Charger 5 nouvelles questions
-                    renderColumns();
+                    currentSet = getRandomSet(5);  // Obtenir 5 nouvelles questions
+                    renderColumns();  // Réafficher les colonnes avec les nouvelles questions
                 }
             } else {
                 errors++;
                 timer -= 5;
-
                 selectedLeft.classList.add('incorrect');
                 selectedRight.classList.add('incorrect');
-
+                
                 setTimeout(() => {
                     selectedLeft.classList.remove('incorrect');
                     selectedRight.classList.remove('incorrect');
                 }, 500);
             }
-
-            selectedLeft = selectedRight = null;
+            
+            selectedLeft = null;
+            selectedRight = null;
             document.getElementById('score').textContent = `Score : ${score}`;
+            
             if (timer <= 0) {
                 clearInterval(timerInterval);
-                endGame();  // Fin de la partie si le temps est écoulé
+                endGame();
             }
         }
     }
 }
 
-// Fonction pour jouer un son
-function playSound(audioFile) {
-    const audio = new Audio(audioFile);
-    audio.play();
+function showScore() {
+    const scorePopup = document.getElementById('score-popup');
+    const scoreResult = document.getElementById('score-result');
+    scoreResult.textContent = `Erreurs: ${errors}. Score: ${score}`;
+    scorePopup.style.display = 'block';
+}
+
+
+document.getElementById('replay-btn').addEventListener('click', function() {
+    document.getElementById('score-popup').style.display = 'none';
+    startGame();
+})
 }
