@@ -91,11 +91,15 @@ function renderColumns() {
     const rightColumn = document.getElementById('column-right');
     leftColumn.innerHTML = '';
     rightColumn.innerHTML = '';
-
-    currentSet.forEach((item, index) => {
+    
+    // Mélanger les items pour ne pas avoir de correspondance directe
+    const shuffledLeft = [...currentSet].sort(() => Math.random() - 0.5); // Colonne gauche mélangée
+    const shuffledRight = [...currentSet].sort(() => Math.random() - 0.5); // Colonne droite mélangée
+    
+    shuffledLeft.forEach((item, index) => {
         const leftItem = document.createElement('div');
         leftItem.classList.add('item');
-
+        
         if (item.imageFile) {
             leftItem.innerHTML = `<img src="${item.imageFile}" alt="Image" width="100">`;
         } else if (item.audioFile) {
@@ -103,14 +107,16 @@ function renderColumns() {
         }
         leftItem.dataset.index = index;
         leftColumn.appendChild(leftItem);
-
+    });
+    
+    shuffledRight.forEach((item, index) => {
         const rightItem = document.createElement('div');
         rightItem.classList.add('item');
-        rightItem.textContent = item.text || "Oups! Pas de texte disponible";
+        rightItem.textContent = item.text || "Pas de texte disponible";
         rightItem.dataset.index = index;
         rightColumn.appendChild(rightItem);
     });
-
+    
     addClickHandlers();
 }
 
@@ -140,7 +146,7 @@ function addClickHandlers() {
         if (selectedLeft && selectedRight) {
             const leftIndex = selectedLeft.dataset.index;
             const rightIndex = selectedRight.dataset.index;
-
+            
             if (leftIndex === rightIndex) {
                 matchesMade++;
                 correctAnswers++;
@@ -148,10 +154,12 @@ function addClickHandlers() {
                 timer += 5;
                 selectedLeft.classList.add('hidden');
                 selectedRight.classList.add('hidden');
+                
+                // Remplacer uniquement les bonnes réponses par de nouvelles questions
                 if (correctAnswers === 3) {
                     correctAnswers = 0;
-                    currentSet = getRandomSet(3);
-                    renderColumns();
+                    currentSet = getRandomSet(3);  // Obtenir 3 nouvelles questions
+                    renderColumns();  // Réafficher les colonnes avec les 3 nouvelles et les restantes
                 }
             } else {
                 errors++;
@@ -163,11 +171,11 @@ function addClickHandlers() {
                     selectedRight.classList.remove('incorrect');
                 }, 500);
             }
-
+            
             selectedLeft = null;
             selectedRight = null;
             document.getElementById('score').textContent = `Score : ${score}`;
-
+            
             if (timer <= 0) {
                 clearInterval(timerInterval);
                 endGame();

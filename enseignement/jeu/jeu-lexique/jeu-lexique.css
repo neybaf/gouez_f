@@ -22,3 +22,35 @@ button.selected {
 .hidden {
     visibility: hidden;
 }
+/* style du jeu*/
+#game-container {
+    display: flex;
+    justify-content: space-between; /* Pour espacer les colonnes */
+}
+
+.column {
+    width: 48%; /* Ajustez la largeur des colonnes */
+}
+
+.item {
+    margin-bottom: 10px; /* Espacement entre les items */
+}
+
+img {
+    max-width: 100%; /* Pour que les images s'adaptent à la largeur de la colonne */
+}
+
+/* Style de la page et image de fond */
+
+body {
+    background-image: url('lexique_background.png');
+    background-size: cover; /* Pour que l'image couvre toute la page */
+    background-position: center; /* Centrer l'image */
+    background-repeat: no-repeat; /* Ne pas répéter l'image */
+}
+
+#game-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Pour rendre les colonnes lisibles sur le fond */
+    padding: 20px;
+    border-radius: 10px;
+}
