@@ -92,11 +92,8 @@ function renderColumns() {
     leftColumn.innerHTML = '';
     rightColumn.innerHTML = '';
     
-    // Mélanger les items pour ne pas avoir de correspondance directe
-    const shuffledLeft = [...currentSet].sort(() => Math.random() - 0.5); // Colonne gauche mélangée
-    const shuffledRight = [...currentSet].sort(() => Math.random() - 0.5); // Colonne droite mélangée
-    
-    shuffledLeft.forEach((item, index) => {
+    // Colonne gauche : les questions sont dans l'ordre du CSV
+    currentSet.forEach((item, index) => {
         const leftItem = document.createElement('div');
         leftItem.classList.add('item');
         
@@ -105,15 +102,17 @@ function renderColumns() {
         } else if (item.audioFile) {
             leftItem.innerHTML = `<audio controls src="${item.audioFile}"></audio>`;
         }
-        leftItem.dataset.index = index;
+        leftItem.dataset.index = index;  // Conserver l'index pour la correspondance
         leftColumn.appendChild(leftItem);
     });
     
-    shuffledRight.forEach((item, index) => {
+    // Colonne droite : les réponses mélangées
+    const shuffledAnswers = [...currentSet].sort(() => Math.random() - 0.5);
+    shuffledAnswers.forEach((item, index) => {
         const rightItem = document.createElement('div');
         rightItem.classList.add('item');
         rightItem.textContent = item.text || "Pas de texte disponible";
-        rightItem.dataset.index = index;
+        rightItem.dataset.index = currentSet.indexOf(item);  // L'index doit correspondre à la position correcte
         rightColumn.appendChild(rightItem);
     });
     
