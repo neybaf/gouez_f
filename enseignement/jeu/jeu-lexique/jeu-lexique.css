@@ -92,7 +92,7 @@ body {
 
 audio {
     width: 100%; /* Limite la largeur du lecteur audio à la taille du conteneur */
-    max-width: 300px; /* Taille maximale du lecteur audio */
+    max-width: 100px; /* Taille maximale du lecteur audio */
 }
 
 @media (max-width: 768px) {
@@ -101,6 +101,6 @@ audio {
     }
     
     audio {
-        max-width: 100%; /* S'assurer que le lecteur audio s'ajuste sur mobile */
+        max-width: 50%; /* S'assurer que le lecteur audio s'ajuste sur mobile */
     }
 }
