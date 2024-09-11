@@ -188,18 +188,27 @@ function addClickHandlers() {
                 const audio = new Audio('bonne_reponse.m4a');
                 audio.play();
                 
-                // Ajout de l'animation de bonne réponse
+                // animation de bonne réponse
                 selectedLeft.classList.add('correct');
                 selectedRight.classList.add('correct');
+
+            
+                // Désactive les éléments pour éviter de gagner plus de points en cliquant à nouveau (you smart ass)
+                selectedLeft.classList.add('disabled');
+                selectedRight.classList.add('disabled');
+
+                //  Tempo anim
+                selectedLeft.style.animation = 'correct-answer 0.5s ease';
+                selectedRight.style.animation = 'correct-answer 0.5s ease';
                 setTimeout(() => {
-                    selectedLeft.classList.add('hidden');
-                    selectedRight.classList.add('hidden');
-                }, 500);  // Masquer après l'animation
+                    selectedLeft.style.animation = '';
+                    selectedRight.style.animation = '';
+                }, 500);  // Masquer anim
                 
                 if (correctAnswers === 5) {
                     correctAnswers = 0;
                     currentSet = getRandomSet(5);  // Obtenir 5 nouvelles questions
-                    renderColumns();  // Réafficher les colonnes avec les nouvelles questions
+                    renderColumns();  // Réafficher les colonnes avec  nouvelles questions
                 }
             } else {
                 errors++;
@@ -215,6 +224,9 @@ function addClickHandlers() {
                 }, 500);
             }
             
+        // Après chaque tentative, désélectionner les cases
+        selectedLeft.classList.remove('selected');
+        selectedRight.classList.remove('selected');
             selectedLeft = null;
             selectedRight = null;
             document.getElementById('score').textContent = `Score : ${score}`;

@@ -14,23 +14,6 @@ button.selected {
 .selected {
     border: 2px solid green;
 }
-
-.correct {
-    animation: correct-answer 0.5s ease;
-}
-@keyframes correct-answer {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-.item {
-    transition: background-color 0.5s ease;  /* Transition douce pour le changement de couleur */
-}
-.incorrect {
-    background-color: red;
-    transition: background-color 0.3s ease;
-}
-
 .hidden {
     visibility: hidden;
 }
@@ -40,7 +23,7 @@ button.selected {
     justify-content: space-between; /* Pour espacer les colonnes */
 }
 
-.column {
+.columns {
     width: 48%; /* Ajustez la largeur des colonnes */
 }
 
@@ -127,4 +110,46 @@ audio, img {
 
 #endgame-popup button {
     margin: 10px 5px; /* Espacement entre les boutons */
+}
+
+.columns .item {
+    font-family: Verdana, Geneva, sans-serif; /* Utiliser une police moderne comme Roboto */
+    font-size: 1.5rem; /* Taille du texte */
+    color: #333; /* Couleur du texte */
+    text-align: center; /* Centrer le texte */
+    background-color: #f9f9f9; /* Fond doux pour mettre en évidence le texte */
+    padding: 20px; /* Espacement autour du texte */
+    margin-bottom: 10px; /* Espacement entre les éléments */
+    border-radius: 10px; /* Coins arrondis pour un effet moderne */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ajouter une ombre douce */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Transition pour les effets de survol */
+}
+
+.columns .item:hover {
+    background-color: #e0e0e0; /* Changer la couleur de fond au survol */
+    transform: scale(1.05); /* Légère augmentation de la taille au survol */
+}
+
+/* Style pour le texte lorsque c'est correct (si applicable) */
+.correct {
+    background-color: #d4edda; /* Vert doux pour une bonne réponse */
+    color: #155724;
+}
+@keyframes correct-answer {
+    0% { background-color: #d4edda; transform: scale(1); }
+    50% { background-color: #d4edda; transform: scale(1.2); }
+    100% { background-color: #d4edda; transform: scale(1); }
+}
+/* Style pour le texte lorsque c'est incorrect (si applicable) */
+.incorrect {
+    animation: incorrect-answer 0.5s ease; /* Animation temporaire pour le rouge */
+}
+@keyframes incorrect-answer {
+    0% { background-color: #f8d7da; transform: rotate(0); }
+    50% { background-color: #f8d7da; transform: rotate(180); }
+    100% { background-color: #f9f9f9; transform: rotate(0); } /* Retour à la couleur par défaut */
+}
+.disabled {
+    pointer-events: none; /* Empêche les clics */
+    opacity: 0.5; /* Visuellement montrer que c'est bloqué */
 }
