@@ -80,19 +80,23 @@ audio, img {
     height: auto; /* Maintient les proportions pour les images */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     #game-container {
         flex-direction: column; /* Empile les colonnes sur mobile */
     }
     
     audio {
-        max-width: 50px; /* Ajustement pour les petits écrans */
+        max-width: 40px; /* Ajustement pour les petits écrans */
     }
     
     img {
         max-width: 100%; /* Ajuste les images pour les petits écrans */
     }
 }
+.audio-item.selected {
+    border: 2px solid green; /* sélection */
+}
+
 #endgame-popup {
     position: fixed; /* position fixe */
     top: 50%; /* centré */
