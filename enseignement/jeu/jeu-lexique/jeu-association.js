@@ -155,6 +155,7 @@ function addClickHandlers() {
     let selectedLeft = null;
     let selectedRight = null;
 
+// Gestion colonne de gauche - médias// 
     document.querySelectorAll('#column-left .item').forEach(item => {
         item.addEventListener('click', function() {
             if (selectedLeft) selectedLeft.classList.remove('selected');
@@ -162,6 +163,17 @@ function addClickHandlers() {
             selectedLeft.classList.add('selected');
             checkMatch();
         });
+        const audioElement = item.querySelector('audio');
+        if (audioElement) {
+            audioElement.addEventListener('play', function() {
+                // Désélectionner tout autre élément
+                if (selectedLeft) selectedLeft.classList.remove('selected');
+                // Sélectionner l'élément contenant l'audio joué
+                selectedLeft = item;
+                selectedLeft.classList.add('selected');
+                checkMatch(); // Vérifier si une correspondance est faite
+            });
+        }
     });
 
     document.querySelectorAll('#column-right .item').forEach(item => {
