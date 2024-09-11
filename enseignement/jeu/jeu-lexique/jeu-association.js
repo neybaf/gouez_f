@@ -111,7 +111,7 @@ function renderColumns() {
     shuffledAnswers.forEach((item, index) => {
         const rightItem = document.createElement('div');
         rightItem.classList.add('item');
-        rightItem.textContent = item.text || "Pas de texte disponible";
+        rightItem.textContent = item.text || "Ouuuups! Pas de texte disponible";
         rightItem.dataset.index = currentSet.indexOf(item);  // L'index doit correspondre à la position correcte
         rightColumn.appendChild(rightItem);
     });
@@ -153,7 +153,7 @@ function addClickHandlers() {
                 timer += 5;
                 
                 // Jouer le son pour la bonne réponse
-                const audio = new Audio('bonne_repoonse.m4a');
+                const audio = new Audio('bonne_reponse.m4a');
                 audio.play();
                 
                 // Ajout de l'animation de bonne réponse
@@ -165,9 +165,9 @@ function addClickHandlers() {
                     selectedRight.classList.add('hidden');
                 }, 500);  // Masquer après l'animation
                 
-                if (correctAnswers === 3) {
+                if (correctAnswers === 5) {
                     correctAnswers = 0;
-                    currentSet = getRandomSet(3);  // Obtenir 3 nouvelles questions
+                    currentSet = getRandomSet(5);  // Obtenir 5 nouvelles questions
                     renderColumns();  // Réafficher les colonnes avec les nouvelles questions
                 }
             } else {
