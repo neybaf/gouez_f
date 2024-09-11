@@ -88,3 +88,19 @@ body {
 .correct {
     animation: correct-answer 0.5s ease;
 }
+
+
+audio {
+    width: 100%; /* Limite la largeur du lecteur audio à la taille du conteneur */
+    max-width: 300px; /* Taille maximale du lecteur audio */
+}
+
+@media (max-width: 768px) {
+    #game-container {
+        flex-direction: column; /* Empile les colonnes sur mobile */
+    }
+    
+    audio {
+        max-width: 100%; /* S'assurer que le lecteur audio s'ajuste sur mobile */
+    }
+}
