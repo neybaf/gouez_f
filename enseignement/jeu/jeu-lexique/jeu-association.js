@@ -54,7 +54,7 @@ function endGame() {
     popup.id = 'endgame-popup';
     popup.innerHTML = `
         <p>Temps écoulé !</p>
-        <p>Votre score est de : ${score}, vous avez fait ${errors} erreurs</p>
+        <p>Votre score est de : ${score}, vous avez fait ${errors} erreur(s)</p>
         <button id="share-btn">Partager</button>
         <button id="replay-btn">Rejouer</button>
         <button id="change-level-btn">Changer de niveau</button>
@@ -230,6 +230,17 @@ function showScore() {
     scoreResult.textContent = `Erreurs: ${errors}. Score: ${score}`;
     scorePopup.style.display = 'block';
 }
+document.getElementById('share-btn').addEventListener('click', function() {
+    const playerName = document.getElementById('player-name').value || 'Joueur';
+    const scoreMessage = `${playerName} a obtenu un score de ${score} points dans ce jeu !`;
+    const textArea = document.getElementById('share-message');
+    textArea.value = scoreMessage;
+    textArea.style.display = 'block';
+    textArea.select();
+    document.execCommand('copy');
+    textArea.style.display = 'none';
+    alert('Score copié ! Collez-le dans votre conversation WeChat.');
+});
 
 document.getElementById('replay-btn').addEventListener('click', function() {
     document.getElementById('score-popup').style.display = 'none';

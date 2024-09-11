@@ -7,7 +7,7 @@ text,audio,image
 "un coucher de soleil",data-lexique/INS2/U9/un_coucher_soleil.m4a,data-lexique/INS2/U9/un_coucher_soleil.jpeg
 "la marine",data-lexique/INS2/U9/la_marine.m4a,
 "un navire",data-lexique/INS2/U9/un_navire.m4a,
-"un ocean",data-lexique/INS2/U9/un_ocean.mp3,data-lexique/INS2/U9/un_ocean.jpeg
+"un océan",data-lexique/INS2/U9/un_ocean.mp3,data-lexique/INS2/U9/un_ocean.jpeg
 "un officier",data-lexique/INS2/U9/un_officier.mp3,
 "une passerelle",data-lexique/INS2/U9/une_passerelle.mp3,
 "un port",data-lexique/INS2/U9/un_port.mp3,data-lexique/INS2/U9/port.jpeg
@@ -20,7 +20,7 @@ text,audio,image
 "une aventure",data-lexique/INS2/U9/en_train.mp3,
 "une cabine",data-lexique/INS2/U9/une_cabine.mp3,data-lexique/INS2/U9/cabine_bateau.jpeg
 "un continent",data-lexique/INS2/U9/un_continent.mp3,
-"un depart",data-lexique/INS2/U9/un_depart.mp3,
+"un départ",data-lexique/INS2/U9/un_depart.mp3,
 "une destination",data-lexique/INS2/U9/une_destination.mp3,
 "une durée",data-lexique/INS2/U9/une_duree.mp3,
 "une escale",data-lexique/INS2/U9/une_escale.mp3,
@@ -49,12 +49,12 @@ text,audio,image
 "passer par",data-lexique/INS2/U9/passer_par.mp3,
 "rejoindre",data-lexique/INS2/U9/rejoindre.mp3,
 "remonter",data-lexique/INS2/U9/remonter.mp3,
-"s_arrêter à",data-lexique/INS2/U9/s_arreter_a.mp3,
+"s'arrêter à",data-lexique/INS2/U9/s_arreter_a.mp3,
 "en ligne droite",data-lexique/INS2/U9/en_ligne_droite.mp3,
-"a velo",data-lexique/INS2/U9/a_velo.mp3,data-lexique/INS2/U9/en_velo.jpeg
+"à vélo",data-lexique/INS2/U9/a_velo.mp3,data-lexique/INS2/U9/en_velo.jpeg
 "en bus",data-lexique/INS2/U9/en_bus.mp3,data-lexique/INS2/U9/en_bus.jpeg
 "en voiture",data-lexique/INS2/U9/en_voiture.mp3,data-lexique/INS2/U9/en_voiture.jpeg
-"l_hébergement",data-lexique/INS2/U9/l_hebergement.mp3,
+"l'hébergement",data-lexique/INS2/U9/l_hebergement.mp3,
 "une auberge",data-lexique/INS2/U9/une_auberge.mp3,
 "le camping",data-lexique/INS2/U9/le_camping.mp3,data-lexique/INS2/U9/camping.jpeg
 "le couchsurfing",data-lexique/INS2/U9/le_couchsurfing.mp3,data-lexique/INS2/U9/le_couchsurfing.jpeg
