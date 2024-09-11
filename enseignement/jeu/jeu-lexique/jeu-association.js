@@ -20,6 +20,7 @@ document.querySelectorAll('.niveau-btn').forEach(button => {
     });
 });
 
+
 let questions = [];
 let currentSet = [];
 let errors = 0;
@@ -47,8 +48,37 @@ function startTimer() {
 // Fonction de fin de partie
 function endGame() {
     clearInterval(timerInterval);
-    alert(`Temps écoulé ! Votre score est de : ${score}, vous avez fait ${errors} erreurs`);
-    startGame();  
+    
+    // Créer un popup personnalisé
+    const popup = document.createElement('div');
+    popup.id = 'endgame-popup';
+    popup.innerHTML = `
+        <p>Temps écoulé !</p>
+        <p>Votre score est de : ${score}, vous avez fait ${errors} erreurs</p>
+        <button id="share-btn">Partager</button>
+        <button id="replay-btn">Rejouer</button>
+        <button id="change-level-btn">Changer de niveau</button>
+    `;
+    
+    document.body.appendChild(popup);
+    
+    // Gestion du bouton "Partager"
+    document.getElementById('share-btn').addEventListener('click', function() {
+        alert('Partage du score bientôt disponible!');
+    });
+    
+    // Gestion du bouton "Rejouer"
+    document.getElementById('replay-btn').addEventListener('click', function() {
+        document.getElementById('endgame-popup').remove(); // Supprimer le popup
+        startGame(); // Relancer le jeu
+    });
+    
+    // Gestion du bouton "Changer de niveau"
+    document.getElementById('change-level-btn').addEventListener('click', function() {
+        document.getElementById('endgame-popup').remove(); // Supprimer le popup
+        document.getElementById('game-container').classList.add('hidden');
+        document.getElementById('semesters').classList.remove('hidden'); // Retour à la sélection des niveaux
+    });
 }
 
 async function loadQuestions() {
