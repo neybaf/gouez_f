@@ -90,9 +90,10 @@ body {
 }
 
 
-audio {
-    width: 100%; /* Limite la largeur du lecteur audio à la taille du conteneur */
-    max-width: 100px; /* Taille maximale du lecteur audio */
+audio, img {
+    width: 100%;
+    max-width: 300px; /* Taille maximale par défaut pour les images et lecteurs audio */
+    height: auto; /* Maintient les proportions pour les images */
 }
 
 @media (max-width: 768px) {
@@ -101,6 +102,10 @@ audio {
     }
     
     audio {
-        max-width: 50%; /* S'assurer que le lecteur audio s'ajuste sur mobile */
+        max-width: 50px; /* Ajustement pour les petits écrans */
+    }
+    
+    img {
+        max-width: 100%; /* Ajuste les images pour les petits écrans */
     }
 }
