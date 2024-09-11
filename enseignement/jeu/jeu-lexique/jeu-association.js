@@ -56,29 +56,14 @@ function endGame() {
         <p>Temps écoulé !</p>
         <p>Votre score est de : ${score}, vous avez fait ${errors} erreur(s)</p>
         <button id="share-btn">Partager</button>
-        <button id="replay-btn">Rejouer</button>
-        <button id="change-level-btn">Changer de niveau</button>
+        <button id="change-level-btn">Encore ! </button>
     `;
     
     document.body.appendChild(popup);
     
     // Gestion du bouton "Partager"
-    document.getElementById('share-btn').addEventListener('click', function() {
-        const scoreMessage = `J'ai obtenu un score de ${score} points dans ce jeu !`;
-        const textArea = document.createElement('textarea');
-        textArea.value = scoreMessage;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        alert('Score copié ! Collez-le dans une conversation WeChat.');
-    });
-    
+
     // Gestion du bouton "Rejouer"
-    document.getElementById('replay-btn').addEventListener('click', function() {
-        document.getElementById('endgame-popup').remove(); // Supprimer le popup
-        startGame(); // Relancer le jeu
-    });
     
     // Gestion du bouton "Changer de niveau"
     document.getElementById('change-level-btn').addEventListener('click', function() {
@@ -115,6 +100,17 @@ function startGame() {
     currentSet = getRandomSet(5);
     renderColumns();
     startTimer();
+}
+function resetGame() {
+    errors = 0;
+    correctAnswers = 0;
+    matchesMade = 0;
+    score = 0;
+    timer = 30;
+    questions = [];  // Recharger les questions
+    loadQuestions(); // Recharger les questions depuis le CSV
+    document.getElementById('score').textContent = `Score : ${score}`;
+    document.getElementById('timer').textContent = `Temps restant : ${timer} sec`;
 }
 
 function getRandomSet(number) {
@@ -195,7 +191,6 @@ function addClickHandlers() {
                 // Ajout de l'animation de bonne réponse
                 selectedLeft.classList.add('correct');
                 selectedRight.classList.add('correct');
-                
                 setTimeout(() => {
                     selectedLeft.classList.add('hidden');
                     selectedRight.classList.add('hidden');
@@ -209,6 +204,8 @@ function addClickHandlers() {
             } else {
                 errors++;
                 timer -= 5;
+                const audio = new Audio('mauvaise_reponse.m4a');
+                audio.play();
                 selectedLeft.classList.add('incorrect');
                 selectedRight.classList.add('incorrect');
                 
@@ -242,4 +239,3 @@ document.getElementById('replay-btn').addEventListener('click', function() {
     document.getElementById('score-popup').style.display = 'none';
     startGame();
 })
-}
