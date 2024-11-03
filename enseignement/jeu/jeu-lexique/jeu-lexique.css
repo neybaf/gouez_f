@@ -1,22 +1,45 @@
-/* Style pour les boutons */
-button {
-    padding: 10px 20px;
-    margin: 5px;
+/*  */
+/* Menu */
+/* Style pour le menu rétracté */
+.fixed-menu {
+    position: fixed;
+    top: 50px;
+    left: 10px;
+    background-color: #5446e98c;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 150px;  /* Largeur normale du menu */
+    transition: all 0.3s ease;
+}
+
+.fixed-menu.collapsed {
+    width: 20px;  /* Largeur réduite du menu */
+    height: 20px;  /* Hauteur réduite du menu */
+    overflow: hidden;
+    padding: 5px;
+}
+
+/* Masquer les éléments à l'intérieur du menu lorsque collapsed */
+.fixed-menu.collapsed h3,
+.fixed-menu.collapsed select {
+    display: none;  /* Masquer le contenu (texte et sélecteurs) */
+}
+
+/* Assurer que le bouton reste visible même en mode collapsed */
+#menu-toggle {
+    font-size: 20px;
     cursor: pointer;
+    color: #070707;
+    background: none;
+    border: none;
 }
-
-/* Style lorsque le bouton est sélectionné */
-button.selected {
-    background-color: green;
-    color: white;
+.menu-hidden h3,
+.menu-hidden select {
+    display: none;
 }
-
-.selected {
-    border: 2px solid green;
-}
-.hidden {
-    visibility: hidden;
-}
+/*  */
 /* style du jeu*/
 #game-container {
     display: flex;
@@ -97,24 +120,6 @@ audio, img {
     border: 2px solid green; /* sélection */
 }
 
-#endgame-popup {
-    position: fixed; /* position fixe */
-    top: 50%; /* centré */
-    left: 50%; /* centré */
-    transform: translate(-50%, -50%);  /* centré */
-    background-color: white; /* couleur*/
-    border: 2px solid #333;  /* épaisseur style couleur */
-    padding: 20px; /* espace autour du contenu */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* ombre */
-    border-radius: 10px; /* arrondit les  coins */
-    z-index: 1000; /*popup au-dessus des autres éléments */
-    width: 300px; /* taille */
-    text-align: center; /*  txt centré */
-}
-
-#endgame-popup button {
-    margin: 10px 5px; /* Espacement entre les boutons */
-}
 
 .columns .item {
     font-family: Verdana, Geneva, sans-serif; /* Utiliser une police moderne comme Roboto */
@@ -156,4 +161,83 @@ audio, img {
 .disabled {
     pointer-events: none; /* Empêche les clics */
     opacity: 0.5; /* Visuellement montrer que c'est bloqué */
+}
+
+
+#start-game {
+    position: fixed;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%); /* Centrer horizontalement le conteneur */
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#start-btn {
+    background-color: #5b6987;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 20px; /* Ajout de padding pour un meilleur rendu */
+    display: block; /* Permet de centrer le bouton */
+    margin: 0 auto; /* Centre le bouton horizontalement dans le conteneur */
+}
+
+#start-btn:hover {
+    background-color: #2d4579;
+}
+
+.hidden {
+    display: none;
+}
+
+
+#score-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid #333;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    z-index: 1001;
+    width: 300px;
+    text-align: center;
+    display: none;  /* Pop-up caché au départ */
+}
+
+#score-popup.hidden {
+    display: none !important;
+} /* Garde caché quand la classe 'hidden' est appliquée */
+
+
+.popup-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.popup-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.popup-content button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    background-color: #218838;
 }
