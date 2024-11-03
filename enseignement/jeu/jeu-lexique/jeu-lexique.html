@@ -3,56 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu d'association lexical</title>
+<!-- Ajout d'un bouton pour démarrer le jeu -->
+<div id="start-game">
+    <button id="start-btn">Démarrer le jeu</button>
+</div>
     <link rel="stylesheet" href="jeu-lexique.css">
 </head>
 <body>
-    <h1>Jeu d'association lexical</h1>
-    
-    <!-- Section pour choisir le semestre -->
-    <div id="semesters">
-        <h2>Choisissez un semestre</h2>
-        <button class="semestre-btn" data-semestre="1">FG 1</button>
-        <button class="semestre-btn" data-semestre="2">FG 2</button>
-        <button class="semestre-btn" data-semestre="3">FG 3</button>
-        <button class="semestre-btn" data-semestre="4">FG 4</button>
-        <button class="semestre-btn" data-semestre="4">F.O.S 1</button>
-        <button class="semestre-btn" data-semestre="4">F.O.S 2</button>
-    </div>
-
-    <!-- Section pour choisir le sous-niveau -->
-    <div id="sous-niveaux" class="hidden">
-        <h2>Choisissez un sous-niveau</h2>
-        <button class="niveau-btn" data-niveau="1">U1</button>
-        <button class="niveau-btn" data-niveau="2">U2</button>
-        <button class="niveau-btn" data-niveau="3">U3</button>
-        <button class="niveau-btn" data-niveau="4">U4</button>
-        <button class="niveau-btn" data-niveau="5">U5</button>
-        <button class="niveau-btn" data-niveau="6">U6</button>
-        <button class="niveau-btn" data-niveau="7">U7</button>
-        <button class="niveau-btn" data-niveau="8">U8</button>
-        <button class="niveau-btn" data-niveau="9">U9</button>
-        <!-- Ajoutez plus de niveaux selon les besoins -->
-    </div>
 
     <!-- Zone de jeu -->
     <div id="game-info">
         <p id="timer">Temps restant : 30 sec</p>
         <p id="score">Score : 0</p>
     </div>
-
     <div id="game-container" class="hidden">
         <div id="column-left" class="columns"></div>
         <div id="column-right" class="columns"></div>
-        
     </div>
-    <!-- Popup de score -->
+    <div id="start-game" class="hidden">
+        <button id="start-btn">Démarrer le jeu</button>
+    </div>
+            <!-- Ajout du bouton de bascule -->
+            
+    <div id="level-menu" class="fixed-menu">
+        <button id="menu-toggle">≡</button>
+        <h3>Choisissez un semestre</h3>
+        <select id="semestre-select">
+            <option value="1">FG 1</option>
+            <option value="2">FG 2</option>
+            <option value="3">FG 3</option>
+            <option value="4">FG 4</option>
+            <option value="fos1">F.O.S 1</option>
+            <option value="fos2">F.O.S 2</option>
+        </select>
+        
+        <h3>Choisissez un sous-niveau</h3>
+        <select id="niveau-select" class="hidden">
+            <option value="1">U1</option>
+            <option value="2">U2</option>
+            <option value="3">U3</option>
+            <option value="4">U4</option>
+            <option value="5">U5</option>
+            <option value="6">U6</option>
+            <option value="7">U7</option>
+            <option value="8">U8</option>
+            <option value="9">U9 </option>
+        </select>
+    </div>
     <div id="score-popup" class="hidden">
-        <h2>Résultat</h2>
-        <p id="score-result"></p>
-        <button id="replay-btn">Rejouer</button>
-        <button id="share-btn">Partager</button>
+        <div class="popup-content">
+            <h2>Fin du jeu</h2>
+            <p>Votre score est de : <span id="final-score"> </span>
+               Vous avez commis :  <span id="errors"> </span> erreurs </p>
+               <button id="replay-btn">Rejouer</button>
+            <button id="share-btn">Partager</button>
+        </div>
     </div>
     <script src="jeu-association.js"></script>
+
 </body>
 </html>
