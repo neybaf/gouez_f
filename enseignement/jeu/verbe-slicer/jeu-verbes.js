@@ -2,7 +2,7 @@ let canvas, ctx, score, verbesIrreguliers, motsDivers, currentVerbes;
 let fallingWords = [];
 let gameInterval;
 let isGameRunning = false;
-let gameSpeed = 40; // Vitesse initiale
+let gameSpeed = 80; // Vitesse initiale
 
 function startGame() {
     document.getElementById('popup').style.display = 'none';
@@ -26,7 +26,7 @@ function initGame() {
             motsDivers = data.motsDivers;
             currentVerbes = [...verbesIrreguliers.infinitif, ...motsDivers]; // Commencer par l'infinitif
             // Appeler spawnWord plusieurs fois pour générer plusieurs mots au début
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 10; i++) {
                 spawnWord();
             }
         })
@@ -50,8 +50,8 @@ function updateGame() {
 
     // Met à jour la vitesse et le niveau de difficulté en fonction du score
     adjustDifficulty();
-    // Ajouter un mot de manière régulière si moins de 3 mots sont à l'écran
-    if (fallingWords.length < 5) {
+    // Ajouter un mot de manière régulière si moins de 10 mots sont à l'écran
+    if (fallingWords.length < 10) {
         spawnWord();
     }
     // Dessiner les mots tombants
