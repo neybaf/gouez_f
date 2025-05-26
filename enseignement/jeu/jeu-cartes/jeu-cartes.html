@@ -116,6 +116,59 @@
             background: var(--light-color);
         }
 
+        .level-selection {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .level-selection h3, .level-selection h4 {
+            margin: 0 0 1rem 0;
+            color: var(--dark-color);
+            text-align: center;
+        }
+
+        .level-buttons, .sublevel-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .level-btn, .sublevel-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--secondary-color);
+            background: white;
+            color: var(--secondary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .level-btn.active, .level-btn:hover,
+        .sublevel-btn.active, .sublevel-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .level-btn:disabled, .sublevel-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .sublevel-selection {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
         .filter-buttons {
             display: flex;
             gap: 0.5rem;
@@ -196,6 +249,23 @@
         </div>
 
         <div class="game-area">
+            <!-- Sélection des niveaux CECR -->
+            <div class="level-selection">
+                <h3>Choisissez votre niveau :</h3>
+                <div class="level-buttons">
+                    <button class="level-btn" data-level="A1">A1 - Débutant</button>
+                    <button class="level-btn" data-level="A2">A2 - Élémentaire</button>
+                    <button class="level-btn" data-level="B1">B1 - Intermédiaire</button>
+                </div>
+                
+                <div class="sublevel-selection" id="sublevel-selection" style="display: none;">
+                    <h4>Sous-niveau :</h4>
+                    <div class="sublevel-buttons" id="sublevel-buttons">
+                        <!-- Les sous-niveaux seront générés dynamiquement -->
+                    </div>
+                </div>
+            </div>
+
             <div class="filter-buttons">
                 <button class="filter-btn active" data-category="all">Toutes</button>
                 <button class="filter-btn" data-category="grammaire">Grammaire</button>

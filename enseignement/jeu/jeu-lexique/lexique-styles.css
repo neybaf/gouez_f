@@ -1,0 +1,561 @@
+/* Variables CSS spécifiques au jeu lexique */
+:root {
+    --lexique-primary: #2E86AB;
+    --lexique-secondary: #A23B72;
+    --lexique-accent: #F18F01;
+    --lexique-success: #C73E1D;
+    --lexique-warning: #F4A261;
+    --lexique-danger: #E76F51;
+    --lexique-light: #F8F9FA;
+    --lexique-dark: #2C3E50;
+    --lexique-gradient: linear-gradient(135deg, var(--lexique-primary), var(--lexique-secondary));
+    --lexique-shadow: 0 4px 15px rgba(46, 134, 171, 0.2);
+    --lexique-border-radius: 12px;
+    --lexique-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Arrière-plan animé spécifique */
+body {
+    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+    background-size: 400% 400%;
+    animation: lexiqueGradient 15s ease infinite;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@keyframes lexiqueGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Sélection des niveaux */
+.level-selection {
+    background: white;
+    border-radius: var(--lexique-border-radius);
+    padding: 2rem;
+    box-shadow: var(--lexique-shadow);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.level-category {
+    margin-bottom: 2rem;
+}
+
+.level-category h3 {
+    color: var(--lexique-dark);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.level-buttons, .sublevel-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.level-btn, .sublevel-btn {
+    padding: 12px 24px;
+    border: 2px solid var(--lexique-primary);
+    background: white;
+    color: var(--lexique-primary);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--lexique-transition);
+    font-weight: 600;
+    font-size: 0.95rem;
+    min-width: 100px;
+}
+
+.level-btn:hover, .sublevel-btn:hover,
+.level-btn.active, .sublevel-btn.active {
+    background: var(--lexique-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 134, 171, 0.3);
+}
+
+.level-btn:disabled, .sublevel-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    background: #f5f5f5;
+    color: #999;
+    border-color: #ddd;
+}
+
+/* Sélection de difficulté */
+.difficulty-selection {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--lexique-light);
+}
+
+.difficulty-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.difficulty-btn {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--lexique-border-radius);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: var(--lexique-transition);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.difficulty-btn:hover {
+    border-color: var(--lexique-primary);
+    transform: translateY(-3px);
+    box-shadow: var(--lexique-shadow);
+}
+
+.difficulty-btn.active {
+    border-color: var(--lexique-primary);
+    background: var(--lexique-gradient);
+    color: white;
+}
+
+.difficulty-icon {
+    font-size: 2rem;
+}
+
+.difficulty-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.difficulty-desc {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Interface de jeu */
+.game-interface {
+    background: white;
+    border-radius: var(--lexique-border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--lexique-shadow);
+}
+
+.game-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1rem;
+    background: var(--lexique-light);
+    border-radius: 8px;
+    transition: var(--lexique-transition);
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--lexique-primary);
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Zone d'association */
+.association-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    background: white;
+    border-radius: var(--lexique-border-radius);
+    padding: 2rem;
+    box-shadow: var(--lexique-shadow);
+    min-height: 500px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--lexique-dark);
+    font-size: 1.2rem;
+    padding: 0.75rem;
+    background: var(--lexique-light);
+    border-radius: 8px;
+}
+
+.items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+}
+
+/* Éléments d'association */
+.association-item {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: var(--lexique-transition);
+    position: relative;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.association-item:hover {
+    border-color: var(--lexique-primary);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(46, 134, 171, 0.2);
+}
+
+.association-item.selected {
+    border-color: var(--lexique-accent);
+    background: rgba(241, 143, 1, 0.1);
+    transform: scale(1.02);
+}
+
+.association-item.correct {
+    border-color: var(--lexique-success);
+    background: rgba(199, 62, 29, 0.1);
+    animation: correctPulse 0.6s ease;
+}
+
+.association-item.incorrect {
+    border-color: var(--lexique-danger);
+    background: rgba(231, 111, 81, 0.1);
+    animation: incorrectShake 0.6s ease;
+}
+
+.association-item.matched {
+    opacity: 0.6;
+    pointer-events: none;
+    background: rgba(46, 134, 171, 0.1);
+    border-color: var(--lexique-primary);
+}
+
+@keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes incorrectShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Éléments média */
+.media-item {
+    text-align: center;
+}
+
+.media-item img {
+    max-width: 100%;
+    max-height: 80px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.media-item audio {
+    width: 100%;
+    height: 40px;
+}
+
+.media-item .audio-placeholder {
+    background: var(--lexique-gradient);
+    color: white;
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 1.5rem;
+}
+
+/* Éléments texte */
+.text-item {
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--lexique-dark);
+}
+
+/* Zone de connexion */
+.connection-area {
+    width: 60px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.connection-line {
+    position: absolute;
+    background: var(--lexique-primary);
+    height: 3px;
+    border-radius: 2px;
+    opacity: 0.8;
+    animation: drawLine 0.5s ease;
+}
+
+@keyframes drawLine {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Écrans de pause et fin */
+.pause-content, .end-content {
+    background: white;
+    border-radius: var(--lexique-border-radius);
+    padding: 3rem;
+    text-align: center;
+    box-shadow: var(--lexique-shadow);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.pause-stats, .final-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.stat-card {
+    background: var(--lexique-light);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: var(--lexique-transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card .stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--lexique-primary);
+    margin-bottom: 0.25rem;
+}
+
+.stat-card .stat-label {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Contrôles */
+.pause-controls, .end-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+/* Popup de feedback */
+.feedback-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--lexique-transition);
+}
+
+.feedback-popup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.feedback-content {
+    background: white;
+    border-radius: var(--lexique-border-radius);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    min-width: 200px;
+}
+
+.feedback-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feedback-message {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--lexique-dark);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .association-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .connection-area {
+        display: none;
+    }
+    
+    .game-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .level-buttons, .sublevel-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .level-btn, .sublevel-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .difficulty-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .pause-controls, .end-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pause-controls .btn, .end-controls .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .level-selection, .pause-content, .end-content {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .association-container {
+        padding: 1rem;
+    }
+    
+    .game-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .final-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Animations d'entrée */
+.screen {
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Effets de survol pour les boutons */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+/* Indicateur de progression spécial */
+.progress-bar {
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 8px;
+}
+
+.progress-fill {
+    background: var(--lexique-gradient);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progressShine 2s infinite;
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+} 

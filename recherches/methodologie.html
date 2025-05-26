@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Méthodologie | Outils et Protocoles</title>
+    <link rel="stylesheet" href="/gouez_f/css/research-styles.css">
+    <meta name="description" content="Outils méthodologiques et protocoles techniques pour la recherche en didactique des langues-cultures">
+</head>
+<body>
+    <div class="research-container">
+        <div class="research-header">
+            <h1 class="research-title">Outils Méthodologiques</h1>
+            <p class="research-subtitle">Protocoles techniques et ressources pour la recherche</p>
+            <p class="research-affiliation">Boîte à outils pour l'analyse de corpus et la recherche qualitative</p>
+        </div>
+
+        <div class="research-content">
+            <section class="section">
+                <div class="methodology-notice">
+                    <h2>📋 Approche méthodologique complète</h2>
+                    <p>
+                        Pour une présentation détaillée de mon positionnement épistémologique, de mes méthodes de recherche et de mon approche éthique, consultez la section <a href="/gouez_f/about.html#methodologie">Méthodologie dans À propos</a>.
+                    </p>
+                </div>
+
+                <h2 class="section-title">🔧 Outils Techniques</h2>
+                
+                <div class="tools-section">
+                    <div class="tool-block">
+                        <h3>📊 Analyse de Corpus Textuels</h3>
+                        <div class="tool-grid">
+                            <div class="tool-item">
+                                <h4>R - Analyse lexicométrique</h4>
+                                <pre><code># Packages principaux
+library(quanteda)
+library(tidytext)
+library(tm)
+library(wordcloud2)
+
+# Exemple d'analyse
+corpus <- corpus(texts)
+dfm <- dfm(corpus, remove_punct = TRUE)
+textstat_frequency(dfm)</code></pre>
+                            </div>
+                            
+                            <div class="tool-item">
+                                <h4>Python - Traitement NLP</h4>
+                                <pre><code># Packages principaux
+import spacy
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Exemple de traitement
+nlp = spacy.load("fr_core_news_sm")
+doc = nlp(text)
+tokens = [token.lemma_ for token in doc]</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-block">
+                        <h3>🗺️ Cartographie et Visualisation</h3>
+                        <div class="tool-grid">
+                            <div class="tool-item">
+                                <h4>Leaflet - Cartes interactives</h4>
+                                <pre><code>// Initialisation de la carte
+var map = L.map('map').setView([39.9, 116.4], 6);
+
+// Ajout de marqueurs avec données
+L.marker([lat, lng])
+  .addTo(map)
+  .bindPopup(institutionData);</code></pre>
+                            </div>
+                            
+                            <div class="tool-item">
+                                <h4>D3.js - Visualisations dynamiques</h4>
+                                <pre><code>// Graphique en réseau
+const simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links))
+  .force("charge", d3.forceManyBody())
+  .force("center", d3.forceCenter());</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-block">
+                        <h3>📝 Gestion de Données Qualitatives</h3>
+                        <div class="tool-grid">
+                            <div class="tool-item">
+                                <h4>Obsidian - Carnet de recherche</h4>
+                                <ul>
+                                    <li>Organisation par tags et liens</li>
+                                    <li>Graphique de connaissances</li>
+                                    <li>Templates pour entretiens</li>
+                                    <li>Synchronisation multi-appareils</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="tool-item">
+                                <h4>Zotero - Gestion bibliographique</h4>
+                                <ul>
+                                    <li>Collecte automatique de métadonnées</li>
+                                    <li>Annotation de PDFs</li>
+                                    <li>Groupes collaboratifs</li>
+                                    <li>Export vers formats multiples</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">📋 Protocoles de Recherche</h2>
+                
+                <div class="protocols-section">
+                    <div class="protocol-block">
+                        <h3>🎤 Entretiens Semi-directifs</h3>
+                        <div class="protocol-steps">
+                            <div class="step">
+                                <h4>1. Préparation</h4>
+                                <ul>
+                                    <li>Grille d'entretien thématique</li>
+                                    <li>Consentement éclairé</li>
+                                    <li>Test matériel d'enregistrement</li>
+                                </ul>
+                            </div>
+                            <div class="step">
+                                <h4>2. Conduite</h4>
+                                <ul>
+                                    <li>Durée : 45-90 minutes</li>
+                                    <li>Relances et approfondissements</li>
+                                    <li>Prise de notes contextuelles</li>
+                                </ul>
+                            </div>
+                            <div class="step">
+                                <h4>3. Post-traitement</h4>
+                                <ul>
+                                    <li>Transcription intégrale</li>
+                                    <li>Anonymisation</li>
+                                    <li>Validation par l'enquêté</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="protocol-block">
+                        <h3>📊 Analyse Lexicométrique</h3>
+                        <div class="protocol-steps">
+                            <div class="step">
+                                <h4>1. Préparation du corpus</h4>
+                                <ul>
+                                    <li>Nettoyage et normalisation</li>
+                                    <li>Segmentation en unités d'analyse</li>
+                                    <li>Étiquetage métadonnées</li>
+                                </ul>
+                            </div>
+                            <div class="step">
+                                <h4>2. Analyse statistique</h4>
+                                <ul>
+                                    <li>Fréquences et spécificités</li>
+                                    <li>Cooccurrences et concordances</li>
+                                    <li>Classification hiérarchique</li>
+                                </ul>
+                            </div>
+                            <div class="step">
+                                <h4>3. Interprétation</h4>
+                                <ul>
+                                    <li>Retour au contexte qualitatif</li>
+                                    <li>Validation par triangulation</li>
+                                    <li>Visualisation des résultats</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">🔗 Ressources Utiles</h2>
+                
+                <div class="resources-grid">
+                    <a href="https://github.com/fabiengouez/corpus-analysis" class="resource-card" target="_blank">
+                        <span class="resource-icon">💻</span>
+                        <h3 class="resource-title">Scripts d'analyse</h3>
+                        <p class="resource-description">Dépôt GitHub avec scripts R et Python pour l'analyse de corpus</p>
+                    </a>
+                    
+                    <a href="https://www.zotero.org/groups/5560949/sinofrancophonie" class="resource-card" target="_blank">
+                        <span class="resource-icon">📚</span>
+                        <h3 class="resource-title">Bibliothèque partagée</h3>
+                        <p class="resource-description">Groupe Zotero avec références méthodologiques</p>
+                    </a>
+                    
+                    <div class="resource-card">
+                        <span class="resource-icon">📋</span>
+                        <h3 class="resource-title">Templates d'entretien</h3>
+                        <p class="resource-description">Grilles d'entretien et formulaires de consentement</p>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="resource-icon">🎯</span>
+                        <h3 class="resource-title">Guides d'analyse</h3>
+                        <p class="resource-description">Protocoles détaillés pour l'analyse qualitative et quantitative</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: #666; font-size: 0.9rem;">
+        <p><a href="index.html" style="color: var(--secondary-color); text-decoration: none;">← Retour aux recherches</a></p>
+        <div data-include="/gouez_f/partials/footer.html"></div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.tool-block, .protocol-block, .resource-card').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+
+    <style>
+        .methodology-notice {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .methodology-notice h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .methodology-notice a {
+            color: white;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        
+        .tools-section, .protocols-section {
+            margin-bottom: 3rem;
+        }
+        
+        .tool-block, .protocol-block {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-block h3, .protocol-block h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tool-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .tool-item h4 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .tool-item pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .tool-item ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .tool-item li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .tool-item li:before {
+            content: '✓';
+            color: var(--success-color);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .protocol-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .step {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .step h4 {
+            color: var(--dark-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .step ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .step li {
+            padding: 0.25rem 0;
+            color: #666;
+        }
+        
+        .step li:before {
+            content: '→';
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .protocol-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-item pre {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</body>
+</html>

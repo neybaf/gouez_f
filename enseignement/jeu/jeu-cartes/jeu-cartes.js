@@ -2,6 +2,10 @@ class JeuCartes {
     constructor() {
         this.cards = [];
         this.currentFilter = 'all';
+        this.currentLevel = null;
+        this.currentSublevel = null;
+        this.availableLevels = ['A1', 'A2', 'B1'];
+        this.availableSublevels = {};
         this.stats = {
             cardsViewed: 0,
             correctAnswers: 0,
@@ -10,123 +14,92 @@ class JeuCartes {
         this.init();
     }
 
-    init() {
-        this.loadCards();
+    async init() {
+        await this.scanAvailableLevels();
         this.setupEventListeners();
         this.updateStats();
+        this.showLevelSelection();
     }
 
-    loadCards() {
-        // Données des cartes par catégorie
-        this.cardsData = [
-            // Grammaire
-            {
-                question: "Quel est l'auxiliaire du passé composé pour 'aller' ?",
-                answer: "être",
-                category: "grammaire",
-                difficulty: 2,
-                explanation: "Les verbes de mouvement utilisent l'auxiliaire 'être'"
-            },
-            {
-                question: "Comment accorde-t-on l'adjectif avec un nom féminin pluriel ?",
-                answer: "On ajoute -es",
-                category: "grammaire",
-                difficulty: 1,
-                explanation: "Féminin + pluriel = -es (ex: grandes)"
-            },
-            {
-                question: "Quelle est la forme négative de 'Je mange' ?",
-                answer: "Je ne mange pas",
-                category: "grammaire",
-                difficulty: 1,
-                explanation: "La négation se forme avec 'ne...pas'"
-            },
-            
-            // Vocabulaire
-            {
-                question: "Comment dit-on 'library' en français ?",
-                answer: "bibliothèque",
-                category: "vocabulaire",
-                difficulty: 2,
-                explanation: "Attention à ne pas confondre avec 'librairie' (bookstore)"
-            },
-            {
-                question: "Quel est le contraire de 'grand' ?",
-                answer: "petit",
-                category: "vocabulaire",
-                difficulty: 1,
-                explanation: "Antonyme de base en français"
-            },
-            {
-                question: "Comment appelle-t-on le repas du matin ?",
-                answer: "le petit-déjeuner",
-                category: "vocabulaire",
-                difficulty: 1,
-                explanation: "Premier repas de la journée"
-            },
-            
-            // Conjugaison
-            {
-                question: "Conjuguez 'être' à la 1ère personne du singulier au présent",
-                answer: "je suis",
-                category: "conjugaison",
-                difficulty: 1,
-                explanation: "Verbe irrégulier fondamental"
-            },
-            {
-                question: "Conjuguez 'finir' à la 3ème personne du pluriel au futur",
-                answer: "ils finiront",
-                category: "conjugaison",
-                difficulty: 3,
-                explanation: "Verbe du 2ème groupe au futur simple"
-            },
-            {
-                question: "Quelle est la forme du subjonctif présent de 'avoir' (que j'...) ?",
-                answer: "que j'aie",
-                category: "conjugaison",
-                difficulty: 3,
-                explanation: "Forme irrégulière du subjonctif"
-            },
-            
-            // Culture
-            {
-                question: "Quelle est la capitale de la France ?",
-                answer: "Paris",
-                category: "culture",
-                difficulty: 1,
-                explanation: "Ville lumière et capitale française"
-            },
-            {
-                question: "Quel fromage français est surnommé 'le roi des fromages' ?",
-                answer: "le roquefort",
-                category: "culture",
-                difficulty: 2,
-                explanation: "Fromage à pâte persillée de l'Aveyron"
-            },
-            {
-                question: "Qui a écrit 'Les Misérables' ?",
-                answer: "Victor Hugo",
-                category: "culture",
-                difficulty: 2,
-                explanation: "Grand écrivain français du 19ème siècle"
-            }
-        ];
+    async scanAvailableLevels() {
+        // Scanner les niveaux disponibles
+        for (const level of this.availableLevels) {
+            this.availableSublevels[level] = await this.scanSublevels(level);
+        }
+        this.updateLevelButtons();
+    }
 
-        this.cards = [...this.cardsData];
-        this.stats.totalCards = this.cards.length;
-        this.shuffleCards();
-        this.renderCards();
+    async scanSublevels(level) {
+        const sublevels = [];
+        // Tenter de charger les sous-niveaux de 1 à 9
+        for (let i = 1; i <= 9; i++) {
+            try {
+                const response = await fetch(`data/${level}/niveau_${i}.json`);
+                if (response.ok) {
+                    sublevels.push(i);
+                }
+            } catch (error) {
+                // Fichier non trouvé, on continue
+            }
+        }
+        return sublevels;
+    }
+
+    updateLevelButtons() {
+        const levelButtons = document.querySelectorAll('.level-btn');
+        levelButtons.forEach(btn => {
+            const level = btn.dataset.level;
+            const hasSublevels = this.availableSublevels[level] && this.availableSublevels[level].length > 0;
+            
+            if (!hasSublevels) {
+                btn.disabled = true;
+                btn.textContent += ' (Indisponible)';
+                btn.style.opacity = '0.5';
+            }
+        });
+    }
+
+    async loadCardsFromLevel(level, sublevel) {
+        try {
+            const response = await fetch(`data/${level}/niveau_${sublevel}.json`);
+            if (!response.ok) {
+                throw new Error(`Impossible de charger le niveau ${level} - ${sublevel}`);
+            }
+            
+            const cardsData = await response.json();
+            this.cards = [...cardsData];
+            this.stats.totalCards = this.cards.length;
+            this.shuffleCards();
+            this.renderCards();
+            this.updateStats();
+            
+            // Afficher un message de confirmation
+            this.showLoadingMessage(`Niveau ${level} - Sous-niveau ${sublevel} chargé ! ${this.cards.length} cartes disponibles.`);
+            
+        } catch (error) {
+            console.error('Erreur lors du chargement:', error);
+            this.showErrorMessage(`Erreur: ${error.message}`);
+        }
     }
 
     setupEventListeners() {
-        // Filtres
+        // Sélection des niveaux CECR
+        document.querySelectorAll('.level-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (btn.disabled) return;
+                
+                this.selectLevel(e.target.dataset.level);
+            });
+        });
+
+        // Filtres de catégories
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 this.setFilter(e.target.dataset.category);
             });
         });
 
-        // Contrôles
+        // Contrôles de jeu
         document.getElementById('shuffle-btn').addEventListener('click', () => {
             this.shuffleCards();
             this.renderCards();
@@ -150,10 +123,64 @@ class JeuCartes {
         });
     }
 
+    selectLevel(level) {
+        this.currentLevel = level;
+        
+        // Mettre à jour les boutons de niveau
+        document.querySelectorAll('.level-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`[data-level="${level}"]`).classList.add('active');
+        
+        // Afficher les sous-niveaux disponibles
+        this.showSublevels(level);
+    }
+
+    showSublevels(level) {
+        const sublevelSelection = document.getElementById('sublevel-selection');
+        const sublevelButtons = document.getElementById('sublevel-buttons');
+        
+        sublevelButtons.innerHTML = '';
+        
+        const availableSublevels = this.availableSublevels[level] || [];
+        
+        if (availableSublevels.length > 0) {
+            availableSublevels.forEach(sublevel => {
+                const btn = document.createElement('button');
+                btn.className = 'sublevel-btn';
+                btn.dataset.sublevel = sublevel;
+                btn.textContent = `Niveau ${sublevel}`;
+                
+                btn.addEventListener('click', () => {
+                    this.selectSublevel(sublevel);
+                });
+                
+                sublevelButtons.appendChild(btn);
+            });
+            
+            sublevelSelection.style.display = 'block';
+        } else {
+            sublevelSelection.style.display = 'none';
+        }
+    }
+
+    selectSublevel(sublevel) {
+        this.currentSublevel = sublevel;
+        
+        // Mettre à jour les boutons de sous-niveau
+        document.querySelectorAll('.sublevel-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`[data-sublevel="${sublevel}"]`).classList.add('active');
+        
+        // Charger les cartes du niveau sélectionné
+        this.loadCardsFromLevel(this.currentLevel, sublevel);
+    }
+
     setFilter(category) {
         this.currentFilter = category;
         
-        // Mettre à jour les boutons
+        // Mettre à jour les boutons de filtre
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.classList.remove('active');
         });
@@ -173,9 +200,19 @@ class JeuCartes {
         const container = document.getElementById('cards-container');
         container.innerHTML = '';
 
+        if (this.cards.length === 0) {
+            container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">Sélectionnez un niveau pour commencer à jouer !</div>';
+            return;
+        }
+
         const filteredCards = this.currentFilter === 'all' 
             ? this.cards 
             : this.cards.filter(card => card.category === this.currentFilter);
+
+        if (filteredCards.length === 0) {
+            container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">Aucune carte trouvée pour cette catégorie.</div>';
+            return;
+        }
 
         filteredCards.forEach((card, index) => {
             const cardElement = this.createCardElement(card, index);
@@ -198,28 +235,26 @@ class JeuCartes {
         card.dataset.index = index;
         card.dataset.category = cardData.category;
 
-        const difficultyDots = Array.from({length: 3}, (_, i) => 
-            `<div class="difficulty-dot ${i < cardData.difficulty ? 'active' : ''}"></div>`
-        ).join('');
-
         card.innerHTML = `
             <div class="card-inner">
                 <div class="card-front">
                     <div class="difficulty-indicator">
-                        ${difficultyDots}
+                        ${this.createDifficultyDots(cardData.difficulty)}
                     </div>
                     <div class="card-category">${this.getCategoryLabel(cardData.category)}</div>
                     <div class="card-question">${cardData.question}</div>
-                    <div style="font-size: 0.9rem; color: #666; margin-top: auto;">
+                    <div style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
                         Cliquez pour révéler la réponse
                     </div>
                 </div>
                 <div class="card-back">
                     <div class="card-answer">${cardData.answer}</div>
-                    ${cardData.explanation ? `<div style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.9;">${cardData.explanation}</div>` : ''}
-                    <div style="margin-top: auto;">
-                        <button class="btn btn-success" onclick="gameInstance.markCorrect(${index})" style="margin: 0.5rem;">✓ Correct</button>
-                        <button class="btn btn-danger" onclick="gameInstance.markIncorrect(${index})" style="margin: 0.5rem;">✗ Incorrect</button>
+                    <div style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.9;">
+                        ${cardData.explanation || ''}
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <button class="btn btn-success btn-sm" onclick="game.markCorrect(${index})">✓ Correct</button>
+                        <button class="btn btn-danger btn-sm" onclick="game.markIncorrect(${index})">✗ Incorrect</button>
                     </div>
                 </div>
             </div>
@@ -234,48 +269,55 @@ class JeuCartes {
         return card;
     }
 
+    createDifficultyDots(difficulty) {
+        let dots = '';
+        for (let i = 1; i <= 3; i++) {
+            const activeClass = i <= difficulty ? 'active' : '';
+            dots += `<div class="difficulty-dot ${activeClass}"></div>`;
+        }
+        return dots;
+    }
+
     getCategoryLabel(category) {
         const labels = {
-            grammaire: 'Grammaire',
-            vocabulaire: 'Vocabulaire',
-            conjugaison: 'Conjugaison',
-            culture: 'Culture'
+            'grammaire': 'Grammaire',
+            'vocabulaire': 'Vocabulaire',
+            'conjugaison': 'Conjugaison',
+            'culture': 'Culture'
         };
         return labels[category] || category;
     }
 
     flipCard(cardElement) {
-        if (!cardElement.classList.contains('viewed')) {
-            cardElement.classList.add('viewed');
-            this.stats.cardsViewed++;
-        }
-        
         cardElement.classList.toggle('flipped');
-        this.updateStats();
+        if (cardElement.classList.contains('flipped')) {
+            this.stats.cardsViewed++;
+            this.updateStats();
+        }
     }
 
     markCorrect(index) {
         this.stats.correctAnswers++;
-        this.updateStats();
         this.removeCard(index);
-        this.playSound('correct');
+        this.updateStats();
+        this.checkGameComplete();
     }
 
     markIncorrect(index) {
-        this.updateStats();
         this.removeCard(index);
-        this.playSound('incorrect');
+        this.updateStats();
+        this.checkGameComplete();
     }
 
     removeCard(index) {
-        const card = document.querySelector(`[data-index="${index}"]`);
-        if (card) {
-            card.style.transform = 'scale(0)';
-            card.style.opacity = '0';
+        const cardElement = document.querySelector(`[data-index="${index}"]`);
+        if (cardElement) {
+            cardElement.style.animation = 'fadeOut 0.5s ease-out forwards';
             setTimeout(() => {
-                card.remove();
-                this.checkGameComplete();
-            }, 300);
+                if (cardElement.parentNode) {
+                    cardElement.parentNode.removeChild(cardElement);
+                }
+            }, 500);
         }
     }
 
@@ -286,20 +328,22 @@ class JeuCartes {
         const accuracy = this.stats.cardsViewed > 0 
             ? Math.round((this.stats.correctAnswers / this.stats.cardsViewed) * 100)
             : 0;
-        document.getElementById('accuracy').textContent = `${accuracy}%`;
-
+        document.getElementById('accuracy').textContent = accuracy + '%';
+        
         // Mettre à jour la barre de progression
-        const progress = (this.stats.cardsViewed / this.stats.totalCards) * 100;
-        document.getElementById('progress-fill').style.width = `${progress}%`;
+        const progress = this.stats.totalCards > 0 
+            ? (this.stats.cardsViewed / this.stats.totalCards) * 100
+            : 0;
+        document.getElementById('progress-fill').style.width = progress + '%';
         document.getElementById('progress-count').textContent = `${this.stats.cardsViewed}/${this.stats.totalCards}`;
     }
 
     checkGameComplete() {
-        const remainingCards = document.querySelectorAll('.card').length;
-        if (remainingCards === 0) {
+        const remainingCards = document.querySelectorAll('.card:not([style*="fadeOut"])').length;
+        if (remainingCards === 0 && this.stats.totalCards > 0) {
             setTimeout(() => {
                 this.showResultPopup();
-            }, 500);
+            }, 1000);
         }
     }
 
@@ -310,15 +354,27 @@ class JeuCartes {
         const accuracy = this.stats.cardsViewed > 0 
             ? Math.round((this.stats.correctAnswers / this.stats.cardsViewed) * 100)
             : 0;
-
+        
         finalStats.innerHTML = `
-            <div style="margin: 1rem 0;">
-                <div><strong>Cartes vues:</strong> ${this.stats.cardsViewed}</div>
-                <div><strong>Bonnes réponses:</strong> ${this.stats.correctAnswers}</div>
-                <div><strong>Précision:</strong> ${accuracy}%</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">${this.stats.cardsViewed}</div>
+                    <div style="font-size: 0.9rem; color: #666;">Cartes vues</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--success-color);">${this.stats.correctAnswers}</div>
+                    <div style="font-size: 0.9rem; color: #666;">Bonnes réponses</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--warning-color);">${accuracy}%</div>
+                    <div style="font-size: 0.9rem; color: #666;">Précision</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 1rem; padding: 1rem; background: var(--light-color); border-radius: 8px;">
+                Niveau complété : <strong>${this.currentLevel} - Sous-niveau ${this.currentSublevel}</strong>
             </div>
         `;
-
+        
         popup.classList.add('show');
     }
 
@@ -330,45 +386,134 @@ class JeuCartes {
         this.stats = {
             cardsViewed: 0,
             correctAnswers: 0,
-            totalCards: this.cardsData.length
+            totalCards: this.stats.totalCards
         };
-        this.cards = [...this.cardsData];
-        this.shuffleCards();
-        this.renderCards();
+        
+        if (this.currentLevel && this.currentSublevel) {
+            this.loadCardsFromLevel(this.currentLevel, this.currentSublevel);
+        }
+        
         this.updateStats();
     }
 
     newGame() {
-        this.resetGame();
-        // Ici on pourrait charger de nouvelles cartes ou changer de niveau
+        this.stats = {
+            cardsViewed: 0,
+            correctAnswers: 0,
+            totalCards: 0
+        };
+        this.cards = [];
+        this.currentLevel = null;
+        this.currentSublevel = null;
+        
+        // Réinitialiser les sélections
+        document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.sublevel-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('sublevel-selection').style.display = 'none';
+        
+        this.renderCards();
+        this.updateStats();
+        this.showLevelSelection();
+    }
+
+    showLevelSelection() {
+        this.showLoadingMessage('Sélectionnez un niveau CECR et un sous-niveau pour commencer !');
+    }
+
+    showLoadingMessage(message) {
+        const container = document.getElementById('cards-container');
+        container.innerHTML = `
+            <div style="text-align: center; padding: 3rem; background: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+                <div style="font-size: 1.2rem; color: var(--primary-color); margin-bottom: 1rem;">
+                    ${message}
+                </div>
+                <div style="font-size: 0.9rem; color: #666;">
+                    Les niveaux indisponibles sont grisés.
+                </div>
+            </div>
+        `;
+    }
+
+    showErrorMessage(message) {
+        const container = document.getElementById('cards-container');
+        container.innerHTML = `
+            <div style="text-align: center; padding: 3rem; background: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow); border-left: 4px solid var(--danger-color);">
+                <div style="font-size: 1.2rem; color: var(--danger-color); margin-bottom: 1rem;">
+                    ${message}
+                </div>
+                <div style="font-size: 0.9rem; color: #666;">
+                    Veuillez sélectionner un autre niveau.
+                </div>
+            </div>
+        `;
     }
 
     playSound(type) {
-        // Créer un son simple avec Web Audio API
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-
-        if (type === 'correct') {
-            oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // Do
-            oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // Mi
-        } else {
-            oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // La grave
-        }
-
-        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.3);
+        // Placeholder pour les effets sonores futurs
+        console.log(`Son: ${type}`);
     }
 }
 
 // Initialiser le jeu
-let gameInstance;
+let game;
 document.addEventListener('DOMContentLoaded', () => {
-    gameInstance = new JeuCartes();
-}); 
+    game = new JeuCartes();
+});
+
+// Styles CSS pour les animations
+const style = document.createElement('style');
+style.textContent = `
+    .card {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+    
+    .card.fade-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+    }
+    
+    .result-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .result-popup.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .popup-content {
+        background: white;
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+    }
+`;
+document.head.appendChild(style); 

@@ -1,0 +1,142 @@
+[
+    {
+        "question": "Comment appelle-t-on les petits gestes quotidiens pour protéger la planète ?",
+        "answer": "écogestes",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Ce sont des habitudes simples comme éteindre la lumière ou trier ses déchets."
+    },
+    {
+        "question": "Quel mot désigne une période de chaleur extrême ?",
+        "answer": "canicule",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Une canicule est une période anormalement chaude qui dure plusieurs jours."
+    },
+    {
+        "question": "Comment appelle-t-on la disparition d’une forêt ?",
+        "answer": "déforestation",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "La déforestation est causée par la coupe des arbres pour l’agriculture ou l’urbanisation."
+    },
+    {
+        "question": "Quel mot désigne le fait de produire moins de déchets ?",
+        "answer": "réduction",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "La réduction des déchets fait partie des trois R : Réduire, Réutiliser, Recycler."
+    },
+    {
+        "question": "Comment appelle-t-on le respect des droits des animaux ?",
+        "answer": "bien-être animal",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "C’est un ensemble de pratiques visant à garantir une vie digne aux animaux."
+    },
+    {
+        "question": "Quel adjectif qualifie une énergie qui ne pollue pas ?",
+        "answer": "renouvelable",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Le solaire, l’éolien ou l’hydraulique sont des énergies renouvelables."
+    },
+    {
+        "question": "Comment nomme-t-on un animal qui disparaît totalement ?",
+        "answer": "espèce éteinte",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Un exemple est le dodo, un oiseau disparu de l'île Maurice."
+    },
+    {
+        "question": "Quel nom donne-t-on à l’action de réutiliser les déchets ?",
+        "answer": "recyclage",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Le recyclage permet de transformer les déchets en nouveaux produits."
+    },
+    {
+        "question": "Comment s'appelle le fait d'utiliser des ressources sans les épuiser ?",
+        "answer": "développement durable",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Le développement durable équilibre écologie, économie et société."
+    },
+    {
+        "question": "Quel mot désigne l’ensemble des espèces vivantes ?",
+        "answer": "biodiversité",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "La biodiversité comprend toutes les formes de vie sur Terre."
+    },
+    {
+        "question": "Quel temps utilise-t-on avec 'si' pour exprimer un regret ?",
+        "answer": "plus-que-parfait",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "On utilise 'si + plus-que-parfait' suivi du conditionnel passé."
+    },
+    {
+        "question": "Quel pronom remplace 'à lui' et 'à elle' ?",
+        "answer": "lui",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Lui est un pronom COI utilisé pour une personne."
+    },
+    {
+        "question": "Quelle est la structure correcte : 'je le lui donne' ou 'je lui le donne' ?",
+        "answer": "je le lui donne",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "On respecte l’ordre des pronoms COD puis COI en français."
+    },
+    {
+        "question": "Quel mode utilise-t-on après 'il faut que' ?",
+        "answer": "subjonctif",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Le subjonctif est utilisé pour exprimer une nécessité ou un doute."
+    },
+    {
+        "question": "Quel est le pronom relatif dans la phrase : 'C’est une solution dont je parle' ?",
+        "answer": "dont",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "'Dont' remplace 'de + chose' ou 'de + personne'."
+    },
+    {
+        "question": "Complétez : 'Si j’avais su, je... venu.'",
+        "answer": "serais",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "C’est une hypothèse irréelle dans le passé, donc conditionnel passé."
+    },
+    {
+        "question": "Quel est le participe passé dans 'nous avons lu un article' ?",
+        "answer": "lu",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Le participe passé de 'lire' est 'lu'."
+    },
+    {
+        "question": "Quel pronom pouurait on utiliser dans la phrase 'Oui, Je viens de France' ?",
+        "answer": "en",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "'En' remplace un complément introduit par 'de'."
+    },
+    {
+        "question": "Comment forme-t-on le conditionnel passé ?",
+        "answer": "auxiliaire au conditionnel + participe passé",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "Ex : j’aurais fini, tu serais parti."
+    },
+    {
+        "question": "Quel est l’infinitif de 'avait expliqué' ?",
+        "answer": "expliquer",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "C’est le verbe 'expliquer' à l’imparfait + participe passé."
+    }
+]

@@ -1,0 +1,282 @@
+[
+    {
+        "question": "Que signifie 'infobésité' ?",
+        "answer": "Trop d'informations reçues en même temps",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Mot-valise : information + obésité"
+    },
+    {
+        "question": "Comment appelle-t-on une image numérique représentant une personne ?",
+        "answer": "Un avatar",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Utilisé dans les jeux, réseaux sociaux ou forums"
+    },
+    {
+        "question": "Quel mot décrit une information modifiée pour influencer les gens ?",
+        "answer": "Manipulée",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Une information manipulée a été changée pour tromper"
+    },
+    {
+        "question": "Quel est le contraire d’une information vérifiée ?",
+        "answer": "Une fake news",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Une fausse information, souvent diffusée rapidement"
+    },
+    {
+        "question": "Comment appelle-t-on une personne qui influence sur Internet ?",
+        "answer": "Un influenceur",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Personne suivie par un grand nombre d’internautes"
+    },
+    {
+        "question": "Quel mot désigne une machine qui imite l’intelligence humaine ?",
+        "answer": "L’intelligence artificielle",
+        "category": "vocabulaire",
+        "difficulty": 3,
+        "explanation": "Technologie qui permet aux ordinateurs de 'penser'"
+    },
+    {
+        "question": "Quel adjectif qualifie une vidéo diffusée sans interruption ?",
+        "answer": "En continu",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Diffusée sans arrêt sur Internet ou à la télévision"
+    },
+    {
+        "question": "Quel mot signifie 'envoyer une information à beaucoup de gens' ?",
+        "answer": "Diffuser",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Synonyme : partager, transmettre"
+    },
+    {
+        "question": "Comment appelle-t-on un message court qui s’affiche sur un téléphone ?",
+        "answer": "Une notification",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Petite alerte qui informe d’une nouveauté"
+    },
+    {
+        "question": "Quel adjectif décrit un contenu destiné à un public précis ?",
+        "answer": "Ciblé",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Contenu pensé pour un groupe de personnes"
+    },
+    {
+        "question": "Que veut dire 'mettre en contexte' ?",
+        "answer": "Expliquer le moment et le lieu d’une information",
+        "category": "vocabulaire",
+        "difficulty": 3,
+        "explanation": "Cela permet de mieux comprendre une info"
+    },
+    {
+        "question": "Quel adjectif signifie 'qui existe seulement sur Internet' ?",
+        "answer": "Virtuel",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Opposé de réel"
+    },
+    {
+        "question": "Que signifie le mot 'algorithme' ?",
+        "answer": "Programme qui trie des informations",
+        "category": "vocabulaire",
+        "difficulty": 3,
+        "explanation": "Utilisé par les moteurs de recherche et réseaux"
+    },
+    {
+        "question": "Comment appelle-t-on une photo modifiée avec un logiciel ?",
+        "answer": "Retouchée",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Photo changée pour paraître plus belle ou différente"
+    },
+    {
+        "question": "Quel mot désigne une trop grande quantité de contenu numérique ?",
+        "answer": "Surinformation",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Synonyme : infobésité"
+    },
+    {
+        "question": "Quel mot signifie 'faire faire une tâche par une machine' ?",
+        "answer": "Automatiser",
+        "category": "vocabulaire",
+        "difficulty": 3,
+        "explanation": "Exemple : réponses automatiques sur un site"
+    },
+    {
+        "question": "Que veut dire 'détecter' une erreur ?",
+        "answer": "La trouver automatiquement",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Souvent utilisé avec un logiciel ou une IA"
+    },
+    {
+        "question": "Quel mot décrit la capacité à comprendre l’importance d’une information ?",
+        "answer": "Mettre en perspective",
+        "category": "vocabulaire",
+        "difficulty": 4,
+        "explanation": "Comparer une information à d’autres"
+    },
+    {
+        "question": "Quel mot désigne un outil technologique pour faire une action précise ?",
+        "answer": "Un dispositif",
+        "category": "vocabulaire",
+        "difficulty": 3,
+        "explanation": "Exemple : un dispositif de sécurité"
+    },
+    {
+        "question": "Comment appelle-t-on un ensemble de données sur une personne ?",
+        "answer": "Un profil",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Informations utilisées pour personnaliser un contenu"
+    },
+    {
+        "question": "Quelle conjonction utilise-t-on pour exprimer le but avec le subjonctif ?",
+        "answer": "Pour que",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "Ex : Je parle lentement pour que tu comprennes."
+    },
+    {
+        "question": "Quel temps utilise-t-on pour parler d’une action habituelle ?",
+        "answer": "Le présent de l’indicatif",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Ex : Je lis le journal tous les matins."
+    },
+    {
+        "question": "Quelle est la forme correcte : 'il faut que tu ___ (venir)' ?",
+        "answer": "viennes",
+        "category": "grammaire",
+        "difficulty": 3,
+        "explanation": "Subjonctif présent du verbe venir"
+    },
+    {
+        "question": "Quelle préposition précède un verbe à l’infinitif pour exprimer le but ?",
+        "answer": "Pour",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Ex : Je travaille pour réussir."
+    },
+    {
+        "question": "Comment transforme-t-on 'il dit : je pars' au discours indirect ?",
+        "answer": "Il dit qu’il part",
+        "category": "grammaire",
+        "difficulty": 3,
+        "explanation": "Le verbe reste au présent si le verbe introducteur est au présent."
+    },
+    {
+        "question": "Quelle structure utilise-t-on pour exprimer une conséquence ?",
+        "answer": "Si bien que",
+        "category": "grammaire",
+        "difficulty": 4,
+        "explanation": "Ex : Il a crié si fort que tout le monde l’a entendu."
+    },
+    {
+        "question": "Quel pronom relatif remplace 'un lieu' ?",
+        "answer": "Où",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Ex : La ville où je suis né."
+    },
+    {
+        "question": "Quelle structure exprime l'opposition ?",
+        "answer": "Bien que",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "Ex : Bien que fatigué, il continue."
+    },
+    {
+        "question": "Quel est l’imparfait du verbe 'avoir' à la 1re personne du singulier ?",
+        "answer": "J’avais",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Imparfait : j’avais, tu avais, il avait…"
+    },
+    {
+        "question": "Complétez : 'Il a dit qu’il ___ parti.'",
+        "answer": "était",
+        "category": "grammaire",
+        "difficulty": 3,
+        "explanation": "Discours indirect au passé : plus-que-parfait"
+    },
+    {
+        "question": "Quel temps utilise-t-on pour exprimer une hypothèse avec 'si' + imparfait ?",
+        "answer": "Le conditionnel présent",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "Ex : Si j’étais riche, j’achèterais une maison."
+    },
+    {
+        "question": "Quel est le participe présent du verbe 'parler' ?",
+        "answer": "Parlant",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "Formation : radical de 'nous' + -ant"
+    },
+    {
+        "question": "Quel est le pronom relatif dans : 'L’homme qui parle est mon oncle.' ?",
+        "answer": "Qui",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Sujet du verbe 'parle'"
+    },
+    {
+        "question": "Complétez : 'C’est un métier ___ demande beaucoup de rigueur.'",
+        "answer": "qui",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Sujet du verbe 'demander'"
+    },
+    {
+        "question": "Comment forme-t-on le plus-que-parfait ?",
+        "answer": "Auxiliaire à l’imparfait + participe passé",
+        "category": "grammaire",
+        "difficulty": 3,
+        "explanation": "Ex : J’avais vu, tu avais fini…"
+    },
+    {
+        "question": "Quel est le conditionnel du verbe 'pouvoir' à la 3e personne du singulier ?",
+        "answer": "Pourrait",
+        "category": "grammaire",
+        "difficulty": 3,
+        "explanation": "Il/elle pourrait"
+    },
+    {
+        "question": "Quel mot exprime la conséquence logique ?",
+        "answer": "Donc",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Ex : Il a faim, donc il mange."
+    },
+    {
+        "question": "Complétez : 'Pour qu’il comprenne, il faut que tu ___ (expliquer)'",
+        "answer": "expliques",
+        "category": "grammaire",
+        "difficulty": 4,
+        "explanation": "Subjonctif présent après 'il faut que'"
+    },
+    {
+        "question": "Quel temps suit souvent 'quand' dans une narration au passé ?",
+        "answer": "Le plus-que-parfait",
+        "category": "grammaire",
+        "difficulty": 3,
+        "explanation": "Ex : Quand il était arrivé, tout avait changé."
+    },
+    {
+        "question": "Comment exprimer une intention différente avec 'au lieu de' ?",
+        "answer": "au lieu de + infinitif",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "Ex : Il joue au lieu de travailler."
+    }
+]
