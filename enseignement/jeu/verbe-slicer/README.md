@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Verbe Slicer est un jeu d'action moderne pour apprendre les verbes irréguliers français. Les joueurs doivent cliquer sur les verbes irréguliers qui tombent du ciel tout en évitant les verbes réguliers.
+Verbe Slicer est un jeu d'action pour apprendre les verbes irréguliers français. Les joueurs doivent cliquer sur les verbes irréguliers qui tombent du ciel tout en évitant les verbes réguliers.
 
 ## Fonctionnalités
 
