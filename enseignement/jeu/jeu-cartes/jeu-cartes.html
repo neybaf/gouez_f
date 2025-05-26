@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Cartes FLE</title>
+    <link rel="stylesheet" href="/gouez_f/css/game-styles.css">
+    <style>
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            min-height: 200px;
+            perspective: 1000px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .card-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .card-answer {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .card-category {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .difficulty-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            gap: 2px;
+        }
+
+        .difficulty-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+        }
+
+        .difficulty-dot.active {
+            background: var(--warning-color);
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .progress-section {
+            padding: 1rem;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">🎴 Jeu de Cartes FLE</h1>
+            <p class="game-subtitle">Retournez les cartes pour révéler les réponses</p>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-text">Progression: <span id="progress-count">0/0</span></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat-item">
+                <span class="stat-value" id="cards-viewed">0</span>
+                <span class="stat-label">Cartes vues</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="correct-answers">0</span>
+                <span class="stat-label">Bonnes réponses</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="accuracy">0%</span>
+                <span class="stat-label">Précision</span>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">Toutes</button>
+                <button class="filter-btn" data-category="grammaire">Grammaire</button>
+                <button class="filter-btn" data-category="vocabulaire">Vocabulaire</button>
+                <button class="filter-btn" data-category="conjugaison">Conjugaison</button>
+                <button class="filter-btn" data-category="culture">Culture</button>
+            </div>
+
+            <div class="cards-container" id="cards-container">
+                <!-- Les cartes seront générées dynamiquement -->
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <button class="btn btn-secondary" id="shuffle-btn">🔀 Mélanger</button>
+            <button class="btn btn-warning" id="reset-btn">🔄 Recommencer</button>
+            <button class="btn btn-primary" id="new-game-btn">🎮 Nouveau jeu</button>
+        </div>
+    </div>
+
+    <div class="result-popup" id="result-popup">
+        <div class="popup-content">
+            <h2>🎉 Félicitations !</h2>
+            <p>Vous avez terminé toutes les cartes !</p>
+            <div id="final-stats"></div>
+            <div style="margin-top: 1rem;">
+                <button class="btn btn-primary" id="play-again-btn">Rejouer</button>
+                <button class="btn btn-secondary" id="menu-btn">Menu principal</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="jeu-cartes.js"></script>
+</body>
+</html> 
