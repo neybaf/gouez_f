@@ -178,7 +178,16 @@ class VerbeSlicer {
     
     setupCanvas() {
         this.canvas = document.getElementById('game-canvas');
+        if (!this.canvas) {
+            console.error('Canvas element not found!');
+            return;
+        }
+        
         this.ctx = this.canvas.getContext('2d');
+        if (!this.ctx) {
+            console.error('Canvas context not available!');
+            return;
+        }
         
         this.resizeCanvas();
         window.addEventListener('resize', () => this.resizeCanvas());
@@ -197,8 +206,15 @@ class VerbeSlicer {
     }
     
     resizeCanvas() {
+        if (!this.canvas) return;
+        
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+        
+        // Redessiner si le jeu est en cours
+        if (this.gameState === 'playing') {
+            this.render();
+        }
     }
     
     startGame() {
