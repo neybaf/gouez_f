@@ -13,7 +13,7 @@ Le jeu d'association lexicale est un outil pédagogique interactif conçu pour l
 - **Feedback visuel** : Indications claires pour les bonnes/mauvaises réponses
 
 ### 📚 Système de niveaux dynamique
-- **Niveaux CECR** : Formation Générale (FG1-4), Formation Spécialisée (FOS1-2), Institut (INS2)
+- **Niveaux CECR** : Français Général (FG1-4), Français sur Objectifs spécifiques (FOS1-2), Institut (INS2)
 - **Sous-niveaux** : Unités U1 à U9 selon disponibilité
 - **Détection automatique** : Scan des fichiers disponibles
 - **Progression adaptative** : Passage au niveau suivant
