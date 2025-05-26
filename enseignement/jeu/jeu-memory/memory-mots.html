@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory des Mots FLE</title>
+    <link rel="stylesheet" href="/gouez_f/css/game-styles.css">
+    <style>
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            position: relative;
+            perspective: 1000px;
+            transition: transform 0.2s ease;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            pointer-events: none;
+        }
+
+        .memory-card.matched {
+            opacity: 0.7;
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .memory-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: var(--dark-color);
+            transform: rotateY(180deg);
+        }
+
+        .card-back.french {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .card-back.translation {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border: 2px solid var(--accent-color);
+        }
+
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .difficulty-btn.active,
+        .difficulty-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--light-color);
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .moves-counter {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+
+        .hint-button {
+            background: var(--warning-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .hint-button:hover {
+            background: #f57c00;
+            transform: scale(1.05);
+        }
+
+        .hint-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color);
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .level-complete {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--success-color), #66bb6a);
+            color: white;
+            border-radius: var(--border-radius);
+            margin: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .memory-grid {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 1rem;
+            }
+            
+            .game-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .card-face {
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .memory-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .card-face {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">🧠 Memory des Mots</h1>
+            <p class="game-subtitle">Associez les mots français avec leurs traductions</p>
+        </div>
+
+        <div class="game-area">
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-level="facile">Facile (6 paires)</button>
+                <button class="difficulty-btn" data-level="moyen">Moyen (8 paires)</button>
+                <button class="difficulty-btn" data-level="difficile">Difficile (12 paires)</button>
+            </div>
+
+            <div class="game-info">
+                <div class="timer-display" id="timer">⏱️ 00:00</div>
+                <div class="moves-counter" id="moves">Coups: 0</div>
+                <button class="hint-button" id="hint-btn">💡 Indice (3)</button>
+            </div>
+
+            <div class="memory-grid" id="memory-grid">
+                <!-- Les cartes seront générées dynamiquement -->
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <button class="btn btn-secondary" id="new-game-btn">🎮 Nouveau jeu</button>
+            <button class="btn btn-warning" id="reset-btn">🔄 Recommencer</button>
+            <button class="btn btn-primary" id="menu-btn">🏠 Menu</button>
+        </div>
+    </div>
+
+    <div class="result-popup" id="result-popup">
+        <div class="popup-content">
+            <h2>🎉 Félicitations !</h2>
+            <div id="final-results"></div>
+            <div style="margin-top: 1rem;">
+                <button class="btn btn-primary" id="play-again-btn">Rejouer</button>
+                <button class="btn btn-secondary" id="next-level-btn">Niveau suivant</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script src="memory-mots.js"></script>
+</body>
+</html> 

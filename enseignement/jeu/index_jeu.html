@@ -1,57 +1,387 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Activité FLE</title>
-  <link rel="stylesheet" href="/gouez_f/css/styles.css">
+  <title>🎮 Jeux FLE - Apprendre le français en s'amusant</title>
+  <link rel="stylesheet" href="/gouez_f/css/game-styles.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
-      padding: 50px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
     }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
     }
-    .game-choice {
-      margin: 20px 0;
-      padding: 10px 20px;
-      background-color: #4CAF50;
+    
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
-      cursor: pointer;
-      border-radius: 5px;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    
+    .hero-title {
+      font-size: 3rem;
+      margin: 0 0 1rem 0;
+      font-weight: 700;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+    
+    .games-section {
+      padding: 3rem 2rem;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      color: var(--dark-color);
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .game-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
       text-decoration: none;
+      color: inherit;
+      position: relative;
     }
-    .game-choice:hover {
-      background-color: #45a049;
+    
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     }
-    footer {
-      font-family: Arial, sans-serif;
-      color: silver;
-      background-color: #f4f4f4;
-      font-size: xx-small;
+    
+    .game-card-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .game-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    
+    .game-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      color: var(--dark-color);
+    }
+    
+    .game-description {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    .game-card-body {
+      padding: 1.5rem;
+    }
+    
+    .game-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .game-features li {
+      padding: 0.3rem 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .game-features li::before {
+      content: '✓';
+      color: var(--success-color);
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+    
+    .difficulty-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    
+    .difficulty-facile {
+      background: var(--success-color);
+      color: white;
+    }
+    
+    .difficulty-moyen {
+      background: var(--warning-color);
+      color: white;
+    }
+    
+    .difficulty-difficile {
+      background: var(--danger-color);
+      color: white;
+    }
+    
+    .new-badge {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      background: var(--accent-color);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 0 0 15px 0;
+      font-size: 0.7rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .stats-section {
+      background: var(--light-color);
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid #e0e0e0;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      display: block;
+    }
+    
+    .stat-label {
+      color: #666;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Jeux et activités</h1>
-  <h2>Activités</h2>
-  <div class="container">
-    <a href="jeu.html?game=villes-de-france" class="game-choice">Quiz culturel : les villes de France</a>
-    <a href="jeu.html?game=passe-compose" class="game-choice">Quiz de grammaire : Le passé composé</a>
-    <a href="jeu-phonetique.html" class="game-choice">Quiz de Phonétique</a>
-    <a href="jeu-lexique/jeu-lexique.html" class="game-choice">Activité d'association lexicale</a>
+  <div class="main-container">
+    <div class="hero-section">
+      <h1 class="hero-title">🎮 Jeux FLE</h1>
+      <p class="hero-subtitle">Apprendre le français en s'amusant avec des jeux interactifs</p>
+    </div>
+
+    <div class="games-section">
+      <h2 class="section-title">🎯 Activités Interactives</h2>
+      <div class="games-grid">
+        <a href="jeu-cartes/jeu-cartes.html" class="game-card">
+          <div class="new-badge">Nouveau!</div>
+          <div class="difficulty-badge difficulty-moyen">Moyen</div>
+          <div class="game-card-header">
+            <span class="game-icon">🎴</span>
+            <h3 class="game-title">Jeu de Cartes FLE</h3>
+            <p class="game-description">Retournez les cartes pour révéler les réponses et testez vos connaissances</p>
+          </div>
+          <div class="game-card-body">
+            <ul class="game-features">
+              <li>Cartes par catégorie (grammaire, vocabulaire...)</li>
+              <li>Système de progression et statistiques</li>
+              <li>Animations fluides et design moderne</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="jeu-memory/memory-mots.html" class="game-card">
+          <div class="new-badge">Nouveau!</div>
+          <div class="difficulty-badge difficulty-facile">Facile</div>
+          <div class="game-card-header">
+            <span class="game-icon">🧠</span>
+            <h3 class="game-title">Memory des Mots</h3>
+            <p class="game-description">Associez les mots français avec leurs traductions</p>
+          </div>
+          <div class="game-card-body">
+            <ul class="game-features">
+              <li>3 niveaux de difficulté</li>
+              <li>Système d'indices</li>
+              <li>Chronomètre et compteur de coups</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="jeu.html?game=passe-compose" class="game-card">
+          <div class="difficulty-badge difficulty-moyen">Moyen</div>
+          <div class="game-card-header">
+            <span class="game-icon">📚</span>
+            <h3 class="game-title">Quiz Passé Composé</h3>
+            <p class="game-description">Maîtrisez la conjugaison du passé composé avec ce quiz interactif</p>
+          </div>
+          <div class="game-card-body">
+            <ul class="game-features">
+              <li>Questions sur les auxiliaires</li>
+              <li>Drag & drop interactif</li>
+              <li>Feedback immédiat</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="jeu.html?game=villes-de-france" class="game-card">
+          <div class="difficulty-badge difficulty-facile">Facile</div>
+          <div class="game-card-header">
+            <span class="game-icon">🏛️</span>
+            <h3 class="game-title">Quiz Culturel</h3>
+            <p class="game-description">Découvrez les villes de France et enrichissez votre culture générale</p>
+          </div>
+          <div class="game-card-body">
+            <ul class="game-features">
+              <li>Géographie française</li>
+              <li>Culture et monuments</li>
+              <li>Questions variées</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="jeu-phonetique.html" class="game-card">
+          <div class="difficulty-badge difficulty-difficile">Difficile</div>
+          <div class="game-card-header">
+            <span class="game-icon">🔊</span>
+            <h3 class="game-title">Quiz Phonétique</h3>
+            <p class="game-description">Améliorez votre discrimination auditive avec des exercices sonores</p>
+          </div>
+          <div class="game-card-body">
+            <ul class="game-features">
+              <li>Exercices d'écoute</li>
+              <li>Discrimination phonétique</li>
+              <li>Sons du français</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="jeu-lexique/jeu-lexique.html" class="game-card">
+          <div class="difficulty-badge difficulty-moyen">Moyen</div>
+          <div class="game-card-header">
+            <span class="game-icon">🔗</span>
+            <h3 class="game-title">Association Lexicale</h3>
+            <p class="game-description">Associez les mots et enrichissez votre vocabulaire français</p>
+          </div>
+          <div class="game-card-body">
+            <ul class="game-features">
+              <li>Vocabulaire par niveaux</li>
+              <li>Associations logiques</li>
+              <li>Progression adaptative</li>
+            </ul>
+          </div>
+        </a>
+      </div>
+
+      <h2 class="section-title">🎮 Jeux d'Action</h2>
+      <div class="games-grid">
+        <a href="verbe-slicer/jeu-verbes.html" class="game-card">
+          <div class="difficulty-badge difficulty-difficile">Difficile</div>
+          <div class="game-card-header">
+            <span class="game-icon">⚔️</span>
+            <h3 class="game-title">Maître des Verbes</h3>
+            <p class="game-description">Découpez les verbes irréguliers dans ce jeu d'action rapide</p>
+          </div>
+          <div class="game-card-body">
+            <ul class="game-features">
+              <li>Jeu d'action en temps réel</li>
+              <li>Verbes irréguliers par temps</li>
+              <li>Difficulté progressive</li>
+            </ul>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="stats-section">
+      <h2 class="section-title">📊 Statistiques</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">7</span>
+          <span class="stat-label">Jeux disponibles</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">4</span>
+          <span class="stat-label">Catégories</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Niveaux</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">∞</span>
+          <span class="stat-label">Heures de plaisir</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <h2>Jeux</h2>
-  <div>
-    <a href="verbe-slicer/jeu-verbes.html" class="game-choice">Maître des verbes</a>
-  </div>
-</body>
-  <footer>
+
+  <footer style="text-align: center; padding: 2rem; color: white; font-size: 0.9rem;">
     <div data-include="/gouez_f/partials/footer.html"></div>
   </footer>
+</body>
 </html>
