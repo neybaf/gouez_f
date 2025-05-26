@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecteurs Logiques - Jeu FLE</title>
+    <link rel="stylesheet" href="/gouez_f/css/game-styles.css">
+    <link rel="stylesheet" href="connecteurs-styles.css">
+    <meta name="description" content="Jeu pour apprendre les connecteurs logiques français - Trouvez le bon connecteur entre cause et conséquence">
+</head>
+<body>
+    <!-- Écran de démarrage -->
+    <div id="start-screen" class="game-screen active">
+        <div class="game-header">
+            <h1 class="game-title">
+                <span class="title-icon">🔗</span>
+                Connecteurs Logiques
+            </h1>
+            <p class="game-subtitle">Maîtrisez les liens logiques en français !</p>
+        </div>
+
+        <div class="game-instructions">
+            <div class="instruction-card">
+                <h3>🎯 Objectif</h3>
+                <p>Trouvez le <strong>connecteur logique</strong> qui relie correctement la cause à sa conséquence.</p>
+            </div>
+            
+            <div class="instruction-card">
+                <h3>📚 Types de connecteurs</h3>
+                <div class="connector-types">
+                    <div class="connector-type">
+                        <span class="connector-badge cause">Cause</span>
+                        <span class="connector-examples">parce que, car, puisque...</span>
+                    </div>
+                    <div class="connector-type">
+                        <span class="connector-badge consequence">Conséquence</span>
+                        <span class="connector-examples">donc, alors, par conséquent...</span>
+                    </div>
+                    <div class="connector-type">
+                        <span class="connector-badge addition">Addition</span>
+                        <span class="connector-examples">de plus, en outre, aussi...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instruction-card">
+                <h3>⚡ Comment jouer</h3>
+                <p><strong>1.</strong> Lisez la phrase avec la cause<br>
+                <strong>2.</strong> Choisissez le connecteur approprié<br>
+                <strong>3.</strong> Vérifiez avec la conséquence<br>
+                <strong>4.</strong> Gagnez des points et du temps bonus !</p>
+            </div>
+        </div>
+
+        <div class="difficulty-selector">
+            <h3>Choisissez votre niveau :</h3>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn" data-difficulty="debutant">
+                    <span class="difficulty-icon">🌱</span>
+                    <span class="difficulty-name">Débutant</span>
+                    <span class="difficulty-desc">Connecteurs simples</span>
+                </button>
+                <button class="difficulty-btn active" data-difficulty="intermediaire">
+                    <span class="difficulty-icon">⚡</span>
+                    <span class="difficulty-name">Intermédiaire</span>
+                    <span class="difficulty-desc">Variété de connecteurs</span>
+                </button>
+                <button class="difficulty-btn" data-difficulty="avance">
+                    <span class="difficulty-icon">🔥</span>
+                    <span class="difficulty-name">Avancé</span>
+                    <span class="difficulty-desc">Connecteurs complexes</span>
+                </button>
+            </div>
+        </div>
+
+        <button id="start-game-btn" class="game-btn primary">
+            <span class="btn-icon">🚀</span>
+            Commencer l'entraînement
+        </button>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="game-screen">
+        <div class="game-ui">
+            <div class="ui-top">
+                <div class="score-display">
+                    <span class="score-label">Score</span>
+                    <span id="score" class="score-value">0</span>
+                </div>
+                
+                <div class="timer-display">
+                    <span class="timer-label">Temps</span>
+                    <span id="timer" class="timer-value">60</span>
+                    <span class="timer-unit">s</span>
+                </div>
+
+                <div class="streak-display">
+                    <span class="streak-label">Série</span>
+                    <span id="streak" class="streak-value">0</span>
+                    <span class="streak-icon">🔥</span>
+                </div>
+
+                <button id="pause-btn" class="ui-btn">⏸️</button>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-label">Progression</div>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <div id="progress-text" class="progress-text">0 / 10</div>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="sentence-container">
+                <div class="cause-section">
+                    <div class="section-label">Cause</div>
+                    <div id="cause-text" class="sentence-text"></div>
+                </div>
+
+                <div class="connector-section">
+                    <div class="section-label">Connecteur</div>
+                    <div id="connectors-container" class="connectors-grid">
+                        <!-- Les connecteurs seront générés ici -->
+                    </div>
+                </div>
+
+                <div class="consequence-section">
+                    <div class="section-label">Conséquence</div>
+                    <div id="consequence-text" class="sentence-text"></div>
+                </div>
+            </div>
+
+            <div class="feedback-container">
+                <div id="feedback-message" class="feedback-message"></div>
+                <button id="next-btn" class="game-btn primary" style="display: none;">
+                    <span class="btn-icon">➡️</span>
+                    Phrase suivante
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de pause -->
+    <div id="pause-screen" class="game-screen overlay">
+        <div class="pause-content">
+            <h2>⏸️ Jeu en pause</h2>
+            <div class="pause-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Score actuel</span>
+                    <span id="pause-score" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Phrases réussies</span>
+                    <span id="pause-correct" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Précision</span>
+                    <span id="pause-accuracy" class="stat-value">100%</span>
+                </div>
+            </div>
+            <div class="pause-buttons">
+                <button id="resume-btn" class="game-btn primary">
+                    <span class="btn-icon">▶️</span>
+                    Reprendre
+                </button>
+                <button id="restart-btn" class="game-btn secondary">
+                    <span class="btn-icon">🔄</span>
+                    Redémarrer
+                </button>
+                <button id="quit-btn" class="game-btn">
+                    <span class="btn-icon">🏠</span>
+                    Quitter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de fin -->
+    <div id="game-over-screen" class="game-screen overlay">
+        <div class="game-over-content">
+            <h2 id="game-over-title">🎯 Partie terminée !</h2>
+            
+            <div class="final-stats">
+                <div class="stat-card">
+                    <span class="stat-icon">🏆</span>
+                    <span class="stat-label">Score final</span>
+                    <span id="final-score" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">✅</span>
+                    <span class="stat-label">Phrases réussies</span>
+                    <span id="final-correct" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🎯</span>
+                    <span class="stat-label">Précision</span>
+                    <span id="final-accuracy" class="stat-value">100%</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">⏱️</span>
+                    <span class="stat-label">Temps de jeu</span>
+                    <span id="game-time" class="stat-value">0:00</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🔥</span>
+                    <span class="stat-label">Meilleure série</span>
+                    <span id="best-streak" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">📚</span>
+                    <span class="stat-label">Connecteurs maîtrisés</span>
+                    <span id="connectors-learned" class="stat-value">0</span>
+                </div>
+            </div>
+
+            <div id="performance-message" class="performance-message"></div>
+
+            <div class="game-over-buttons">
+                <button id="play-again-btn" class="game-btn primary">
+                    <span class="btn-icon">🔄</span>
+                    Rejouer
+                </button>
+                <button id="back-to-menu-btn" class="game-btn secondary">
+                    <span class="btn-icon">🏠</span>
+                    Menu principal
+                </button>
+                <button id="share-score-btn" class="game-btn">
+                    <span class="btn-icon">📤</span>
+                    Partager le score
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio (généré dynamiquement) -->
+    <audio id="success-sound" preload="auto"></audio>
+    <audio id="error-sound" preload="auto"></audio>
+    <audio id="bonus-sound" preload="auto"></audio>
+
+    <script src="connecteurs-game.js"></script>
+</body>
+</html> 

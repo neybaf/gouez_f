@@ -1,0 +1,72 @@
+[
+    {
+        "question": "Comment dit-on 'hello' en français ?",
+        "answer": "bonjour",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Salutation de base en français."
+    },
+    {
+        "question": "Quel est l'article défini masculin ?",
+        "answer": "le",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Article défini pour les noms masculins singuliers."
+    },
+    {
+        "question": "Comment dit-on 'cat' en français ?",
+        "answer": "chat",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Animal domestique très populaire."
+    },
+    {
+        "question": "Conjuguez 'être' : je...",
+        "answer": "suis",
+        "category": "conjugaison",
+        "difficulty": 1,
+        "explanation": "Première personne du singulier du verbe être."
+    },
+    {
+        "question": "Comment dit-on 'thank you' en français ?",
+        "answer": "merci",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Expression de politesse pour remercier."
+    },
+    {
+        "question": "Quel est l'article défini féminin ?",
+        "answer": "la",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Article défini pour les noms féminins singuliers."
+    },
+    {
+        "question": "Comment dit-on 'dog' en français ?",
+        "answer": "chien",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Meilleur ami de l'homme."
+    },
+    {
+        "question": "Conjuguez 'avoir' : j'...",
+        "answer": "ai",
+        "category": "conjugaison",
+        "difficulty": 1,
+        "explanation": "Première personne du singulier du verbe avoir."
+    },
+    {
+        "question": "Comment dit-on 'water' en français ?",
+        "answer": "eau",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Liquide essentiel à la vie."
+    },
+    {
+        "question": "Quelle est la capitale de la France ?",
+        "answer": "Paris",
+        "category": "culture",
+        "difficulty": 1,
+        "explanation": "Ville lumière et capitale française."
+    }
+] 

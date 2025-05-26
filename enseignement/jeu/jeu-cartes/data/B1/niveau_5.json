@@ -1,0 +1,218 @@
+[
+      {
+        "question": "Que signifie « entre » dans « entre la place de la Concorde et l’Arc de Triomphe » ?",
+        "answer": "Situé au milieu de deux points.",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Exprime la position intermédiaire entre deux lieux."
+      },
+      {
+        "question": "Que veut dire « le long de » dans « le long de l’avenue » ?",
+        "answer": "Suivant la longueur de la rue.",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Indique une disposition parallèle au parcours."
+      },
+      {
+        "question": "Que signifie « à partir de » dans « à partir de 2024 » ?",
+        "answer": "Dès cette date.",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Marque le début d’une période à compter d’une date."
+      },
+      {
+        "question": "Que veut dire « au cœur de » dans « au cœur de la ville » ?",
+        "answer": "Au centre de la ville.",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Indique la position centrale."
+      },
+      {
+        "question": "Que signifie « piétonisation » ?",
+        "answer": "Réserver un espace aux piétons en excluant les voitures.",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Action de rendre une voie praticable uniquement à pied."
+      },
+        {
+          "question": "Que veut dire « zone ombragée » ?",
+          "answer": "Espace bénéficiant d'ombre.",
+          "category": "vocabulaire",
+          "difficulty": 1,
+          "explanation": "Zone où l'ombre est créée par des arbres ou structures."
+        },
+        {
+          "question": "Que décrit l'expression « poumon vert » ?",
+          "answer": "Grand espace végétalisé apportant de la fraîcheur et de l'air pur.",
+          "category": "vocabulaire",
+          "difficulty": 2,
+          "explanation": "Métaphore pour un espace vert améliorant la qualité de l'air."
+        },
+        {
+          "question": "Que signifie « centre-ville » ?",
+          "answer": "Secteur principal où se concentrent commerces et services.",
+          "category": "vocabulaire",
+          "difficulty": 1,
+          "explanation": "Partie centrale et dynamique d'une ville."
+        },
+        {
+          "question": "Que signifie « végétaliser » ?",
+          "answer": "Planter de la végétation dans un espace.",
+          "category": "vocabulaire",
+          "difficulty": 1,
+          "explanation": "Action d'introduire des plantes pour verdir un lieu."
+        },
+        {
+          "question": "Que veut dire « promenades végétalisées » ?",
+          "answer": "Allées bordées de végétation.",
+          "category": "vocabulaire",
+          "difficulty": 2,
+          "explanation": "Sentiers agrémentés d'arbres ou d'arbustes."
+        },
+        {
+          "question": "Que signifie « bacs à fleurs » ?",
+          "answer": "Jardinières pour cultiver des fleurs.",
+          "category": "vocabulaire",
+          "difficulty": 1,
+          "explanation": "Conteneurs destinés à la culture de fleurs."
+        },
+        {
+          "question": "Que veut dire « jardin partagé » ?",
+          "answer": "Espace de jardinage collectif.",
+          "category": "vocabulaire",
+          "difficulty": 2,
+          "explanation": "Jardin entretenu et utilisé par plusieurs personnes."
+        },
+        {
+          "question": "Que signifie « appartement traversant » ?",
+          "answer": "Logement avec fenêtres sur deux façades opposées.",
+          "category": "vocabulaire",
+          "difficulty": 3,
+          "explanation": "Permet une meilleure aération et luminosité."
+        },
+        {
+          "question": "Que veut dire « studio » ?",
+          "answer": "Appartement composé d'une seule pièce principale.",
+          "category": "vocabulaire",
+          "difficulty": 1,
+          "explanation": "Logement minimaliste avec pièce unique."
+        },
+        {
+          "question": "Que signifie « balcon filant » ?",
+          "answer": "Balcon continu sur toute la longueur d'une façade.",
+          "category": "vocabulaire",
+          "difficulty": 3,
+          "explanation": "Balcon courant le long de plusieurs fenêtres."
+        },
+        {
+          "question": "Que veut dire « cour » dans « cour d'immeuble » ?",
+          "answer": "Espace ouvert entouré par des bâtiments.",
+          "category": "vocabulaire",
+          "difficulty": 1,
+          "explanation": "Zone intérieure à l'îlot formé par les immeubles."
+        },
+        {
+          "question": "Que signifie « permis tacite » ?",
+          "answer": "Autorisation renouvelée automatiquement.",
+          "category": "vocabulaire",
+          "difficulty": 3,
+          "explanation": "Permis qui se prolonge sans démarche supplémentaire."
+        },
+        {
+          "question": "Que veut dire « charte » dans « charte municipale » ?",
+          "answer": "Ensemble de règles ou principes établis par la municipalité.",
+          "category": "vocabulaire",
+          "difficulty": 2,
+          "explanation": "Document formalisant des engagements ou règles."
+        },
+        {
+          "question": "Que caractérise un « immeuble haussmannien » ?",
+          "answer": "Bâtiment du 19e siècle avec façade uniforme et six étages.",
+          "category": "vocabulaire",
+          "difficulty": 3,
+          "explanation": "Style architectural issu de la rénovation de Paris."
+        },
+        {
+          "question": "Que signifie « étage noble » dans un immeuble haussmannien ?",
+          "answer": "Deuxième étage, le plus prestigieux.",
+          "category": "vocabulaire",
+          "difficulty": 4,
+          "explanation": "Étage haut de plafond destiné aux salons et réceptions."
+        },
+        {
+          "question": "Comment forme-t-on un gérondif en français ?",
+          "answer": "en + participe présent (en + base + ant)",
+          "category": "grammaire",
+          "difficulty": 1,
+          "explanation": "Le gérondif se construit avec en suivi du verbe au participe présent."
+        },
+        {
+          "question": "Donnez un exemple de gérondif exprimant la simultanéité.",
+          "answer": "En écoutant de la musique, je travaille.",
+          "category": "grammaire",
+          "difficulty": 2,
+          "explanation": "Montre deux actions se déroulant en même temps."
+        },
+        {
+          "question": "Quel verbe a un gérondif irrégulier et quelle est sa forme ?",
+          "answer": "être → en étant",
+          "category": "grammaire",
+          "difficulty": 3,
+          "explanation": "Certains verbes comme être ont un participe présent irrégulier."
+        },
+        {
+          "question": "À quoi sert le gérondif dans « en proposant des solutions » ?",
+          "answer": "Introduire la manière d'agir.",
+          "category": "grammaire",
+          "difficulty": 2,
+          "explanation": "Le gérondif précise la façon d'effectuer l'action principale."
+        },
+        {
+          "question": "Dans quelle situation doit-on éviter de relever un gérondif ?",
+          "answer": "Lorsque le gérondif ne répond pas à la question « comment ? ».",
+          "category": "grammaire",
+          "difficulty": 4,
+          "explanation": "Un gérondif inapproprié ne précise pas la manière d'une action."
+        },
+        {
+          "question": "Comment se forme le plus-que-parfait ?",
+          "answer": "Imparfait de l'auxiliaire + participe passé.",
+          "category": "grammaire",
+          "difficulty": 1,
+          "explanation": "Assemblage de l'auxiliaire être ou avoir à l'imparfait et du participe passé."
+        },
+        {
+          "question": "Quel est l'usage du plus-que-parfait dans « il avait déjà bâti » ?",
+          "answer": "Indiquer une action antérieure à une autre action passée.",
+          "category": "grammaire",
+          "difficulty": 2,
+          "explanation": "Marque l'antériorité par rapport à un autre fait passé."
+        },
+        {
+          "question": "Reformulez « elle avait compris » en conservant le même temps et sens.",
+          "answer": "elle avait saisi",
+          "category": "grammaire",
+          "difficulty": 3,
+          "explanation": "Utilisation d'un synonyme au même temps pour conserver l'antériorité."
+        },
+        {
+          "question": "Pourquoi utilise-t-on le plus-que-parfait dans « il avait construit le pont » ?",
+          "answer": "Pour souligner que l'action était accomplie avant une autre.",
+          "category": "grammaire",
+          "difficulty": 2,
+          "explanation": "Le plus-que-parfait insiste sur l'antériorité par rapport au passé composé."
+        },
+        {
+          "question": "Quelle nuance apporte le plus-que-parfait dans « elle avait déjà terminé » ?",
+          "answer": "Met l'accent sur l'achèvement antérieur à un repère passé.",
+          "category": "grammaire",
+          "difficulty": 4,
+          "explanation": "Insiste sur le fait que l'action était réalisée avant un moment donné."
+        },
+        {
+          "question": "d'abord, puis, aujourd'hui sont des ____",
+          "answer": "marqueurs temporels",
+          "category": "grammaire",
+          "difficulty": 1
+        }
+]

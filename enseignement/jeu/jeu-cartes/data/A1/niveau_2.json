@@ -1,0 +1,72 @@
+[
+    {
+        "question": "Comment dit-on 'please' en français ?",
+        "answer": "s'il vous plaît",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Formule de politesse pour demander quelque chose."
+    },
+    {
+        "question": "Quel est l'article indéfini masculin ?",
+        "answer": "un",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Article indéfini pour les noms masculins singuliers."
+    },
+    {
+        "question": "Comment dit-on 'house' en français ?",
+        "answer": "maison",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Lieu d'habitation principal."
+    },
+    {
+        "question": "Conjuguez 'avoir' : tu...",
+        "answer": "as",
+        "category": "conjugaison",
+        "difficulty": 1,
+        "explanation": "Deuxième personne du singulier du verbe avoir."
+    },
+    {
+        "question": "Comment dit-on 'goodbye' en français ?",
+        "answer": "au revoir",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Formule de politesse pour prendre congé."
+    },
+    {
+        "question": "Quel est l'article indéfini féminin ?",
+        "answer": "une",
+        "category": "grammaire",
+        "difficulty": 1,
+        "explanation": "Article indéfini pour les noms féminins singuliers."
+    },
+    {
+        "question": "Comment dit-on 'book' en français ?",
+        "answer": "livre",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Objet contenant du texte à lire."
+    },
+    {
+        "question": "Conjuguez 'être' : il/elle...",
+        "answer": "est",
+        "category": "conjugaison",
+        "difficulty": 1,
+        "explanation": "Troisième personne du singulier du verbe être."
+    },
+    {
+        "question": "Comment dit-on 'school' en français ?",
+        "answer": "école",
+        "category": "vocabulaire",
+        "difficulty": 1,
+        "explanation": "Lieu d'apprentissage et d'éducation."
+    },
+    {
+        "question": "Quelle est la monnaie française ?",
+        "answer": "l'euro",
+        "category": "culture",
+        "difficulty": 1,
+        "explanation": "Monnaie européenne adoptée par la France."
+    }
+] 

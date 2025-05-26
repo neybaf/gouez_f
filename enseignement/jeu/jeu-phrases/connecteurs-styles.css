@@ -1,0 +1,620 @@
+/* Styles spécifiques pour le jeu de Connecteurs Logiques */
+
+/* Variables spécifiques au jeu */
+:root {
+  --connector-primary: #3498db;
+  --connector-secondary: #9b59b6;
+  --connector-success: #27ae60;
+  --connector-warning: #f39c12;
+  --connector-danger: #e74c3c;
+  --connector-cause: #e67e22;
+  --connector-consequence: #2ecc71;
+  --connector-addition: #9b59b6;
+  --connector-gradient: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+}
+
+/* Écran de jeu principal */
+#game-screen {
+  background: var(--connector-gradient);
+  position: relative;
+  overflow: hidden;
+}
+
+#game-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(116, 185, 255, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(155, 89, 182, 0.2) 0%, transparent 50%);
+  animation: backgroundShift 15s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes backgroundShift {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.05) rotate(1deg); }
+}
+
+/* Interface utilisateur du jeu */
+.game-ui {
+  position: relative;
+  z-index: 10;
+  padding: 20px;
+}
+
+.ui-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Affichages de score, timer et série */
+.score-display, .timer-display, .streak-display {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 12px 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  min-width: 120px;
+  text-align: center;
+}
+
+.score-display:hover, .timer-display:hover, .streak-display:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.score-label, .timer-label, .streak-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.score-value, .timer-value, .streak-value {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--connector-primary);
+  line-height: 1;
+}
+
+.timer-unit {
+  font-size: 1rem;
+  color: #666;
+  margin-left: 2px;
+}
+
+.streak-icon {
+  margin-left: 5px;
+  font-size: 1.2rem;
+}
+
+/* Bouton pause */
+.ui-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.ui-btn:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+/* Barre de progression */
+.progress-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 15px 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 20px;
+}
+
+.progress-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.progress-bar {
+  background: #e0e0e0;
+  border-radius: 10px;
+  height: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, var(--connector-primary), var(--connector-success));
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* Contenu principal du jeu */
+.game-content {
+  position: relative;
+  z-index: 5;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.sentence-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.cause-section, .consequence-section {
+  margin-bottom: 2rem;
+}
+
+.connector-section {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.section-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.sentence-text {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 1.5rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #2c3e50;
+  text-align: center;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.sentence-text.highlight {
+  border-color: var(--connector-primary);
+  background: rgba(52, 152, 219, 0.05);
+}
+
+/* Grille des connecteurs */
+.connectors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.connector-btn {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.connector-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.connector-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: var(--connector-primary);
+}
+
+.connector-btn:hover::before {
+  left: 100%;
+}
+
+.connector-btn.selected {
+  background: var(--connector-primary);
+  color: white;
+  border-color: var(--connector-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+}
+
+.connector-btn.correct {
+  background: var(--connector-success);
+  color: white;
+  border-color: var(--connector-success);
+  animation: correctPulse 0.6s ease;
+}
+
+.connector-btn.incorrect {
+  background: var(--connector-danger);
+  color: white;
+  border-color: var(--connector-danger);
+  animation: incorrectShake 0.6s ease;
+}
+
+.connector-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes correctPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes incorrectShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Types de connecteurs dans les instructions */
+.connector-types {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.connector-type {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.connector-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  min-width: 80px;
+  text-align: center;
+}
+
+.connector-badge.cause {
+  background: var(--connector-cause);
+}
+
+.connector-badge.consequence {
+  background: var(--connector-consequence);
+}
+
+.connector-badge.addition {
+  background: var(--connector-addition);
+}
+
+.connector-examples {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Feedback */
+.feedback-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.feedback-message {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.feedback-message.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feedback-message.success {
+  border-left: 5px solid var(--connector-success);
+  color: var(--connector-success);
+}
+
+.feedback-message.error {
+  border-left: 5px solid var(--connector-danger);
+  color: var(--connector-danger);
+}
+
+/* Écrans overlay */
+.overlay {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.pause-content, .game-over-content {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.pause-content h2, .game-over-content h2 {
+  margin-bottom: 1.5rem;
+  color: var(--dark-color);
+}
+
+/* Statistiques de pause */
+.pause-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--connector-primary);
+}
+
+/* Statistiques finales */
+.final-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.stat-card {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-label {
+  font-size: 0.7rem;
+  margin-bottom: 0.25rem;
+}
+
+.stat-card .stat-value {
+  font-size: 1.2rem;
+}
+
+/* Message de performance */
+.performance-message {
+  background: linear-gradient(135deg, var(--connector-success), var(--connector-primary));
+  color: white;
+  padding: 1rem;
+  border-radius: 15px;
+  margin: 1.5rem 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Boutons de jeu */
+.pause-buttons, .game-over-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ui-top {
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .score-display, .timer-display, .streak-display {
+    min-width: 100px;
+    padding: 10px 15px;
+  }
+  
+  .score-value, .timer-value, .streak-value {
+    font-size: 1.5rem;
+  }
+  
+  .sentence-container {
+    padding: 1.5rem;
+  }
+  
+  .sentence-text {
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+  
+  .connectors-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .connector-types {
+    gap: 0.5rem;
+  }
+  
+  .connector-type {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .final-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .pause-buttons, .game-over-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ui-top {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sentence-container {
+    padding: 1rem;
+  }
+  
+  .final-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .pause-content, .game-over-content {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}
+
+/* Animations d'entrée */
+.game-screen.active {
+  animation: screenFadeIn 0.5s ease-out;
+}
+
+@keyframes screenFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Effets de bonus */
+.bonus-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, var(--connector-warning), var(--connector-success));
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  z-index: 20;
+  animation: bonusAnimation 1.5s ease-out forwards;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes bonusAnimation {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+} 

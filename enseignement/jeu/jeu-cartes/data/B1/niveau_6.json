@@ -1,0 +1,282 @@
+[
+  {
+    "question": "Quel terme désigne l'étude scientifique des musées et de leurs collections ?",
+    "answer": "Muséologie",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "La muséologie étudie la gestion, la conservation et la présentation des collections muséales."
+  },
+  {
+    "question": "Quel mot désigne la science de la conception et de l'aménagement des bâtiments ?",
+    "answer": "Architecture",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "L’architecture concerne la création et l’organisation des espaces bâtis."
+  },
+  {
+    "question": "Comment appelle-t-on le panneau explicatif placé à côté d'une œuvre d'art dans un musée ?",
+    "answer": "Cartel",
+    "category": "vocabulaire",
+    "difficulty": 1,
+    "explanation": "Le cartel est la fiche descriptive qui accompagne une œuvre en exposition."
+  },
+  {
+    "question": "Quel mot décrit une œuvre faite de petits carreaux colorés, souvent utilisée en street art par Invader ?",
+    "answer": "Mosaïque",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "La mosaïque est une composition réalisée à partir de petits morceaux de matériau coloré."
+  },
+  {
+    "question": "Comment appelle-t-on un mouvement artistique urbain réalisé dans l'espace public, souvent sans autorisation ?",
+    "answer": "Street art",
+    "category": "vocabulaire",
+    "difficulty": 1,
+    "explanation": "Le street art regroupe les interventions artistiques dans l’espace public."
+  },
+  {
+    "question": "Quel terme désigne la gratuité d'accès à un musée ou à une exposition ?",
+    "answer": "Gratuité",
+    "category": "vocabulaire",
+    "difficulty": 1,
+    "explanation": "La gratuité signifie que l’entrée ne nécessite pas de paiement."
+  },
+  {
+    "question": "Quel mot signifie la capacité d'ouvrir son esprit à de nouvelles idées ou expériences ?",
+    "answer": "Ouverture d’esprit",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "L’ouverture d’esprit désigne la disposition à accepter et comprendre l’autre."
+  },
+  {
+    "question": "Que signifie le terme « exposition » dans un contexte muséal ?",
+    "answer": "Présentation",
+    "category": "vocabulaire",
+    "difficulty": 1,
+    "explanation": "Une exposition est la mise en valeur publique d’œuvres d’art."
+  },
+  {
+    "question": "Quel mot décrit l'ensemble des bâtiments et espaces culturels destinés à la création artistique ?",
+    "answer": "Espace culturel",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "Un espace culturel regroupe lieux et infrastructures dédiés aux arts."
+  },
+  {
+    "question": "Comment nomme-t-on l'action de prêter une œuvre par un musée à une autre institution ?",
+    "answer": "Prêt",
+    "category": "vocabulaire",
+    "difficulty": 1,
+    "explanation": "Le prêt permet de déplacer temporairement une œuvre pour une exposition."
+  },
+  {
+    "question": "Quel verbe signifie encourager quelqu'un à participer activement ?",
+    "answer": "Inciter",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "Inciter, c’est pousser ou motiver quelqu’un à agir."
+  },
+  {
+    "question": "Quel mot anglais utilisé en français désigne un classement des cinq meilleurs éléments ?",
+    "answer": "Top 5",
+    "category": "vocabulaire",
+    "difficulty": 1,
+    "explanation": "Top 5 est un anglicisme couramment employé pour un « podium » de cinq."
+  },
+  {
+    "question": "Comment appelle-t-on un résumé synthétique d'une œuvre et de son auteur, souvent placé dans un cartel ?",
+    "answer": "Notice",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "La notice présente les informations clés sur une œuvre."
+  },
+  {
+    "question": "Quel mot définit l'ensemble des « arts plastiques », comme la peinture et la sculpture ?",
+    "answer": "Arts plastiques",
+    "category": "vocabulaire",
+    "difficulty": 1,
+    "explanation": "Les arts plastiques regroupent les disciplines fondées sur la matière."
+  },
+  {
+    "question": "Que signifie « caractérisation » dans le contexte de la description d’une œuvre ?",
+    "answer": "Description des traits distinctifs",
+    "category": "vocabulaire",
+    "difficulty": 3,
+    "explanation": "Caractérisation consiste à relever et nommer les particularités d’une œuvre."
+  },
+  {
+    "question": "Quel mot désigne un lieu historique classé au patrimoine mondial de l’UNESCO, comme la Cité des Papes ?",
+    "answer": "Patrimoine",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "Le patrimoine regroupe les biens culturels protégés au titre de l’UNESCO."
+  },
+  {
+    "question": "Quel terme désigne un compte rendu oral et informel diffusé à la radio ou à la télévision ?",
+    "answer": "Chronique",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "La chronique est une rubrique régulière relatant un sujet spécifique."
+  },
+  {
+    "question": "Quel verbe signifie regarder attentivement et avec admiration une œuvre d’art ?",
+    "answer": "Admirer",
+    "category": "vocabulaire",
+    "difficulty": 1,
+    "explanation": "Admirer, c’est contempler avec plaisir ou respect."
+  },
+  {
+    "question": "Quel mot décrit le sentiment de détente procuré par l’écoute de musique ?",
+    "answer": "Relaxation",
+    "category": "vocabulaire",
+    "difficulty": 2,
+    "explanation": "La relaxation est un état de calme et de bien-être."
+  },
+  {
+    "question": "Que signifie « média » dans le contexte de la communication ?",
+    "answer": "Support d’information",
+    "category": "vocabulaire",
+    "difficulty": 1,
+    "explanation": "Un média est un canal de diffusion d’informations (presse, radio, TV, web)."
+  },
+  {
+    "question": "Transformez en voix passive : « Jacques Chirac a inauguré le musée du Quai Branly en 2006. »",
+    "answer": "Le musée du Quai Branly a été inauguré en 2006 par Jacques Chirac.",
+    "category": "grammaire",
+    "difficulty": 2,
+    "explanation": "La forme passive met l’accent sur le musée plutôt que sur l’agent."
+  },
+  {
+    "question": "Placez l’adjectif « curieux » avant ou après le nom pour exprimer deux sens différents : « un étudiant ___ ».",
+    "answer": "Un curieux étudiant (étrange) / un étudiant curieux (avide de savoir).",
+    "category": "grammaire",
+    "difficulty": 3,
+    "explanation": "La position de l’adjectif modifie son interprétation."
+  },
+  {
+    "question": "Remplacez « dans le musée » par le pronom approprié : « Les visiteurs se perdent dans le musée. »",
+    "answer": "Les visiteurs s’y perdent.",
+    "category": "grammaire",
+    "difficulty": 1,
+    "explanation": "Le pronom « y » remplace un complément de lieu introduit par « dans »."
+  },
+  {
+    "question": "Remplacez « de l’exposition » par le pronom approprié : « Nous parlons souvent de l’exposition. »",
+    "answer": "Nous en parlons souvent.",
+    "category": "grammaire",
+    "difficulty": 1,
+    "explanation": "Le pronom « en » remplace un complément introduit par « de »."
+  },
+  {
+    "question": "Complétez par « bien que » ou « même si » : « ___ le temps était mauvais, nous avons visité le musée. »",
+    "answer": "Bien que le temps ait été mauvais, nous avons visité le musée.",
+    "category": "grammaire",
+    "difficulty": 2,
+    "explanation": "« Bien que » introduit la concession et requiert le subjonctif."
+  },
+  {
+    "question": "Complétez par « car » ou « parce que » : « Nous avons fermé les fenêtres ___ il pleuvait. »",
+    "answer": "car",
+    "category": "grammaire",
+    "difficulty": 1,
+    "explanation": "« Car » introduit une cause et se place en tête de proposition coordonnée."
+  },
+  {
+    "question": "Complétez par « dont » ou « ainsi » : « Il a beaucoup répété, ___ il a réussi son exposition orale. »",
+    "answer": "ainsi",
+    "category": "grammaire",
+    "difficulty": 2,
+    "explanation": "« Ainsi » exprime la conséquence de l’action précédente."
+  },
+  {
+    "question": "Utilisez « d’une part... d’autre part... » pour présenter deux arguments sur la muséologie.",
+    "answer": "D’une part, la muséologie valorise les collections ; d’autre part, elle nécessite des moyens financiers importants.",
+    "category": "grammaire",
+    "difficulty": 4,
+    "explanation": "Les locutions corrélatives organisent et équilibrent deux idées."
+  },
+  {
+    "question": "Transformez au discours indirect : « Jade a dit : ‘Cette sculpture est fascinante.’ »",
+    "answer": "Jade a dit que cette sculpture était fascinante.",
+    "category": "grammaire",
+    "difficulty": 3,
+    "explanation": "Le discours indirect requiert l’accord des temps et supprime les deux-points."
+  },
+  {
+    "question": "Complétez avec le subjonctif : « Bien que l’exposition ___ (être) courte, elle était intense. »",
+    "answer": "soit",
+    "category": "grammaire",
+    "difficulty": 2,
+    "explanation": "Le subjonctif est nécessaire après « bien que »."
+  },
+  {
+    "question": "Transformez en voix passive : « On découvre la collection du musée. »",
+    "answer": "La collection du musée est découverte.",
+    "category": "grammaire",
+    "difficulty": 2,
+    "explanation": "La voix passive fait du COD le sujet de la phrase."
+  },
+  {
+    "question": "Complétez par « parce que » ou « toutefois » : « L’entrée est libre, ___ le nombre de visiteurs reste limité. »",
+    "answer": "toutefois",
+    "category": "grammaire",
+    "difficulty": 2,
+    "explanation": "« Toutefois » nuancier comme « néanmoins », placé en début de proposition."
+  },
+  {
+    "question": "Insérez « en effet » pour expliquer : « ___, la muséologie nécessite des compétences variées. »",
+    "answer": "En effet, la muséologie nécessite des compétences variées.",
+    "category": "grammaire",
+    "difficulty": 3,
+    "explanation": "« En effet » introduit une justification."
+  },
+  {
+    "question": "Conjuguez « visiter » au gérondif : « ___ le musée, nous avons discuté de l’art. »",
+    "answer": "En visitant",
+    "category": "grammaire",
+    "difficulty": 4,
+    "explanation": "Le participe présent exprime une action concomitante."
+  },
+  {
+    "question": "Transformez au discours indirect : « Le guide a annoncé : ‘La visite commencera à 10 h.’ »",
+    "answer": "Le guide a annoncé que la visite commencerait à 10 h.",
+    "category": "grammaire",
+    "difficulty": 3,
+    "explanation": "Au discours indirect, le futur devient conditionnel."
+  },
+  {
+    "question": "Placez l’adjectif « magnifique » avant ou après le nom selon le sens : « un ___ paysage ». ",
+    "answer": "Un magnifique paysage (beau) / un paysage magnifique (exceptionnel).",
+    "category": "grammaire",
+    "difficulty": 3,
+    "explanation": "La position de l’adjectif influe sur la nuance stylistique."
+  },
+  {
+    "question": "Transformez en voix passive : « Les artistes de rue collent leurs mosaïques sur les murs. »",
+    "answer": "Les mosaïques sont collées sur les murs par les artistes de rue.",
+    "category": "grammaire",
+    "difficulty": 2,
+    "explanation": "La voix passive donne la priorité à l’objet de l’action."
+  },
+  {
+    "question": "Complétez par « tandis que » ou « alors que » : « Il aime la peinture, ___ elle préfère la sculpture. »",
+    "answer": "tandis que",
+    "category": "grammaire",
+    "difficulty": 2,
+    "explanation": "« Tandis que » marque l’opposition entre deux goûts."
+  },
+  {
+    "question": "Conjuguez « apprécier » au subjonctif : « Il faut que vous ___ (apprécier) cette exposition. »",
+    "answer": "appréciiez",
+    "category": "grammaire",
+    "difficulty": 3,
+    "explanation": "Le subjonctif suit « il faut que »."
+  },
+  {
+    "question": "Remplacez « Les élèves examinent les œuvres » par des pronoms :",
+    "answer": "Ils les examinent.",
+    "category": "grammaire",
+    "difficulty": 1,
+    "explanation": "« Ils » remplace « les élèves » et « les » remplace « les œuvres »."
+  }
+]

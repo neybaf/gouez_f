@@ -1,0 +1,72 @@
+[
+    {
+        "question": "Quel est l'auxiliaire du passé composé pour 'manger' ?",
+        "answer": "avoir",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "La plupart des verbes utilisent l'auxiliaire 'avoir'."
+    },
+    {
+        "question": "Comment dit-on 'yesterday' en français ?",
+        "answer": "hier",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Adverbe de temps pour le jour précédent."
+    },
+    {
+        "question": "Conjuguez 'aller' au futur : nous...",
+        "answer": "irons",
+        "category": "conjugaison",
+        "difficulty": 2,
+        "explanation": "Verbe irrégulier au futur simple."
+    },
+    {
+        "question": "Comment forme-t-on le féminin de 'acteur' ?",
+        "answer": "actrice",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "Transformation irrégulière -eur → -rice."
+    },
+    {
+        "question": "Comment dit-on 'to cook' en français ?",
+        "answer": "cuisiner",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Verbe pour préparer des repas."
+    },
+    {
+        "question": "Quel est le participe passé de 'prendre' ?",
+        "answer": "pris",
+        "category": "conjugaison",
+        "difficulty": 2,
+        "explanation": "Participe passé irrégulier."
+    },
+    {
+        "question": "Comment dit-on 'to be born' en français ?",
+        "answer": "naître",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Verbe pour venir au monde."
+    },
+    {
+        "question": "Quelle est la forme négative de 'Il y a' ?",
+        "answer": "Il n'y a pas",
+        "category": "grammaire",
+        "difficulty": 2,
+        "explanation": "Expression d'existence à la forme négative."
+    },
+    {
+        "question": "Comment dit-on 'to remember' en français ?",
+        "answer": "se souvenir",
+        "category": "vocabulaire",
+        "difficulty": 2,
+        "explanation": "Verbe pronominal pour la mémoire."
+    },
+    {
+        "question": "Quel monument célèbre se trouve à Paris ?",
+        "answer": "la Tour Eiffel",
+        "category": "culture",
+        "difficulty": 2,
+        "explanation": "Monument emblématique de Paris et de la France."
+    }
+] 

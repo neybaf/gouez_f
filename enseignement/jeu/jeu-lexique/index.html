@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu d'Association Lexicale FLE</title>
+    <link rel="stylesheet" href="/gouez_f/css/game-styles.css">
+    <link rel="stylesheet" href="lexique-styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- En-tête du jeu -->
+        <div class="game-header">
+            <h1 class="game-title">🎯 Association Lexicale</h1>
+            <p class="game-subtitle">Associez les mots à leurs images ou sons</p>
+        </div>
+
+        <!-- Écran de démarrage -->
+        <div class="screen" id="start-screen">
+            <div class="level-selection">
+                <h2>Sélectionnez votre niveau</h2>
+                
+                <div class="level-category">
+                    <h3>📚 Français Générale</h3>
+                    <div class="level-buttons" id="fg-levels">
+                        <button class="level-btn" data-level="FG1">FG 1</button>
+                        <button class="level-btn" data-level="FG2">FG 2</button>
+                        <button class="level-btn" data-level="FG3">FG 3</button>
+                        <button class="level-btn" data-level="FG4">FG 4</button>
+                    </div>
+                </div>
+
+                <div class="level-category">
+                    <h3>🎓 Français sur Objectifs Spécifiques</h3>
+                    <div class="level-buttons" id="fos-levels">
+                        <button class="level-btn" data-level="FOS1">F.O.S 1</button>
+                        <button class="level-btn" data-level="FOS2">F.O.S 2</button>
+                    </div>
+                </div>
+
+                <div class="level-category">
+                    <h3>📚 Inspire</h3>
+                    <div class="level-buttons" id="ins-levels">
+                        <button class="level-btn" data-level="INS2">INSPIRE 2</button>
+                    </div>
+                </div>
+
+                <div class="sublevel-selection" id="sublevel-selection" style="display: none;">
+                    <h3>Choisissez l'unité :</h3>
+                    <div class="sublevel-buttons" id="sublevel-buttons">
+                        <!-- Généré dynamiquement -->
+                    </div>
+                </div>
+
+                <div class="difficulty-selection" id="difficulty-selection" style="display: none;">
+                    <h3>Niveau de difficulté :</h3>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn" data-difficulty="easy">
+                            <span class="difficulty-icon">🟢</span>
+                            <span class="difficulty-label">Facile</span>
+                            <span class="difficulty-desc">5 associations, 45s</span>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="medium">
+                            <span class="difficulty-icon">🟡</span>
+                            <span class="difficulty-label">Moyen</span>
+                            <span class="difficulty-desc">7 associations, 35s</span>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="hard">
+                            <span class="difficulty-icon">🔴</span>
+                            <span class="difficulty-label">Difficile</span>
+                            <span class="difficulty-desc">10 associations, 25s</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-large" id="start-game-btn" style="display: none;">
+                    🎮 Commencer le jeu
+                </button>
+            </div>
+        </div>
+
+        <!-- Écran de jeu -->
+        <div class="screen hidden" id="game-screen">
+            <!-- Interface de jeu -->
+            <div class="game-interface">
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <span class="stat-icon">⏱️</span>
+                        <span class="stat-value" id="timer">30</span>
+                        <span class="stat-label">secondes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🎯</span>
+                        <span class="stat-value" id="score">0</span>
+                        <span class="stat-label">points</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🔗</span>
+                        <span class="stat-value" id="matches">0</span>
+                        <span class="stat-label">associations</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">❌</span>
+                        <span class="stat-value" id="errors">0</span>
+                        <span class="stat-label">erreurs</span>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <div class="progress-text">Progression: <span id="progress-text">0/0</span></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zone de jeu principale -->
+            <div class="game-area">
+                <div class="association-container">
+                    <div class="column" id="media-column">
+                        <h3>🎵 Médias</h3>
+                        <div class="items-container" id="media-items">
+                            <!-- Éléments média générés dynamiquement -->
+                        </div>
+                    </div>
+                    
+                    <div class="connection-area" id="connection-area">
+                        <!-- Lignes de connexion -->
+                    </div>
+                    
+                    <div class="column" id="text-column">
+                        <h3>📝 Textes</h3>
+                        <div class="items-container" id="text-items">
+                            <!-- Éléments texte générés dynamiquement -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contrôles de jeu -->
+            <div class="game-controls">
+                <button class="btn btn-secondary" id="pause-btn">⏸️ Pause</button>
+                <button class="btn btn-warning" id="reset-btn">🔄 Recommencer</button>
+                <button class="btn btn-danger" id="quit-btn">🚪 Quitter</button>
+            </div>
+        </div>
+
+        <!-- Écran de pause -->
+        <div class="screen hidden" id="pause-screen">
+            <div class="pause-content">
+                <h2>⏸️ Jeu en pause</h2>
+                <p>Prenez votre temps !</p>
+                <div class="pause-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="pause-score">0</span>
+                        <span class="stat-label">Points actuels</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="pause-matches">0</span>
+                        <span class="stat-label">Associations réussies</span>
+                    </div>
+                </div>
+                <div class="pause-controls">
+                    <button class="btn btn-primary" id="resume-btn">▶️ Reprendre</button>
+                    <button class="btn btn-secondary" id="restart-btn">🔄 Recommencer</button>
+                    <button class="btn btn-danger" id="menu-btn">🏠 Menu principal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Écran de fin -->
+        <div class="screen hidden" id="end-screen">
+            <div class="end-content">
+                <h2 id="end-title">🎉 Félicitations !</h2>
+                <div class="final-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-value" id="final-score">0</div>
+                        <div class="stat-label">Points totaux</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔗</div>
+                        <div class="stat-value" id="final-matches">0</div>
+                        <div class="stat-label">Associations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-value" id="final-accuracy">0%</div>
+                        <div class="stat-label">Précision</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-value" id="final-speed">0</div>
+                        <div class="stat-label">Vitesse</div>
+                    </div>
+                </div>
+
+                <div class="level-info">
+                    <p>Niveau complété : <strong id="completed-level"></strong></p>
+                </div>
+
+                <div class="end-controls">
+                    <button class="btn btn-primary" id="play-again-btn">🔄 Rejouer</button>
+                    <button class="btn btn-success" id="next-level-btn" style="display: none;">➡️ Niveau suivant</button>
+                    <button class="btn btn-secondary" id="share-score-btn">📤 Partager</button>
+                    <button class="btn btn-outline" id="back-menu-btn">🏠 Menu principal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup de feedback -->
+    <div class="feedback-popup" id="feedback-popup">
+        <div class="feedback-content">
+            <div class="feedback-icon" id="feedback-icon"></div>
+            <div class="feedback-message" id="feedback-message"></div>
+        </div>
+    </div>
+
+    <script src="lexique-game.js"></script>
+</body>
+</html> 
