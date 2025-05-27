@@ -14,6 +14,7 @@ recherches/
 ├── mymap.html             # Carte interactive Zhejiang
 ├── carte-population-enseignante.html  # Carte démographique
 ├── data/                  # Données de recherche
+├── garden/                # Notes de recherche
 └── README.md              # Cette documentation
 ```
 

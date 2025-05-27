@@ -1,0 +1,15 @@
+site_name: "Documentation interactive"
+site_url: "https://neybaf.github.io/gouez_f/docs/"
+docs_dir: docs
+theme: 
+  name: material
+  features:
+    - navigation.expand
+    - content.code.annotate
+plugins:
+  - search
+  - mkdocs-jupyter
+nav:
+  - Accueil: index.md
+  - Notebook interactif: mon_notebook.ipynb
+  - Notes: mes_notes.md
