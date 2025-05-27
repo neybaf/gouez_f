@@ -1,7 +1,0 @@
-{
-    "installOptions": {
-        "installFromRepository": true,
-        "libraryPath": "/Users/fabiengouez/Library/R/arm64/4.3/library",
-        "installDependencies": true
-    }
-}

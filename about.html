@@ -3,450 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>À propos | Fabien Gouez</title>
+  <title>About Me</title>
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/research-styles.css">
-  <meta name="description" content="Profil, parcours et publications de Fabien Gouez, doctorant en didactique des langues-cultures">
+  <script src="scripts/include.js" defer></script>
 </head>
 <body>
-  <div class="research-container">
-    <div class="research-header">
-      <h1 class="research-title">À propos</h1>
-      <p class="research-subtitle">Parcours, publications et méthodologie</p>
-      <p class="research-affiliation">Fabien Gouez • Doctorant en didactique des langues-cultures</p>
-    </div>
-
+  <header>
+    <h1>About Me</h1>
+    <div data-include="partials/header.html"></div>
+  </header>
+  
+  <main>
     <nav class="research-nav">
       <ul class="nav-tabs">
-        <li><a href="#profil" class="nav-tab active" data-section="profil">Profil</a></li>
-        <li><a href="#publications" class="nav-tab" data-section="publications">Publications</a></li>
-        <li><a href="#methodologie" class="nav-tab" data-section="methodologie">Méthodologie</a></li>
-        <li><a href="#parcours" class="nav-tab" data-section="parcours">Parcours</a></li>
+        <li><a href="#cv-links" class="nav-tab active" data-section="cv-links">CV et Liens</a></li>
+        <li><a href="#description" class="nav-tab" data-section="description">Description</a></li>
+        <li><a href="#enseignement" class="nav-tab" data-section="enseignement">Enseignement</a></li>
+        <li><a href="#recherches" class="nav-tab" data-section="recherches">Recherches</a></li>
+        <li><a href="#jeu" class="nav-tab" data-section="jeu">Jeux</a></li>
       </ul>
     </nav>
 
     <div class="research-content">
-      <section id="profil" class="section active-section">
-        <h2 class="section-title">Profil de recherche</h2>
-        
-        <div class="profile-content">
-          <div class="profile-main">
-            <div class="profile-description">
-              <h3>Positionnement scientifique</h3>
-              <p>
-                Doctorant en didactique des langues-cultures à l'Université de Franche-Comté, mes recherches s'inscrivent dans une approche critique de la didactologie du français langue étrangère (FLE). Je m'intéresse particulièrement aux effets glottopolitiques des dispositifs d'enseignement du français en contexte sinophone.
-              </p>
-              <p>
-                Mon travail doctoral porte sur l'analyse des pratiques enseignantes et des représentations linguistiques dans l'enseignement supérieur chinois, en croisant approches qualitatives (entretiens semi-directifs) et quantitatives (analyse lexicométrique de corpus).
-              </p>
-              
-              <h3>Domaines d'expertise</h3>
-              <ul class="expertise-list">
-                <li><strong>Didactique du FLE</strong> : Analyse des dispositifs d'enseignement et de leur ancrage contextuel</li>
-                <li><strong>Glottopolitique</strong> : Politiques linguistiques et diffusion du français en contexte sinophone</li>
-                <li><strong>Analyse de corpus</strong> : Lexicométrie, textométrie, traitement automatique du langage</li>
-                <li><strong>Innovation pédagogique</strong> : Développement d'outils numériques et IA pour l'apprentissage</li>
-                <li><strong>Recherche qualitative</strong> : Entretiens, observation, analyse thématique</li>
-              </ul>
+      <section id="cv-links" class="section active-section">
+        <h2>CV et Liens</h2>
+        <ul>
+          <li><a href="https://cv.hal.science/fabien-gouez" target="_blank">CV Hal</a></li>
+          <li><a href="pictures/these.gif" target="_blank">Thèse</a></li>
+          <li><a href="data/cv.pdf" target="_blank">CV PDF</a></li>
+        </ul>
+      </section>
+      
+      <section id="description" class="section">
+        <h2>Description</h2>
+        <p>disismaloretipsum</p>
+        <p>disismaloretipsum</p>
+      </section>
 
-              <h3>Approche théorique</h3>
-              <p>
-                Mon cadre théorique s'appuie sur les travaux de Galisson, Porcher et Puren en didactologie, ainsi que sur les approches critiques de la glottopolitique. Je privilégie une démarche réflexive et située, attentive aux rapports de pouvoir et aux enjeux sociopolitiques de l'enseignement des langues.
-              </p>
+      <section id="enseignement" class="section">
+        <h2>Enseignement</h2>
+        <div class="projects-grid">
+          <a href="enseignement/jeu/index_jeu.html" class="project-card">
+            <div class="project-header">
+              <span class="project-type">Jeux pédagogiques</span>
+              <h3 class="project-title">Plateforme de Jeux FLE</h3>
+              <p class="project-description">Collection de jeux interactifs pour l'apprentissage du français</p>
             </div>
-
-            <div class="profile-links">
-              <h3>Liens professionnels</h3>
-              <ul class="links-list">
-                <li><a href="https://cv.hal.science/fabien-gouez" target="_blank">📄 CV HAL</a></li>
-                <li><a href="pictures/these.gif" target="_blank">🎓 Projet de thèse</a></li>
-                <li><a href="https://github.com/fabiengouez" target="_blank">💻 GitHub</a></li>
-                <li><a href="https://www.zotero.org/groups/5560949/sinofrancophonie" target="_blank">📚 Bibliothèque Zotero</a></li>
-              </ul>
+            <div class="project-body">
+              <div class="project-meta">
+                <span>2024-2025</span>
+                <span class="project-status status-en-cours">En cours</span>
+              </div>
+              <p>8 jeux développés : connecteurs logiques, association lexicale, cartes FLE, memory, phonétique, verbe slicer...</p>
             </div>
-          </div>
+          </a>
+          
+          <a href="enseignement/teaching.html" class="project-card">
+            <div class="project-header">
+              <span class="project-type">Activités présentielles</span>
+              <h3 class="project-title">Cours et formations</h3>
+              <p class="project-description">Activités d'enseignement en présentiel</p>
+            </div>
+            <div class="project-body">
+              <p>Cours de français langue étrangère et formations pédagogiques</p>
+            </div>
+          </a>
         </div>
       </section>
 
-      <section id="publications" class="section">
-        <h2 class="section-title">Publications & communications</h2>
-        
-        <div class="publications-container">
-          <h3>Articles de recherche</h3>
-          <ul class="publication-list">
-            <li class="publication-item">
-              <h4 class="publication-title">Représentations et réalités du français en sinofrancophonie professionnelle</h4>
-              <p class="publication-authors">Gouez, F. (2024)</p>
-              <p class="publication-journal">Ela.</p>
-              <div class="publication-abstract">
-                Ce travail propose une lecture critique des logiques de diffusion du français en Chine via l'analyse des dispositifs institutionnels et des effets glottopolitiques induits. L'étude s'appuie sur un corpus d'entretiens menés auprès d'enseignants de FLE dans l'enseignement supérieur chinois.
-              </div>
-            </li>
-            
-
-          <h3>Communications scientifiques</h3>
-          <ul class="publication-list">
-            <li class="publication-item">
-              <h4 class="publication-title">La relation eneseignant-enseigné en contexte universitaire chinois</h4>
-              <p class="publication-authors">Gouez, F.</p>
-              <p class="publication-journal">Colloque La relation en Didactique des Langues, Paris 2024</p>
-              <div class="publication-abstract">
-
-              </div>
-            </li>
-            
-            <li class="publication-item">
-              <h4 class="publication-title">"À la recherche de la bonne formule"</h4>
-              <p class="publication-authors">Gouez, F.</p>
-              <p class="publication-journal">"vision du monde", Kaohsiung, 2023</p>
-              <div class="publication-abstract">
-                Communication sur les formules dans les manuels de Français Langue Étrangère en Chine
-              </div>
-            </li>
-          </ul>
-
+      <section id="recherches" class="section">
+        <h2>Recherches</h2>
+        <div class="projects-grid">
+          <a href="recherches/index.html" class="project-card">
+            <div class="project-header">
+              <span class="project-type">Didactologie</span>
+              <h3 class="project-title">Recherches en Didactique</h3>
+              <p class="project-description">Glottopolitique, analyse qualitative et innovations numériques</p>
+            </div>
+            <div class="project-body">
+              <p>Recherches en didactique des langues-cultures, glottopolitique et innovation pédagogique</p>
+            </div>
+          </a>
         </div>
       </section>
 
-      <section id="methodologie" class="section">
-        <h2 class="section-title">Approche méthodologique</h2>
-        
-        <div class="methodology-content">
-          <div class="method-block">
-            <h3>🎯 Positionnement épistémologique</h3>
-            <p>
-              Ma démarche de recherche s'inscrit dans une épistémologie critique et réflexive, inspirée des travaux de Bourdieu sur la réflexivité sociologique. Je privilégie une approche située qui questionne les rapports de pouvoir inhérents à la recherche en didactique des langues.
-            </p>
-          </div>
-
-          <div class="method-block">
-            <h3>📊 Méthodes mixtes</h3>
-            <p>
-              J'adopte une approche méthodologique hybride combinant méthodes qualitatives et quantitatives :
-            </p>
-            <ul>
-              <li><strong>Entretiens semi-directifs</strong> : Collecte de données qualitatives sur les trajectoires et pratiques enseignantes</li>
-              <li><strong>Analyse lexicométrique</strong> : Traitement automatique des corpus d'entretiens (R, Python)</li>
-              <li><strong>Cartographie critique</strong> : Géolocalisation et analyse spatiale des données institutionnelles</li>
-              <li><strong>Observation participante</strong> : Immersion dans les contextes d'enseignement</li>
-            </ul>
-          </div>
-
-          <div class="method-block">
-            <h3>🔧 Outils et technologies</h3>
-            <div class="tools-grid">
-              <div class="tool-category">
-                <h4>Analyse textuelle</h4>
-                <ul>
-                  <li>R (quanteda, tidytext, tm)</li>
-                  <li>Python (spaCy, NLTK, pandas)</li>
-                  <li>IRaMuTeQ</li>
-                </ul>
-              </div>
-              <div class="tool-category">
-                <h4>Visualisation</h4>
-                <ul>
-                  <li>ggplot2, plotly</li>
-                  <li>D3.js, Observable</li>
-                  <li>QGIS, Leaflet</li>
-                </ul>
-              </div>
-              <div class="tool-category">
-                <h4>Gestion de données</h4>
-                <ul>
-                  <li>Obsidian (carnet de recherche)</li>
-                  <li>Zotero (bibliographie)</li>
-                  <li>GitHub (versioning)</li>
-                </ul>
-              </div>
+      <section id="jeu" class="section">
+        <h2>Jeux Éducatifs</h2>
+        <div class="projects-grid">
+          <a href="enseignement/jeu/index_jeu.html" class="project-card">
+            <div class="project-header">
+              <span class="project-type">Plateforme interactive</span>
+              <h3 class="project-title">Collection de Jeux FLE</h3>
+              <p class="project-description">Jeux interactifs pour l'apprentissage du français</p>
             </div>
-          </div>
-
-          <div class="method-block">
-
-      <section id="parcours" class="section">
-        <h2 class="section-title">Parcours académique et professionnel</h2>
-        
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-date">2021-2025</div>
-            <div class="timeline-content">
-              <h3>Doctorat en Didactique des Langues-Cultures</h3>
-              <p><strong>Université de Franche-Comté</strong></p>
-              <p>Thèse en cours : Didactique du FLE en CHine (titre provisoire)</p>
-              <p>Direction : Pr. Mohamed Embarki</p>
+            <div class="project-body">
+              <ul class="game-features">
+                <li>Jeu de cartes FLE</li>
+                <li>Association lexicale</li>
+                <li>Quiz culturel et grammatical</li>
+                <li>Memory et phonétique</li>
+              </ul>
             </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-date">2020-2021</div>
-            <div class="timeline-content">
-              <h3>Master 2 Didactique des Langues-Cultures</h3>
-              <p><strong>Université de Franche-Comté</strong></p>
-              <p>Mémoire : "Représentations du français chez les étudiants chinois : une étude exploratoire"</p>
-              <p>Direction : Pr. Mohamed Embarki</p>
-              <p>Mention Très Bien</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-date">2019-2020</div>
-            <div class="timeline-content">
-              <h3>Master 1 FLE</h3>
-              <p><strong>Université de Franche-Comté</strong></p>
-              <p>Spécialisation en didactique du FLE politiques linguistiques éducatives et environnement numériques.</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-date">2024-2025</div>
-            <div class="timeline-content">
-              <h3>Enseignant de français</h3>
-              <p><strong>IFC Franco-Chinois d'aviation civile (ZFAI-BUAA)</strong></p>
-              <p>Enseignement du français, recherche de terrain, développement de la plateforme d'enseignement numérique.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">2017-2023</div>
-            <div class="timeline-content">
-              <h3>Enseignant de français</h3>
-              <p><strong>Université Gongshang du Zhejiang</strong></p>
-              <p>Enseignement du français, recherche de terrain.</p>
-            </div>
-          </div>
+          </a>
         </div>
       </section>
     </div>
-  </div>
-
-  <footer style="text-align: center; padding: 2rem; color: #666; font-size: 0.9rem;">
-    <p><a href="index.html" style="color: var(--secondary-color); text-decoration: none;">← Retour à l'accueil</a></p>
+  </main>
+  
+  <footer>
     <div data-include="partials/footer.html"></div>
   </footer>
 
   <script>
+    // Script pour gérer les onglets
     document.addEventListener('DOMContentLoaded', function() {
       const navTabs = document.querySelectorAll('.nav-tab');
       const sections = document.querySelectorAll('.section');
-      
+
       navTabs.forEach(tab => {
         tab.addEventListener('click', function(e) {
           e.preventDefault();
+          
+          // Retirer la classe active de tous les onglets et sections
           navTabs.forEach(t => t.classList.remove('active'));
           sections.forEach(s => s.classList.remove('active-section'));
+          
+          // Ajouter la classe active à l'onglet cliqué
           this.classList.add('active');
+          
+          // Afficher la section correspondante
           const targetSection = this.getAttribute('data-section');
           const section = document.getElementById(targetSection);
           if (section) {
             section.classList.add('active-section');
-            section.scrollIntoView({ behavior: 'smooth' });
           }
         });
-      });
-
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-          }
-        });
-      }, observerOptions);
-      
-      document.querySelectorAll('.publication-item, .method-block, .timeline-item').forEach(el => {
-        observer.observe(el);
       });
     });
   </script>
-
-  <style>
-    .section { display: none; }
-    .section.active-section { display: block; }
-    
-    .profile-content {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 3rem;
-      margin-top: 2rem;
-    }
-    
-    .expertise-list {
-      list-style: none;
-      padding: 0;
-    }
-    
-    .expertise-list li {
-      padding: 0.75rem 0;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .links-list {
-      list-style: none;
-      padding: 0;
-    }
-    
-    .links-list li {
-      margin: 0.75rem 0;
-    }
-    
-    .links-list a {
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .links-list a:hover {
-      text-decoration: underline;
-    }
-    
-    .publications-container h3 {
-      color: var(--primary-color);
-      margin: 2rem 0 1rem 0;
-      font-size: 1.3rem;
-    }
-    
-    .publication-list {
-      list-style: none;
-      padding: 0;
-    }
-    
-    .publication-item {
-      background: white;
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid var(--primary-color);
-    }
-    
-    .publication-title {
-      color: var(--dark-color);
-      margin: 0 0 0.5rem 0;
-      font-size: 1.1rem;
-    }
-    
-    .publication-authors {
-      font-weight: 600;
-      color: var(--primary-color);
-      margin: 0.25rem 0;
-    }
-    
-    .publication-journal {
-      font-style: italic;
-      color: #666;
-      margin: 0.25rem 0 1rem 0;
-    }
-    
-    .publication-abstract {
-      color: #555;
-      line-height: 1.6;
-    }
-    
-    .methodology-content {
-      margin-top: 2rem;
-    }
-    
-    .method-block {
-      background: white;
-      border-radius: 8px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    .method-block h3 {
-      color: var(--primary-color);
-      margin-top: 0;
-    }
-    
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-    
-    .tool-category h4 {
-      color: var(--secondary-color);
-      margin-bottom: 0.75rem;
-    }
-    
-    .tool-category ul {
-      list-style: none;
-      padding: 0;
-    }
-    
-    .tool-category li {
-      padding: 0.25rem 0;
-      color: #666;
-    }
-    
-    .timeline {
-      margin-top: 2rem;
-    }
-    
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .timeline-date {
-      font-weight: bold;
-      color: var(--primary-color);
-      font-size: 1.1rem;
-    }
-    
-    .timeline-content h3 {
-      color: var(--dark-color);
-      margin: 0 0 0.5rem 0;
-    }
-    
-    .timeline-content p {
-      margin: 0.25rem 0;
-      color: #666;
-    }
-    
-    .timeline-content p:first-of-type {
-      font-weight: 600;
-      color: var(--secondary-color);
-    }
-    
-    .fade-in {
-      animation: fadeInUp 0.6s ease forwards;
-    }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @media (max-width: 768px) {
-      .profile-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      
-      .timeline-item {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-      }
-      
-      .tools-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
 </body>
 </html>
