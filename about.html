@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Me</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>À propos | Fabien Gouez</title>
   <link rel="stylesheet" href="css/research-styles.css">
   <script src="scripts/include.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>About Me</h1>
-    <div data-include="partials/header.html"></div>
-  </header>
-  
-  <main>
+  <div class="research-container">
+    <div class="research-header">
+      <h1 class="research-title">À propos</h1>
+      <p class="research-subtitle">Profil, parcours et activités</p>
+      <div data-include="partials/header.html"></div>
+    </div>
+
     <nav class="research-nav">
       <ul class="nav-tabs">
         <li><a href="#cv-links" class="nav-tab active" data-section="cv-links">CV et Liens</a></li>
@@ -27,22 +27,37 @@
 
     <div class="research-content">
       <section id="cv-links" class="section active-section">
-        <h2>CV et Liens</h2>
-        <ul>
-          <li><a href="https://cv.hal.science/fabien-gouez" target="_blank">CV Hal</a></li>
-          <li><a href="pictures/these.gif" target="_blank">Thèse</a></li>
-          <li><a href="data/cv.pdf" target="_blank">CV PDF</a></li>
-        </ul>
+        <h2 class="section-title">CV et Liens</h2>
+        <div class="resources-grid">
+          <a href="https://cv.hal.science/fabien-gouez" target="_blank" class="resource-card">
+            <span class="resource-icon">📄</span>
+            <h3 class="resource-title">CV Hal</h3>
+            <p class="resource-description">Curriculum vitae académique sur HAL</p>
+          </a>
+          <a href="pictures/these.gif" target="_blank" class="resource-card">
+            <span class="resource-icon">🎓</span>
+            <h3 class="resource-title">Thèse</h3>
+            <p class="resource-description">Travaux de recherche doctorale</p>
+          </a>
+          <a href="data/cv.pdf" target="_blank" class="resource-card">
+            <span class="resource-icon">📋</span>
+            <h3 class="resource-title">CV PDF</h3>
+            <p class="resource-description">Curriculum vitae au format PDF</p>
+          </a>
+        </div>
       </section>
       
       <section id="description" class="section">
-        <h2>Description</h2>
-        <p>disismaloretipsum</p>
-        <p>disismaloretipsum</p>
+        <h2 class="section-title">Description</h2>
+        <div class="citation">
+          <p>Doctorant en didactique des langues-cultures à l'Université de Franche-Comté, mes recherches portent sur la glottopolitique, l'innovation pédagogique et l'analyse critique des dispositifs d'enseignement du français en contexte sinophone.</p>
+          <span class="citation-author">Fabien Gouez</span>
+        </div>
+        <p>Mes travaux s'articulent autour de trois axes principaux : l'analyse des politiques linguistiques, le développement d'outils numériques adaptatifs pour l'apprentissage du français, et l'étude des trajectoires enseignantes dans l'enseignement supérieur chinois.</p>
       </section>
 
       <section id="enseignement" class="section">
-        <h2>Enseignement</h2>
+        <h2 class="section-title">Enseignement & Innovation Pédagogique</h2>
         <div class="projects-grid">
           <a href="enseignement/jeu/index_jeu.html" class="project-card">
             <div class="project-header">
@@ -66,14 +81,29 @@
               <p class="project-description">Activités d'enseignement en présentiel</p>
             </div>
             <div class="project-body">
-              <p>Cours de français langue étrangère et formations pédagogiques</p>
+              <p>Cours de français langue étrangère et formations pédagogiques dans l'enseignement supérieur.</p>
             </div>
           </a>
+
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-type">IA & Apprentissage</span>
+              <h3 class="project-title">GachaFLE - Plateforme IA</h3>
+              <p class="project-description">Application de détection automatique d'erreurs et génération d'exercices adaptatifs</p>
+            </div>
+            <div class="project-body">
+              <div class="project-meta">
+                <span>2025-2027</span>
+                <span class="project-status status-en-cours">En développement</span>
+              </div>
+              <p>Combinaison de NLP, taxonomie CECRL, analyse morphosyntaxique pour générer des ressources didactiques personnalisées.</p>
+            </div>
+          </div>
         </div>
       </section>
 
       <section id="recherches" class="section">
-        <h2>Recherches</h2>
+        <h2 class="section-title">Recherches en Didactologie</h2>
         <div class="projects-grid">
           <a href="recherches/index.html" class="project-card">
             <div class="project-header">
@@ -82,14 +112,25 @@
               <p class="project-description">Glottopolitique, analyse qualitative et innovations numériques</p>
             </div>
             <div class="project-body">
-              <p>Recherches en didactique des langues-cultures, glottopolitique et innovation pédagogique</p>
+              <p>Recherches en didactique des langues-cultures, glottopolitique et innovation pédagogique en contexte sinophone.</p>
+            </div>
+          </a>
+
+          <a href="recherches/mymap.html" class="project-card">
+            <div class="project-header">
+              <span class="project-type">Cartographie</span>
+              <h3 class="project-title">Cartographie Sinofrancophone</h3>
+              <p class="project-description">Analyse spatiale des réseaux d'enseignement du français en Chine</p>
+            </div>
+            <div class="project-body">
+              <p>Géolocalisation, profilage institutionnel et modélisation d'une cartographie critique de la sinofrancophonie universitaire.</p>
             </div>
           </a>
         </div>
       </section>
 
       <section id="jeu" class="section">
-        <h2>Jeux Éducatifs</h2>
+        <h2 class="section-title">Jeux Éducatifs</h2>
         <div class="projects-grid">
           <a href="enseignement/jeu/index_jeu.html" class="project-card">
             <div class="project-header">
@@ -103,15 +144,54 @@
                 <li>Association lexicale</li>
                 <li>Quiz culturel et grammatical</li>
                 <li>Memory et phonétique</li>
+                <li>Connecteurs logiques</li>
+                <li>Verbe slicer</li>
               </ul>
             </div>
           </a>
+
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-type">Gamification</span>
+              <h3 class="project-title">Mécaniques de Jeu</h3>
+              <p class="project-description">Intégration de mécaniques ludiques dans l'apprentissage</p>
+            </div>
+            <div class="project-body">
+              <ul class="game-features">
+                <li>Système de progression</li>
+                <li>Récompenses et badges</li>
+                <li>Défis adaptatifs</li>
+                <li>Feedback immédiat</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="research-stats">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-number">8</span>
+              <span class="stat-label">Jeux développés</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">4</span>
+              <span class="stat-label">Catégories</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">3</span>
+              <span class="stat-label">Niveaux CECRL</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">∞</span>
+              <span class="stat-label">Possibilités</span>
+            </div>
+          </div>
         </div>
       </section>
     </div>
-  </main>
-  
-  <footer>
+  </div>
+
+  <footer style="text-align: center; padding: 2rem; background: #f8f9fa; margin-top: 2rem;">
     <div data-include="partials/footer.html"></div>
   </footer>
 
@@ -137,6 +217,9 @@
           const section = document.getElementById(targetSection);
           if (section) {
             section.classList.add('active-section');
+            // Ajouter une animation
+            section.classList.add('fade-in');
+            setTimeout(() => section.classList.remove('fade-in'), 600);
           }
         });
       });
