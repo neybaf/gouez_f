@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbe Slicer - Version Legacy</title>
+    <link rel="stylesheet" href="jeu-verbes-style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Verbe Slicer - Ancienne Version</h1>
+        <p class="description">Version simplifiée du jeu pour apprendre les verbes irréguliers français</p>
+        
+        <div class="game-info">
+            <div class="score-container">
+                <span>Score: <span id="score">0</span></span>
+                <span>Niveau: <span id="level">1</span></span>
+                <span>Vies: <span id="lives">3</span></span>
+            </div>
+        </div>
+        
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <div class="controls">
+            <button id="startBtn">Commencer</button>
+            <button id="pauseBtn">Pause</button>
+            <button id="restartBtn">Redémarrer</button>
+        </div>
+        
+        <div class="instructions">
+            <h3>Instructions :</h3>
+            <ul>
+                <li>Cliquez sur les verbes irréguliers qui tombent</li>
+                <li>Évitez les verbes réguliers</li>
+                <li>Gagnez des points et progressez dans les niveaux</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="jeu-verbes.js"></script>
+</body>
+</html> 

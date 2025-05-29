@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbe Slicer - Test Simple</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+        }
+        #game-canvas {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚔️ Verbe Slicer - Test Simple</h1>
+        <p>Version de test simplifiée pour vérifier le fonctionnement</p>
+        
+        <div class="stats">
+            <div class="stat">
+                <span id="score" class="stat-value">0</span>
+                <span class="stat-label">Score</span>
+            </div>
+            <div class="stat">
+                <span id="level" class="stat-value">1</span>
+                <span class="stat-label">Niveau</span>
+            </div>
+            <div class="stat">
+                <span id="lives" class="stat-value">3</span>
+                <span class="stat-label">Vies</span>
+            </div>
+        </div>
+        
+        <canvas id="game-canvas" width="700" height="400"></canvas>
+        
+        <div class="controls">
+            <button id="start-btn">Commencer</button>
+            <button id="pause-btn">Pause</button>
+            <button id="restart-btn">Redémarrer</button>
+        </div>
+        
+        <div id="instructions">
+            <h3>Instructions :</h3>
+            <p>Cliquez sur les verbes irréguliers (en vert) qui tombent. Évitez les verbes réguliers (en gris).</p>
+        </div>
+    </div>
+
+    <script>
+        console.log('🎮 Test Simple Verbe Slicer - Initialisation...');
+        
+        class SimpleVerbeSlicer {
+            constructor() {
+                this.canvas = document.getElementById('game-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.gameState = 'stopped'; // stopped, running, paused
+                
+                // Stats
+                this.score = 0;
+                this.level = 1;
+                this.lives = 3;
+                
+                // Jeu
+                this.fallingWords = [];
+                this.spawnRate = 0.02;
+                this.wordSpeed = 2;
+                
+                // Données simplifiées
+                this.irregularVerbs = ['être', 'avoir', 'aller', 'faire', 'venir', 'voir', 'savoir', 'vouloir'];
+                this.regularWords = ['parler', 'aimer', 'chanter', 'jouer', 'manger', 'habiter'];
+                
+                this.init();
+            }
+            
+            init() {
+                console.log('📡 Configuration des événements...');
+                this.setupEvents();
+                this.updateUI();
+                this.render();
+                console.log('✅ Jeu simple initialisé avec succès !');
+            }
+            
+            setupEvents() {
+                document.getElementById('start-btn').addEventListener('click', () => this.startGame());
+                document.getElementById('pause-btn').addEventListener('click', () => this.togglePause());
+                document.getElementById('restart-btn').addEventListener('click', () => this.restartGame());
+                this.canvas.addEventListener('click', (e) => this.handleClick(e));
+            }
+            
+            startGame() {
+                console.log('🚀 Démarrage du jeu...');
+                this.gameState = 'running';
+                this.gameLoop();
+            }
+            
+            togglePause() {
+                if (this.gameState === 'running') {
+                    this.gameState = 'paused';
+                    console.log('⏸️ Jeu en pause');
+                } else if (this.gameState === 'paused') {
+                    this.gameState = 'running';
+                    console.log('▶️ Jeu repris');
+                    this.gameLoop();
+                }
+            }
+            
+            restartGame() {
+                console.log('🔄 Redémarrage du jeu...');
+                this.score = 0;
+                this.level = 1;
+                this.lives = 3;
+                this.fallingWords = [];
+                this.updateUI();
+                this.gameState = 'stopped';
+                this.render();
+            }
+            
+            gameLoop() {
+                if (this.gameState !== 'running') return;
+                
+                this.update();
+                this.render();
+                
+                requestAnimationFrame(() => this.gameLoop());
+            }
+            
+            update() {
+                // Générer nouveaux mots
+                if (Math.random() < this.spawnRate) {
+                    this.spawnWord();
+                }
+                
+                // Mettre à jour mots
+                this.updateWords();
+                
+                // Vérifier fin de jeu
+                if (this.lives <= 0) {
+                    this.gameOver();
+                }
+                
+                // Progression
+                this.level = Math.floor(this.score / 5) + 1;
+            }
+            
+            spawnWord() {
+                const allWords = [...this.irregularVerbs, ...this.regularWords];
+                const word = allWords[Math.floor(Math.random() * allWords.length)];
+                const isIrregular = this.irregularVerbs.includes(word);
+                
+                this.fallingWords.push({
+                    text: word,
+                    x: Math.random() * (this.canvas.width - 100) + 50,
+                    y: -30,
+                    speed: this.wordSpeed + Math.random(),
+                    isIrregular: isIrregular
+                });
+            }
+            
+            updateWords() {
+                this.fallingWords.forEach((word, index) => {
+                    word.y += word.speed;
+                    
+                    if (word.y > this.canvas.height + 30) {
+                        this.fallingWords.splice(index, 1);
+                        if (word.isIrregular) {
+                            this.lives--;
+                            console.log('❌ Verbe raté, vies restantes:', this.lives);
+                        }
+                    }
+                });
+            }
+            
+            handleClick(event) {
+                if (this.gameState !== 'running') return;
+                
+                const rect = this.canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                
+                this.fallingWords.forEach((word, index) => {
+                    if (this.isPointInWord(x, y, word)) {
+                        this.fallingWords.splice(index, 1);
+                        
+                        if (word.isIrregular) {
+                            this.score++;
+                            console.log('✅ Bon clic ! Score:', this.score);
+                        } else {
+                            this.lives--;
+                            console.log('❌ Mauvais clic ! Vies:', this.lives);
+                        }
+                        
+                        this.updateUI();
+                        return;
+                    }
+                });
+            }
+            
+            isPointInWord(x, y, word) {
+                this.ctx.font = '20px Arial';
+                const metrics = this.ctx.measureText(word.text);
+                const wordWidth = metrics.width;
+                const wordHeight = 20;
+                
+                return x >= word.x - wordWidth/2 && 
+                       x <= word.x + wordWidth/2 && 
+                       y >= word.y - wordHeight/2 && 
+                       y <= word.y + wordHeight/2;
+            }
+            
+            render() {
+                // Effacer
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Dessiner mots
+                this.fallingWords.forEach(word => {
+                    this.ctx.save();
+                    this.ctx.font = '20px Arial';
+                    this.ctx.textAlign = 'center';
+                    
+                    if (word.isIrregular) {
+                        this.ctx.fillStyle = '#2ecc71';
+                        this.ctx.shadowColor = '#2ecc71';
+                        this.ctx.shadowBlur = 5;
+                    } else {
+                        this.ctx.fillStyle = '#95a5a6';
+                    }
+                    
+                    this.ctx.fillText(word.text, word.x, word.y);
+                    this.ctx.restore();
+                });
+                
+                // État du jeu
+                if (this.gameState === 'paused') {
+                    this.ctx.save();
+                    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                    
+                    this.ctx.fillStyle = 'white';
+                    this.ctx.font = '30px Arial';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillText('PAUSE', this.canvas.width/2, this.canvas.height/2);
+                    this.ctx.restore();
+                }
+            }
+            
+            updateUI() {
+                document.getElementById('score').textContent = this.score;
+                document.getElementById('level').textContent = this.level;
+                document.getElementById('lives').textContent = this.lives;
+            }
+            
+            gameOver() {
+                this.gameState = 'stopped';
+                console.log('💀 Game Over ! Score final:', this.score);
+                alert(`Game Over ! Score final: ${this.score}`);
+            }
+        }
+        
+        // Initialiser quand le DOM est prêt
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM prêt, initialisation du jeu...');
+            new SimpleVerbeSlicer();
+        });
+    </script>
+</body>
+</html> 

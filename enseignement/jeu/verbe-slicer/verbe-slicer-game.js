@@ -5,6 +5,8 @@
 
 class VerbeSlicer {
     constructor() {
+        console.log('🎮 Initialisation de Verbe Slicer...');
+        
         this.canvas = null;
         this.ctx = null;
         this.gameState = 'menu'; // menu, playing, paused, gameOver
@@ -63,66 +65,94 @@ class VerbeSlicer {
     }
     
     async init() {
-        this.setupEventListeners();
-        this.setupAudio();
-        await this.loadVerbsData();
-        this.setupCanvas();
-        this.showScreen('start-screen');
+        try {
+            console.log('📡 Configuration des événements...');
+            this.setupEventListeners();
+            
+            console.log('🔊 Configuration audio...');
+            this.setupAudio();
+            
+            console.log('📊 Chargement des données...');
+            await this.loadVerbsData();
+            
+            console.log('🎨 Configuration du canvas...');
+            this.setupCanvas();
+            
+            console.log('🚀 Affichage de l\'écran de démarrage...');
+            this.showScreen('start-screen');
+            
+            console.log('✅ Verbe Slicer initialisé avec succès !');
+        } catch (error) {
+            console.error('❌ Erreur lors de l\'initialisation:', error);
+            alert('Erreur lors du chargement du jeu. Vérifiez la console pour plus de détails.');
+        }
     }
     
     setupEventListeners() {
-        // Boutons de démarrage
-        document.getElementById('start-game-btn').addEventListener('click', () => this.startGame());
-        
-        // Sélection de difficulté
-        document.querySelectorAll('.difficulty-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
-                e.target.closest('.difficulty-btn').classList.add('active');
-                this.difficulty = e.target.closest('.difficulty-btn').dataset.difficulty;
-            });
-        });
-        
-        // Boutons de pause
-        document.getElementById('pause-btn').addEventListener('click', () => this.togglePause());
-        document.getElementById('resume-btn').addEventListener('click', () => this.togglePause());
-        document.getElementById('restart-btn').addEventListener('click', () => this.restartGame());
-        document.getElementById('quit-btn').addEventListener('click', () => this.quitToMenu());
-        
-        // Boutons de fin de jeu
-        document.getElementById('play-again-btn').addEventListener('click', () => this.startGame());
-        document.getElementById('back-to-menu-btn').addEventListener('click', () => this.quitToMenu());
-        document.getElementById('share-score-btn').addEventListener('click', () => this.shareScore());
-        
-        // Raccourcis clavier
-        document.addEventListener('keydown', (e) => {
-            switch(e.code) {
-                case 'Space':
-                    e.preventDefault();
-                    if (this.gameState === 'playing' || this.gameState === 'paused') {
-                        this.togglePause();
-                    }
-                    break;
-                case 'KeyR':
-                    if (this.gameState === 'playing' || this.gameState === 'paused') {
-                        this.restartGame();
-                    }
-                    break;
-                case 'Escape':
-                    if (this.gameState === 'playing') {
-                        this.togglePause();
-                    }
-                    break;
+        try {
+            // Boutons de démarrage
+            const startBtn = document.getElementById('start-game-btn');
+            if (!startBtn) {
+                throw new Error('Bouton de démarrage non trouvé');
             }
-        });
+            startBtn.addEventListener('click', () => this.startGame());
+            
+            // Sélection de difficulté
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                    e.target.closest('.difficulty-btn').classList.add('active');
+                    this.difficulty = e.target.closest('.difficulty-btn').dataset.difficulty;
+                });
+            });
+            
+            // Boutons de pause
+            document.getElementById('pause-btn')?.addEventListener('click', () => this.togglePause());
+            document.getElementById('resume-btn')?.addEventListener('click', () => this.togglePause());
+            document.getElementById('restart-btn')?.addEventListener('click', () => this.restartGame());
+            document.getElementById('quit-btn')?.addEventListener('click', () => this.quitToMenu());
+            
+            // Boutons de fin de jeu
+            document.getElementById('play-again-btn')?.addEventListener('click', () => this.startGame());
+            document.getElementById('back-to-menu-btn')?.addEventListener('click', () => this.quitToMenu());
+            document.getElementById('share-score-btn')?.addEventListener('click', () => this.shareScore());
+            
+            // Raccourcis clavier
+            document.addEventListener('keydown', (e) => {
+                switch(e.code) {
+                    case 'Space':
+                        e.preventDefault();
+                        if (this.gameState === 'playing' || this.gameState === 'paused') {
+                            this.togglePause();
+                        }
+                        break;
+                    case 'KeyR':
+                        if (this.gameState === 'playing' || this.gameState === 'paused') {
+                            this.restartGame();
+                        }
+                        break;
+                    case 'Escape':
+                        if (this.gameState === 'playing') {
+                            this.togglePause();
+                        }
+                        break;
+                }
+            });
+            
+            console.log('✅ Événements configurés');
+        } catch (error) {
+            console.error('❌ Erreur lors de la configuration des événements:', error);
+            throw error;
+        }
     }
     
     setupAudio() {
         try {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.generateSounds();
+            console.log('✅ Audio configuré');
         } catch (error) {
-            console.warn('Audio non disponible:', error);
+            console.warn('⚠️ Audio non disponible:', error);
         }
     }
     
@@ -139,70 +169,100 @@ class VerbeSlicer {
         return () => {
             if (!this.audioContext) return;
             
-            const oscillator = this.audioContext.createOscillator();
-            const gainNode = this.audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(this.audioContext.destination);
-            
-            oscillator.frequency.value = frequency;
-            oscillator.type = type;
-            
-            gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
-            
-            oscillator.start(this.audioContext.currentTime);
-            oscillator.stop(this.audioContext.currentTime + duration);
+            try {
+                const oscillator = this.audioContext.createOscillator();
+                const gainNode = this.audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(this.audioContext.destination);
+                
+                oscillator.frequency.value = frequency;
+                oscillator.type = type;
+                
+                gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
+                
+                oscillator.start(this.audioContext.currentTime);
+                oscillator.stop(this.audioContext.currentTime + duration);
+            } catch (error) {
+                console.warn('Erreur audio:', error);
+            }
         };
     }
     
     async loadVerbsData() {
         try {
+            console.log('📥 Tentative de chargement du fichier JSON...');
             const response = await fetch('jeu-verbes.json');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
             this.verbesData = await response.json();
+            console.log('✅ Données JSON chargées:', this.verbesData);
+            
+            // Vérifier la structure des données
+            if (!this.verbesData.verbesIrreguliers || !this.verbesData.motsDivers) {
+                throw new Error('Structure JSON invalide');
+            }
+            
         } catch (error) {
-            console.error('Erreur lors du chargement des verbes:', error);
-            // Données de fallback
+            console.warn('⚠️ Erreur lors du chargement des verbes, utilisation des données de fallback:', error);
+            
+            // Données de fallback étendues
             this.verbesData = {
                 verbesIrreguliers: {
-                    infinitif: ['être', 'avoir', 'aller', 'faire', 'venir'],
-                    participe_passe: ['été', 'eu', 'allé', 'fait', 'venu'],
-                    futur: ['serai', 'aurai', 'irai', 'ferai', 'viendrai'],
-                    imparfait: ['étais', 'avais', 'allais', 'faisais', 'venais'],
-                    subjonctif: ['sois', 'aie', 'aille', 'fasse', 'vienne']
+                    infinitif: ['être', 'avoir', 'aller', 'faire', 'venir', 'prendre', 'mettre', 'voir', 'savoir', 'vouloir'],
+                    participe_passe: ['été', 'eu', 'allé', 'fait', 'venu', 'pris', 'mis', 'vu', 'su', 'voulu'],
+                    futur: ['serai', 'aurai', 'irai', 'ferai', 'viendrai', 'prendrai', 'mettrai', 'verrai', 'saurai', 'voudrai'],
+                    imparfait: ['étais', 'avais', 'allais', 'faisais', 'venais', 'prenais', 'mettais', 'voyais', 'savais', 'voulais'],
+                    subjonctif: ['sois', 'aie', 'aille', 'fasse', 'vienne', 'prenne', 'mette', 'voie', 'sache', 'veuille']
                 },
-                motsDivers: ['parler', 'aimer', 'chanter', 'danser', 'jouer']
+                motsDivers: ['parler', 'aimer', 'chanter', 'danser', 'jouer', 'regarder', 'écouter', 'travailler', 'manger', 'habiter']
             };
+            
+            console.log('✅ Données de fallback chargées');
         }
     }
     
     setupCanvas() {
-        this.canvas = document.getElementById('game-canvas');
-        if (!this.canvas) {
-            console.error('Canvas element not found!');
-            return;
-        }
-        
-        this.ctx = this.canvas.getContext('2d');
-        if (!this.ctx) {
-            console.error('Canvas context not available!');
-            return;
-        }
-        
-        this.resizeCanvas();
-        window.addEventListener('resize', () => this.resizeCanvas());
-        
-        // Événements de clic
-        this.canvas.addEventListener('click', (e) => this.handleClick(e));
-        this.canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const rect = this.canvas.getBoundingClientRect();
-            this.handleClick({
-                clientX: touch.clientX,
-                clientY: touch.clientY
+        try {
+            this.canvas = document.getElementById('game-canvas');
+            if (!this.canvas) {
+                throw new Error('Canvas element not found!');
+            }
+            
+            this.ctx = this.canvas.getContext('2d');
+            if (!this.ctx) {
+                throw new Error('Canvas context not available!');
+            }
+            
+            // Test du canvas
+            this.ctx.fillStyle = 'red';
+            this.ctx.fillRect(0, 0, 1, 1);
+            
+            this.resizeCanvas();
+            window.addEventListener('resize', () => this.resizeCanvas());
+            
+            // Événements de clic
+            this.canvas.addEventListener('click', (e) => this.handleClick(e));
+            this.canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = this.canvas.getBoundingClientRect();
+                this.handleClick({
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
             });
-        });
+            
+            console.log('✅ Canvas configuré:', this.canvas.width, 'x', this.canvas.height);
+            
+        } catch (error) {
+            console.error('❌ Erreur lors de la configuration du canvas:', error);
+            throw error;
+        }
     }
     
     resizeCanvas() {

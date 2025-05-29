@@ -228,6 +228,44 @@
     <audio id="error-sound" preload="auto"></audio>
     <audio id="level-up-sound" preload="auto"></audio>
 
+    <script>
+        // Script de débogage
+        console.log('🔍 Script de débogage chargé');
+        
+        // Vérifier que tous les éléments existent
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM chargé, vérification des éléments...');
+            
+            const requiredElements = [
+                'start-game-btn',
+                'game-canvas',
+                'start-screen',
+                'game-screen',
+                'pause-screen',
+                'game-over-screen'
+            ];
+            
+            requiredElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    console.log(`✅ Élément ${id} trouvé`);
+                } else {
+                    console.error(`❌ Élément ${id} manquant`);
+                }
+            });
+            
+            // Vérifier les boutons de difficulté
+            const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+            console.log(`📊 ${difficultyBtns.length} boutons de difficulté trouvés`);
+            
+            // Vérifier les écrans de jeu
+            const gameScreens = document.querySelectorAll('.game-screen');
+            console.log(`🖥️ ${gameScreens.length} écrans de jeu trouvés`);
+            
+            console.log('🎯 Prêt pour l\'initialisation du jeu');
+        });
+    </script>
+    
     <script src="verbe-slicer-game.js"></script>
 </body>
 </html> 
