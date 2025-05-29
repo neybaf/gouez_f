@@ -1,0 +1,114 @@
+[
+    {
+        "french": "bonjour",
+        "chinese": "你好",
+        "pinyin": "nǐ hǎo",
+        "category": "salutations",
+        "difficulty": 1
+    },
+    {
+        "french": "au revoir",
+        "chinese": "再见",
+        "pinyin": "zài jiàn",
+        "category": "salutations",
+        "difficulty": 1
+    },
+    {
+        "french": "merci",
+        "chinese": "谢谢",
+        "pinyin": "xiè xiè",
+        "category": "politesse",
+        "difficulty": 1
+    },
+    {
+        "french": "s'il vous plaît",
+        "chinese": "请",
+        "pinyin": "qǐng",
+        "category": "politesse",
+        "difficulty": 1
+    },
+    {
+        "french": "oui",
+        "chinese": "是",
+        "pinyin": "shì",
+        "category": "réponses",
+        "difficulty": 1
+    },
+    {
+        "french": "non",
+        "chinese": "不是",
+        "pinyin": "bù shì",
+        "category": "réponses",
+        "difficulty": 1
+    },
+    {
+        "french": "chat",
+        "chinese": "猫",
+        "pinyin": "māo",
+        "category": "animaux",
+        "difficulty": 1
+    },
+    {
+        "french": "chien",
+        "chinese": "狗",
+        "pinyin": "gǒu",
+        "category": "animaux",
+        "difficulty": 1
+    },
+    {
+        "french": "eau",
+        "chinese": "水",
+        "pinyin": "shuǐ",
+        "category": "nourriture",
+        "difficulty": 1
+    },
+    {
+        "french": "pain",
+        "chinese": "面包",
+        "pinyin": "miàn bāo",
+        "category": "nourriture",
+        "difficulty": 1
+    },
+    {
+        "french": "maison",
+        "chinese": "房子",
+        "pinyin": "fáng zi",
+        "category": "lieux",
+        "difficulty": 1
+    },
+    {
+        "french": "école",
+        "chinese": "学校",
+        "pinyin": "xué xiào",
+        "category": "lieux",
+        "difficulty": 1
+    },
+    {
+        "french": "rouge",
+        "chinese": "红色",
+        "pinyin": "hóng sè",
+        "category": "couleurs",
+        "difficulty": 1
+    },
+    {
+        "french": "bleu",
+        "chinese": "蓝色",
+        "pinyin": "lán sè",
+        "category": "couleurs",
+        "difficulty": 1
+    },
+    {
+        "french": "grand",
+        "chinese": "大",
+        "pinyin": "dà",
+        "category": "adjectifs",
+        "difficulty": 1
+    },
+    {
+        "french": "petit",
+        "chinese": "小",
+        "pinyin": "xiǎo",
+        "category": "adjectifs",
+        "difficulty": 1
+    }
+] 

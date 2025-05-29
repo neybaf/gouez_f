@@ -1,0 +1,114 @@
+[
+    {
+        "french": "expérience",
+        "chinese": "经验",
+        "pinyin": "jīng yàn",
+        "category": "abstrait",
+        "difficulty": 3
+    },
+    {
+        "french": "développement",
+        "chinese": "发展",
+        "pinyin": "fā zhǎn",
+        "category": "abstrait",
+        "difficulty": 3
+    },
+    {
+        "french": "environnement",
+        "chinese": "环境",
+        "pinyin": "huán jìng",
+        "category": "nature",
+        "difficulty": 3
+    },
+    {
+        "french": "pollution",
+        "chinese": "污染",
+        "pinyin": "wū rǎn",
+        "category": "nature",
+        "difficulty": 3
+    },
+    {
+        "french": "technologie",
+        "chinese": "技术",
+        "pinyin": "jì shù",
+        "category": "technologie",
+        "difficulty": 3
+    },
+    {
+        "french": "internet",
+        "chinese": "互联网",
+        "pinyin": "hù lián wǎng",
+        "category": "technologie",
+        "difficulty": 3
+    },
+    {
+        "french": "gouvernement",
+        "chinese": "政府",
+        "pinyin": "zhèng fǔ",
+        "category": "politique",
+        "difficulty": 3
+    },
+    {
+        "french": "société",
+        "chinese": "社会",
+        "pinyin": "shè huì",
+        "category": "politique",
+        "difficulty": 3
+    },
+    {
+        "french": "culture",
+        "chinese": "文化",
+        "pinyin": "wén huà",
+        "category": "culture",
+        "difficulty": 3
+    },
+    {
+        "french": "tradition",
+        "chinese": "传统",
+        "pinyin": "chuán tǒng",
+        "category": "culture",
+        "difficulty": 3
+    },
+    {
+        "french": "communication",
+        "chinese": "交流",
+        "pinyin": "jiāo liú",
+        "category": "communication",
+        "difficulty": 3
+    },
+    {
+        "french": "information",
+        "chinese": "信息",
+        "pinyin": "xìn xī",
+        "category": "communication",
+        "difficulty": 3
+    },
+    {
+        "french": "réussir",
+        "chinese": "成功",
+        "pinyin": "chéng gōng",
+        "category": "verbes",
+        "difficulty": 3
+    },
+    {
+        "french": "découvrir",
+        "chinese": "发现",
+        "pinyin": "fā xiàn",
+        "category": "verbes",
+        "difficulty": 3
+    },
+    {
+        "french": "améliorer",
+        "chinese": "改善",
+        "pinyin": "gǎi shàn",
+        "category": "verbes",
+        "difficulty": 3
+    },
+    {
+        "french": "participer",
+        "chinese": "参加",
+        "pinyin": "cān jiā",
+        "category": "verbes",
+        "difficulty": 3
+    }
+] 
