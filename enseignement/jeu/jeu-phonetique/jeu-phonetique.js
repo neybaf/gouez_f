@@ -2,7 +2,7 @@
         let questions = [];
 
         async function loadQuestions() {
-            const response = await fetch('/gouez_f/enseignement/jeu/question-phonetique.csv');
+            const response = await fetch('question-phonetique.csv');
             const data = await response.text();
             const lines = data.split('\n').filter(line => line.trim() !== '');
     for (let i = 1; i < lines.length; i++) {
