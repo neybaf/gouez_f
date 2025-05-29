@@ -1,0 +1,114 @@
+[
+    {
+        "french": "voyage",
+        "chinese": "旅行",
+        "pinyin": "lǚ xíng",
+        "category": "voyage",
+        "difficulty": 2
+    },
+    {
+        "french": "hôtel",
+        "chinese": "酒店",
+        "pinyin": "jiǔ diàn",
+        "category": "voyage",
+        "difficulty": 2
+    },
+    {
+        "french": "restaurant",
+        "chinese": "餐厅",
+        "pinyin": "cān tīng",
+        "category": "lieux",
+        "difficulty": 2
+    },
+    {
+        "french": "magasin",
+        "chinese": "商店",
+        "pinyin": "shāng diàn",
+        "category": "lieux",
+        "difficulty": 2
+    },
+    {
+        "french": "travail",
+        "chinese": "工作",
+        "pinyin": "gōng zuò",
+        "category": "profession",
+        "difficulty": 2
+    },
+    {
+        "french": "médecin",
+        "chinese": "医生",
+        "pinyin": "yī shēng",
+        "category": "profession",
+        "difficulty": 2
+    },
+    {
+        "french": "professeur",
+        "chinese": "老师",
+        "pinyin": "lǎo shī",
+        "category": "profession",
+        "difficulty": 2
+    },
+    {
+        "french": "étudiant",
+        "chinese": "学生",
+        "pinyin": "xué shēng",
+        "category": "profession",
+        "difficulty": 2
+    },
+    {
+        "french": "temps",
+        "chinese": "时间",
+        "pinyin": "shí jiān",
+        "category": "temps",
+        "difficulty": 2
+    },
+    {
+        "french": "aujourd'hui",
+        "chinese": "今天",
+        "pinyin": "jīn tiān",
+        "category": "temps",
+        "difficulty": 2
+    },
+    {
+        "french": "demain",
+        "chinese": "明天",
+        "pinyin": "míng tiān",
+        "category": "temps",
+        "difficulty": 2
+    },
+    {
+        "french": "hier",
+        "chinese": "昨天",
+        "pinyin": "zuó tiān",
+        "category": "temps",
+        "difficulty": 2
+    },
+    {
+        "french": "argent",
+        "chinese": "钱",
+        "pinyin": "qián",
+        "category": "économie",
+        "difficulty": 2
+    },
+    {
+        "french": "acheter",
+        "chinese": "买",
+        "pinyin": "mǎi",
+        "category": "verbes",
+        "difficulty": 2
+    },
+    {
+        "french": "vendre",
+        "chinese": "卖",
+        "pinyin": "mài",
+        "category": "verbes",
+        "difficulty": 2
+    },
+    {
+        "french": "comprendre",
+        "chinese": "理解",
+        "pinyin": "lǐ jiě",
+        "category": "verbes",
+        "difficulty": 2
+    }
+] 

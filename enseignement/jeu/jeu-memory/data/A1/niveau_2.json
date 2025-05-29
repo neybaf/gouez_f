@@ -1,0 +1,114 @@
+[
+    {
+        "french": "famille",
+        "chinese": "家庭",
+        "pinyin": "jiā tíng",
+        "category": "famille",
+        "difficulty": 1
+    },
+    {
+        "french": "père",
+        "chinese": "父亲",
+        "pinyin": "fù qīn",
+        "category": "famille",
+        "difficulty": 1
+    },
+    {
+        "french": "mère",
+        "chinese": "母亲",
+        "pinyin": "mǔ qīn",
+        "category": "famille",
+        "difficulty": 1
+    },
+    {
+        "french": "fils",
+        "chinese": "儿子",
+        "pinyin": "ér zi",
+        "category": "famille",
+        "difficulty": 1
+    },
+    {
+        "french": "fille",
+        "chinese": "女儿",
+        "pinyin": "nǚ ér",
+        "category": "famille",
+        "difficulty": 1
+    },
+    {
+        "french": "un",
+        "chinese": "一",
+        "pinyin": "yī",
+        "category": "nombres",
+        "difficulty": 1
+    },
+    {
+        "french": "deux",
+        "chinese": "二",
+        "pinyin": "èr",
+        "category": "nombres",
+        "difficulty": 1
+    },
+    {
+        "french": "trois",
+        "chinese": "三",
+        "pinyin": "sān",
+        "category": "nombres",
+        "difficulty": 1
+    },
+    {
+        "french": "quatre",
+        "chinese": "四",
+        "pinyin": "sì",
+        "category": "nombres",
+        "difficulty": 1
+    },
+    {
+        "french": "cinq",
+        "chinese": "五",
+        "pinyin": "wǔ",
+        "category": "nombres",
+        "difficulty": 1
+    },
+    {
+        "french": "livre",
+        "chinese": "书",
+        "pinyin": "shū",
+        "category": "objets",
+        "difficulty": 1
+    },
+    {
+        "french": "voiture",
+        "chinese": "汽车",
+        "pinyin": "qì chē",
+        "category": "transport",
+        "difficulty": 1
+    },
+    {
+        "french": "ami",
+        "chinese": "朋友",
+        "pinyin": "péng yǒu",
+        "category": "relations",
+        "difficulty": 1
+    },
+    {
+        "french": "manger",
+        "chinese": "吃",
+        "pinyin": "chī",
+        "category": "verbes",
+        "difficulty": 1
+    },
+    {
+        "french": "boire",
+        "chinese": "喝",
+        "pinyin": "hē",
+        "category": "verbes",
+        "difficulty": 1
+    },
+    {
+        "french": "dormir",
+        "chinese": "睡觉",
+        "pinyin": "shuì jiào",
+        "category": "verbes",
+        "difficulty": 1
+    }
+] 

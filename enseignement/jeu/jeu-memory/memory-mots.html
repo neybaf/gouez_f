@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory des Mots FLE</title>
-    <link rel="stylesheet" href="/gouez_f/css/game-styles.css">
+    <title>Memory des Mots FLE - Français/Chinois</title>
+    <link rel="stylesheet" href="../../../css/game-styles.css">
     <style>
         .memory-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
             padding: 2rem;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
+            justify-content: center;
         }
 
         .memory-card {
@@ -24,6 +24,8 @@
             position: relative;
             perspective: 1000px;
             transition: transform 0.2s ease;
+            min-width: 120px;
+            max-width: 180px;
         }
 
         .memory-card:hover {
@@ -53,18 +55,18 @@
             transform: rotateY(180deg);
         }
 
-        .card-face {
+        .card-front, .card-back {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 1rem;
             border-radius: var(--border-radius);
             font-weight: 600;
-            font-size: 1rem;
             text-align: center;
             word-wrap: break-word;
         }
@@ -85,17 +87,42 @@
             border: 2px solid var(--secondary-color);
         }
 
-        .card-back.translation {
-            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-            border: 2px solid var(--accent-color);
+        .card-back.chinese {
+            background: linear-gradient(135deg, #fff3e0, #ffcc02);
+            border: 2px solid #ff9800;
         }
 
-        .difficulty-selector {
+        .card-language {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .level-selection {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .level-selection h3, .level-selection h4 {
+            margin: 0 0 1rem 0;
+            color: var(--dark-color);
+            text-align: center;
+        }
+
+        .selection-buttons {
             display: flex;
+            gap: 0.5rem;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
             flex-wrap: wrap;
+            margin-bottom: 1rem;
         }
 
         .difficulty-btn {
@@ -106,13 +133,26 @@
             border-radius: 25px;
             cursor: pointer;
             transition: var(--transition);
+            font-size: 0.9rem;
             font-weight: 600;
         }
 
-        .difficulty-btn.active,
-        .difficulty-btn:hover {
+        .difficulty-btn.active, .difficulty-btn:hover {
             background: var(--primary-color);
             color: white;
+            transform: translateY(-2px);
+        }
+
+        .difficulty-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .difficulty-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
         }
 
         .game-info {
@@ -209,9 +249,8 @@
                 text-align: center;
             }
             
-            .card-face {
-                font-size: 0.9rem;
-                padding: 0.5rem;
+            .card-text {
+                font-size: 1rem;
             }
         }
 
@@ -220,8 +259,8 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .card-face {
-                font-size: 0.8rem;
+            .card-text {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -230,14 +269,27 @@
     <div class="game-container">
         <div class="game-header">
             <h1 class="game-title">🧠 Memory des Mots</h1>
-            <p class="game-subtitle">Associez les mots français avec leurs traductions</p>
+            <p class="game-subtitle">Associez les mots français avec leurs traductions chinoises</p>
         </div>
 
         <div class="game-area">
-            <div class="difficulty-selector">
-                <button class="difficulty-btn active" data-level="facile">Facile (6 paires)</button>
-                <button class="difficulty-btn" data-level="moyen">Moyen (8 paires)</button>
-                <button class="difficulty-btn" data-level="difficile">Difficile (12 paires)</button>
+            <!-- Sélection des niveaux CECR -->
+            <div class="level-selection">
+                <h3>Choisissez votre niveau :</h3>
+                <div class="selection-buttons">
+                    <button class="difficulty-btn" data-level="A1">A1 - Débutant</button>
+                    <button class="difficulty-btn" data-level="A2">A2 - Élémentaire</button>
+                    <button class="difficulty-btn" data-level="B1">B1 - Intermédiaire</button>
+                </div>
+                
+                <div class="difficulty-section">
+                    <h4>Difficulté :</h4>
+                    <div class="selection-buttons">
+                        <button class="difficulty-btn active" data-difficulty="facile">Facile (6 paires)</button>
+                        <button class="difficulty-btn" data-difficulty="moyen">Moyen (8 paires, 2 min)</button>
+                        <button class="difficulty-btn" data-difficulty="difficile">Difficile (12 paires, 1.5 min)</button>
+                    </div>
+                </div>
             </div>
 
             <div class="game-info">

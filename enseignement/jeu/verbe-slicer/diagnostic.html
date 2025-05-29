@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Verbe Slicer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ddd;
+        }
+        .success { border-left-color: #4CAF50; }
+        .error { border-left-color: #f44336; }
+        .warning { border-left-color: #FF9800; }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #1976D2; }
+        #canvas { border: 1px solid #ddd; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Diagnostic Verbe Slicer</h1>
+    
+    <button onclick="runAllTests()">Lancer tous les tests</button>
+    <button onclick="clearResults()">Effacer</button>
+    
+    <div id="results"></div>
+    
+    <canvas id="canvas" width="300" height="100"></canvas>
+
+    <script>
+        let results = [];
+
+        function addResult(name, status, message) {
+            results.push({name, status, message});
+            displayResults();
+        }
+
+        function displayResults() {
+            const container = document.getElementById('results');
+            container.innerHTML = results.map(r => 
+                `<div class="test ${r.status}">
+                    <strong>${r.name}:</strong> ${r.message}
+                </div>`
+            ).join('');
+        }
+
+        function clearResults() {
+            results = [];
+            displayResults();
+        }
+
+        async function runAllTests() {
+            clearResults();
+            
+            // Test 1: Canvas
+            try {
+                const canvas = document.getElementById('canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = 'red';
+                ctx.fillRect(10, 10, 50, 30);
+                ctx.fillStyle = 'white';
+                ctx.font = '16px Arial';
+                ctx.fillText('Test', 15, 30);
+                addResult('Canvas HTML5', 'success', 'Canvas fonctionne');
+            } catch (e) {
+                addResult('Canvas HTML5', 'error', e.message);
+            }
+
+            // Test 2: JSON
+            try {
+                const response = await fetch('jeu-verbes.json');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                
+                if (data.verbesIrreguliers && data.motsDivers) {
+                    const total = Object.values(data.verbesIrreguliers).flat().length + data.motsDivers.length;
+                    addResult('Données JSON', 'success', `${total} mots chargés`);
+                } else {
+                    addResult('Données JSON', 'error', 'Structure JSON invalide');
+                }
+            } catch (e) {
+                addResult('Données JSON', 'error', e.message);
+            }
+
+            // Test 3: CSS
+            try {
+                const response = await fetch('../../../css/game-styles.css');
+                if (response.ok) {
+                    addResult('CSS Global', 'success', 'CSS global accessible');
+                } else {
+                    addResult('CSS Global', 'warning', 'CSS global non trouvé');
+                }
+            } catch (e) {
+                addResult('CSS Global', 'error', e.message);
+            }
+
+            // Test 4: Script principal
+            try {
+                const response = await fetch('verbe-slicer-game.js');
+                if (response.ok) {
+                    const content = await response.text();
+                    if (content.includes('class VerbeSlicer')) {
+                        addResult('Script Principal', 'success', 'Script accessible et contient la classe');
+                    } else {
+                        addResult('Script Principal', 'error', 'Classe VerbeSlicer non trouvée');
+                    }
+                } else {
+                    addResult('Script Principal', 'error', 'Script non accessible');
+                }
+            } catch (e) {
+                addResult('Script Principal', 'error', e.message);
+            }
+
+            // Test 5: Audio
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                addResult('Web Audio API', 'success', 'Audio disponible');
+            } catch (e) {
+                addResult('Web Audio API', 'warning', 'Audio non disponible: ' + e.message);
+            }
+
+            // Test 6: Local Storage
+            try {
+                localStorage.setItem('test', 'ok');
+                localStorage.removeItem('test');
+                addResult('Local Storage', 'success', 'Stockage local disponible');
+            } catch (e) {
+                addResult('Local Storage', 'warning', 'Stockage local non disponible');
+            }
+        }
+
+        // Auto-run tests
+        window.onload = runAllTests;
+    </script>
+</body>
+</html> 
