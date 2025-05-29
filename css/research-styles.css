@@ -249,23 +249,14 @@ body {
 
 /* Style pour les listes de jeux */
 .game-features {
-  list-style: none;
-  padding: 0;
+  list-style: disc;
+  padding-left: 1.2rem;
   margin: 0;
 }
 
 .game-features li {
   padding: 0.3rem 0;
   color: #666;
-  position: relative;
-  padding-left: 1.2rem;
-}
-
-.game-features li::before {
-  content: '🎮';
-  position: absolute;
-  left: 0;
-  top: 0.3rem;
 }
 
 /* Publications */
