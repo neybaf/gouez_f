@@ -124,6 +124,16 @@ body {
 
 .section {
   margin-bottom: 4rem;
+  display: none; /* Masquer toutes les sections par défaut */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.section.active-section {
+  display: block; /* Afficher seulement la section active */
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .section-title {
@@ -237,6 +247,27 @@ body {
   color: #0c5460;
 }
 
+/* Style pour les listes de jeux */
+.game-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-features li {
+  padding: 0.3rem 0;
+  color: #666;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.game-features li::before {
+  content: '🎮';
+  position: absolute;
+  left: 0;
+  top: 0.3rem;
+}
+
 /* Publications */
 .publication-list {
   list-style: none;
@@ -299,10 +330,10 @@ body {
   border: 1px solid #e0e0e0;
   border-radius: var(--border-radius);
   padding: 1.5rem;
-  text-align: center;
-  transition: var(--transition);
   text-decoration: none;
   color: inherit;
+  transition: var(--transition);
+  text-align: center;
 }
 
 .resource-card:hover {
@@ -312,9 +343,8 @@ body {
 }
 
 .resource-icon {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
-  display: block;
 }
 
 .resource-title {
@@ -327,12 +357,13 @@ body {
 .resource-description {
   color: #666;
   font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 /* Équipe */
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -341,7 +372,7 @@ body {
   background: white;
   border: 1px solid #e0e0e0;
   border-radius: var(--border-radius);
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
   transition: var(--transition);
 }
@@ -349,23 +380,24 @@ body {
 .team-member:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-color: var(--secondary-color);
 }
 
 .member-photo {
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  margin: 0 auto 1rem;
+  margin: 0 auto 1rem auto;
   background: var(--light-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
-  color: var(--secondary-color);
+  font-size: 2rem;
+  color: var(--primary-color);
 }
 
 .member-name {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--primary-color);
   margin-bottom: 0.5rem;
@@ -373,14 +405,14 @@ body {
 
 .member-title {
   color: var(--secondary-color);
-  font-weight: 500;
+  font-size: 0.9rem;
   margin-bottom: 1rem;
 }
 
 .member-bio {
   color: #666;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.85rem;
+  line-height: 1.4;
 }
 
 /* Responsive */
@@ -388,33 +420,33 @@ body {
   .research-header {
     padding: 2rem 1rem;
   }
-  
+
   .research-title {
     font-size: 2rem;
   }
-  
+
   .research-content {
     padding: 2rem 1rem;
   }
-  
+
   .nav-tabs {
     flex-direction: column;
   }
-  
+
   .nav-tab {
     border-radius: 0;
     border-bottom: 1px solid #bdc3c7;
   }
-  
+
   .nav-tab:first-child {
     border-radius: var(--border-radius) var(--border-radius) 0 0;
   }
-  
+
   .nav-tab:last-child {
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     border-bottom: none;
   }
-  
+
   .projects-grid,
   .resources-grid,
   .team-grid {
@@ -429,7 +461,7 @@ body {
 }
 
 .fade-in {
-  animation: fadeIn 0.6s ease;
+  animation: fadeIn 0.6s ease-out;
 }
 
 /* Citations académiques */
@@ -443,15 +475,18 @@ body {
 }
 
 .citation-author {
+  display: block;
+  margin-top: 0.5rem;
   font-weight: 600;
   color: var(--primary-color);
-  margin-top: 0.5rem;
   font-style: normal;
+  font-size: 0.9rem;
 }
 
 /* Statistiques de recherche */
 .research-stats {
-  background: var(--light-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
   padding: 2rem;
   border-radius: var(--border-radius);
   margin: 2rem 0;
@@ -460,28 +495,24 @@ body {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 2rem;
+  gap: 1.5rem;
   text-align: center;
 }
 
 .stat-item {
-  background: white;
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
 }
 
 .stat-number {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--secondary-color);
   display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 .stat-label {
-  color: #666;
   font-size: 0.9rem;
+  opacity: 0.9;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 0.5rem;
+  letter-spacing: 1px;
 } 
