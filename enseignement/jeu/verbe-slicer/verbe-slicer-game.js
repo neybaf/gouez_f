@@ -16,6 +16,7 @@ class VerbeSlicer {
         this.verbesData = null;
         this.currentVerbs = [];
         this.fallingWords = [];
+        this.isDataLoaded = false; // Flag pour vérifier si les données sont chargées
         
         // Statistiques de jeu
         this.score = 0;
@@ -30,11 +31,13 @@ class VerbeSlicer {
         this.gameStartTime = 0;
         this.gameTime = 0;
         
-        // Paramètres de jeu
+        // Paramètres de jeu avec timestamps pour debugging
         this.gameSpeed = 60; // FPS
-        this.spawnRate = 0.02; // Probabilité de spawn par frame
+        this.spawnRate = 0.03; // Augmenté pour plus d'action
         this.wordSpeed = 1;
         this.maxWords = 8;
+        this.lastSpawnTime = 0;
+        this.spawnInterval = 1000; // Spawn toutes les 1 seconde
         
         // Niveaux et progression
         this.levels = [
@@ -103,6 +106,7 @@ class VerbeSlicer {
                     document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
                     e.target.closest('.difficulty-btn').classList.add('active');
                     this.difficulty = e.target.closest('.difficulty-btn').dataset.difficulty;
+                    console.log('🎚️ Difficulté sélectionnée:', this.difficulty);
                 });
             });
             
@@ -193,7 +197,7 @@ class VerbeSlicer {
     async loadVerbsData() {
         try {
             console.log('📥 Tentative de chargement du fichier JSON...');
-            const response = await fetch('jeu-verbes.json');
+            const response = await fetch('./jeu-verbes.json'); // Chemin relatif corrigé
             
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -206,6 +210,12 @@ class VerbeSlicer {
             if (!this.verbesData.verbesIrreguliers || !this.verbesData.motsDivers) {
                 throw new Error('Structure JSON invalide');
             }
+            
+            // Compter le total des verbes
+            const totalIrregular = Object.values(this.verbesData.verbesIrreguliers).flat().length;
+            console.log(`📊 Total verbes irréguliers: ${totalIrregular}, mots réguliers: ${this.verbesData.motsDivers.length}`);
+            
+            this.isDataLoaded = true;
             
         } catch (error) {
             console.warn('⚠️ Erreur lors du chargement des verbes, utilisation des données de fallback:', error);
@@ -222,6 +232,7 @@ class VerbeSlicer {
                 motsDivers: ['parler', 'aimer', 'chanter', 'danser', 'jouer', 'regarder', 'écouter', 'travailler', 'manger', 'habiter']
             };
             
+            this.isDataLoaded = true;
             console.log('✅ Données de fallback chargées');
         }
     }
@@ -278,12 +289,36 @@ class VerbeSlicer {
     }
     
     startGame() {
+        console.log('🚀 Tentative de démarrage du jeu...');
+        
+        // Vérifier que les données sont chargées
+        if (!this.isDataLoaded) {
+            console.error('❌ Impossible de démarrer : données non chargées');
+            alert('Les données du jeu ne sont pas encore chargées. Veuillez patienter...');
+            return;
+        }
+        
+        console.log('🎯 Démarrage du jeu confirmé');
         this.resetGameStats();
+        this.initializeCurrentVerbs(); // CRITIQUE : Initialiser les verbes actuels
         this.gameState = 'playing';
         this.gameStartTime = Date.now();
-        this.updateCurrentVerbs();
+        this.lastSpawnTime = Date.now(); // Initialiser le timer de spawn
         this.showScreen('game-screen');
         this.gameLoop();
+    }
+    
+    // NOUVELLE FONCTION CRITIQUE : Initialise correctement la liste des verbes
+    initializeCurrentVerbs() {
+        const currentLevel = this.getCurrentLevel();
+        const irregularVerbs = this.verbesData.verbesIrreguliers[currentLevel.verbType] || [];
+        const regularWords = this.verbesData.motsDivers || [];
+        
+        // Mélanger les verbes irréguliers avec des mots réguliers
+        this.currentVerbs = [...irregularVerbs, ...regularWords];
+        
+        console.log(`🎲 Verbes initialisés pour niveau ${this.level} (${currentLevel.name}):`, 
+                   `${irregularVerbs.length} irréguliers + ${regularWords.length} réguliers = ${this.currentVerbs.length} total`);
     }
     
     resetGameStats() {
@@ -305,7 +340,9 @@ class VerbeSlicer {
         this.wordSpeed = 1 * settings.speedMultiplier;
         this.spawnRate = 0.02 * settings.spawnMultiplier;
         this.maxWords = settings.maxWords;
+        this.spawnInterval = 1000 / settings.spawnMultiplier; // Ajuster l'intervalle selon la difficulté
         
+        console.log('🔄 Stats réinitialisées, difficulté:', this.difficulty, 'paramètres:', settings);
         this.updateUI();
     }
     
@@ -316,6 +353,9 @@ class VerbeSlicer {
         
         // Mélanger les verbes irréguliers avec des mots réguliers
         this.currentVerbs = [...irregularVerbs, ...regularWords];
+        
+        console.log(`📚 Verbes mis à jour pour niveau ${this.level}:`, 
+                   `${irregularVerbs.length} irréguliers + ${regularWords.length} réguliers`);
     }
     
     getCurrentLevel() {
@@ -328,7 +368,15 @@ class VerbeSlicer {
     }
     
     gameLoop() {
-        if (this.gameState !== 'playing') return;
+        if (this.gameState !== 'playing') {
+            console.log('🛑 GameLoop arrêtée, état:', this.gameState);
+            return;
+        }
+        
+        // Log périodique pour confirmer que la boucle tourne
+        if (Date.now() % 5000 < 16) { // Log toutes les 5 secondes environ
+            console.log('🔄 GameLoop active, mots à l\'écran:', this.fallingWords.length);
+        }
         
         this.update();
         this.render();
@@ -342,9 +390,11 @@ class VerbeSlicer {
         // Vérifier le changement de niveau
         this.checkLevelUp();
         
-        // Générer de nouveaux mots
-        if (Math.random() < this.spawnRate && this.fallingWords.length < this.maxWords) {
+        // Générer de nouveaux mots avec contrôle temporel
+        const now = Date.now();
+        if (now - this.lastSpawnTime > this.spawnInterval && this.fallingWords.length < this.maxWords) {
             this.spawnWord();
+            this.lastSpawnTime = now;
         }
         
         // Mettre à jour les mots qui tombent
@@ -365,28 +415,43 @@ class VerbeSlicer {
         const newLevel = this.getCurrentLevel();
         if (newLevel !== this.levels[this.level - 1]) {
             this.level = this.levels.indexOf(newLevel) + 1;
-            this.updateCurrentVerbs();
+            this.updateCurrentVerbs(); // Mettre à jour les verbes pour le nouveau niveau
             this.showLevelUpEffect();
             this.playSound('levelUp');
+            console.log('🆙 Niveau supérieur atteint:', this.level, newLevel.name);
         }
     }
     
     spawnWord() {
+        if (!this.currentVerbs || this.currentVerbs.length === 0) {
+            console.warn('⚠️ spawnWord appelée mais currentVerbs est vide');
+            this.initializeCurrentVerbs(); // Réinitialiser si vide
+            if (this.currentVerbs.length === 0) {
+                console.error('❌ Impossible de spawn : aucun verbe disponible');
+                return;
+            }
+        }
+        
         const word = this.currentVerbs[Math.floor(Math.random() * this.currentVerbs.length)];
         const currentLevel = this.getCurrentLevel();
+        const isIrregular = this.isIrregularVerb(word);
         
-        this.fallingWords.push({
+        const newWord = {
             text: word,
             x: Math.random() * (this.canvas.width - 200) + 100,
             y: -50,
             speed: this.wordSpeed + Math.random() * 0.5,
-            isIrregular: this.isIrregularVerb(word),
+            isIrregular: isIrregular,
             color: currentLevel.color,
             rotation: 0,
             rotationSpeed: (Math.random() - 0.5) * 0.02,
             scale: 1,
             opacity: 1
-        });
+        };
+        
+        this.fallingWords.push(newWord);
+        
+        console.log(`✨ Mot spawné: "${word}" (${isIrregular ? 'irrégulier' : 'régulier'}), total à l'écran: ${this.fallingWords.length}`);
     }
     
     isIrregularVerb(word) {
@@ -408,6 +473,7 @@ class VerbeSlicer {
                 if (word.isIrregular) {
                     this.loseLife();
                     this.addFloatingText(word.x, word.y - 50, 'Raté !', 'error');
+                    console.log('❌ Verbe irrégulier raté:', word.text);
                 }
             }
         });
@@ -434,6 +500,7 @@ class VerbeSlicer {
         if (!hit) {
             // Clic dans le vide
             this.addFloatingText(x, y, 'Raté !', 'error');
+            console.log('🎯 Clic dans le vide');
         }
     }
     
@@ -465,11 +532,14 @@ class VerbeSlicer {
             this.createSliceEffect(word.x, word.y);
             this.playSound('success');
             
+            console.log('✅ Verbe irrégulier tranché:', word.text, 'Score:', this.score);
+            
             // Bonus pour les séries
             if (this.currentStreak > 0 && this.currentStreak % 5 === 0) {
                 const bonus = Math.floor(this.currentStreak / 5);
                 this.score += bonus;
                 this.addFloatingText(word.x, word.y - 30, `Série +${bonus}!`, 'bonus');
+                console.log('🔥 Bonus série:', bonus);
             }
         } else {
             // Mauvais clic sur un mot régulier
@@ -477,6 +547,7 @@ class VerbeSlicer {
             this.loseLife();
             this.addFloatingText(word.x, word.y, 'Erreur !', 'error');
             this.playSound('error');
+            console.log('❌ Mot régulier cliqué:', word.text);
         }
         
         this.updateUI();
@@ -485,6 +556,7 @@ class VerbeSlicer {
     loseLife() {
         this.lives--;
         this.updateLivesDisplay();
+        console.log('💔 Vie perdue, vies restantes:', this.lives);
         
         if (this.lives <= 0) {
             this.gameOver();
@@ -723,10 +795,12 @@ class VerbeSlicer {
             this.gameState = 'paused';
             this.updatePauseStats();
             this.showScreen('pause-screen');
+            console.log('⏸️ Jeu en pause');
         } else if (this.gameState === 'paused') {
             this.gameState = 'playing';
             this.showScreen('game-screen');
             this.gameLoop();
+            console.log('▶️ Jeu repris');
         }
     }
     
@@ -738,18 +812,21 @@ class VerbeSlicer {
     }
     
     restartGame() {
+        console.log('🔄 Redémarrage du jeu...');
         this.startGame();
     }
     
     quitToMenu() {
         this.gameState = 'menu';
         this.showScreen('start-screen');
+        console.log('🏠 Retour au menu');
     }
     
     gameOver() {
         this.gameState = 'gameOver';
         this.updateFinalStats();
         this.showScreen('game-over-screen');
+        console.log('💀 Game Over ! Score final:', this.score);
     }
     
     updateFinalStats() {
@@ -774,6 +851,15 @@ class VerbeSlicer {
                      this.score >= 50 ? '🎯 Excellent travail !' : 
                      '💪 Continue tes efforts !';
         document.getElementById('game-over-title').textContent = title;
+        
+        console.log('📊 Stats finales:', {
+            score: this.score,
+            level: this.level,
+            accuracy: accuracy + '%',
+            verbesSliced: this.verbsSliced,
+            gameTime: `${minutes}:${seconds}`,
+            bestStreak: this.bestStreak
+        });
     }
     
     getPerformanceMessage(accuracy, score) {
@@ -812,6 +898,7 @@ class VerbeSlicer {
             screen.classList.remove('active');
         });
         document.getElementById(screenId).classList.add('active');
+        console.log('🖥️ Affichage de l\'écran:', screenId);
     }
     
     playSound(soundName) {
@@ -827,5 +914,10 @@ class VerbeSlicer {
 
 // Initialiser le jeu quand la page est chargée
 document.addEventListener('DOMContentLoaded', () => {
-    new VerbeSlicer();
+    console.log('📄 DOM chargé, initialisation de Verbe Slicer...');
+    const game = new VerbeSlicer();
+    
+    // Exposer le jeu globalement pour le debugging
+    window.game = game;
+    console.log('🎮 Jeu exposé globalement dans window.game pour debugging');
 }); 
