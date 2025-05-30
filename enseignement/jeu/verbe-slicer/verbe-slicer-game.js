@@ -88,6 +88,9 @@ class VerbeSlicer {
             console.log('🎨 Configuration du canvas...');
             this.setupCanvas();
             
+            console.log('🖥️ Initialisation des écrans...');
+            this.initializeScreens();
+            
             console.log('🚀 Affichage de l\'écran de démarrage...');
             this.showScreen('start-screen');
             
@@ -96,6 +99,30 @@ class VerbeSlicer {
             console.error('❌ Erreur lors de l\'initialisation:', error);
             alert('Erreur lors du chargement du jeu. Vérifiez la console pour plus de détails.');
         }
+    }
+    
+    initializeScreens() {
+        console.log('🔧 Initialisation des écrans de jeu...');
+        
+        // S'assurer que tous les écrans sont masqués au départ
+        const screens = document.querySelectorAll('.game-screen');
+        screens.forEach(screen => {
+            screen.classList.remove('active');
+            // Réinitialiser les styles inline
+            screen.style.display = '';
+            console.log(`🚫 Écran ${screen.id} masqué et réinitialisé`);
+        });
+        
+        // Afficher explicitement l'écran de démarrage
+        const startScreen = document.getElementById('start-screen');
+        if (startScreen) {
+            startScreen.classList.add('active');
+            console.log('✅ Écran de démarrage activé');
+        } else {
+            console.warn('⚠️ Écran de démarrage non trouvé');
+        }
+        
+        console.log('✅ Initialisation des écrans terminée');
     }
     
     setupEventListeners() {
@@ -107,6 +134,17 @@ class VerbeSlicer {
                 console.log('✅ Bouton de démarrage configuré');
             } else {
                 console.warn('⚠️ Bouton de démarrage non trouvé - Mode test détecté');
+            }
+            
+            // Bouton de test avec données fallback
+            const testBtn = document.getElementById('test-fallback-btn');
+            if (testBtn) {
+                testBtn.addEventListener('click', () => {
+                    console.log('🧪 Mode test activé - Utilisation des données intégrées');
+                    this.useEmbeddedData();
+                    this.startGame();
+                });
+                console.log('✅ Bouton de test configuré');
             }
             
             // Sélection de difficulté - rendre optionnel
@@ -220,23 +258,40 @@ class VerbeSlicer {
     
     async loadVerbsData() {
         try {
-            console.log('📡 Chargement du fichier JSON...');
+            console.log('📡 Tentative de chargement du fichier JSON...');
+            console.log('🌐 URL actuelle:', window.location.href);
+            console.log('🗂️ Chemin JSON: ./jeu-verbes.json');
             
             // Essayer de charger le fichier JSON depuis le serveur
             const response = await fetch('./jeu-verbes.json');
+            console.log('📥 Réponse reçue:', response.status, response.statusText);
             
             if (!response.ok) {
-                console.warn('⚠️ Erreur HTTP:', response.status, '- Utilisation des données de fallback');
+                console.warn(`⚠️ Erreur HTTP: ${response.status} - ${response.statusText}`);
+                console.log('🔄 Basculement vers les données de fallback...');
                 this.useEmbeddedData();
                 return;
             }
             
             const data = await response.json();
-            console.log('✅ Données JSON chargées:', data);
+            console.log('✅ Données JSON chargées avec succès');
+            console.log('📊 Structure des données:', Object.keys(data));
             
             // Valider les données
             if (!data.verbesIrreguliers || !data.motsDivers) {
-                console.warn('⚠️ Structure de données invalide - Utilisation des données de fallback');
+                console.warn('⚠️ Structure de données invalide:', data);
+                console.log('🔄 Basculement vers les données de fallback...');
+                this.useEmbeddedData();
+                return;
+            }
+            
+            // Vérifier le contenu des données
+            const totalIrregular = Object.values(data.verbesIrreguliers).flat().length;
+            const totalRegular = data.motsDivers.length;
+            
+            if (totalIrregular === 0 || totalRegular === 0) {
+                console.warn('⚠️ Données vides détectées');
+                console.log('🔄 Basculement vers les données de fallback...');
                 this.useEmbeddedData();
                 return;
             }
@@ -244,36 +299,81 @@ class VerbeSlicer {
             this.verbesData = data;
             this.isDataLoaded = true;
             
-            // Log détaillé des données chargées
-            const totalIrregular = Object.values(this.verbesData.verbesIrreguliers).flat().length;
-            console.log(`📊 Total verbes irréguliers: ${totalIrregular}, mots réguliers: ${this.verbesData.motsDivers.length}`);
+            console.log(`📈 Total verbes irréguliers: ${totalIrregular}`);
+            console.log(`📈 Total mots réguliers: ${totalRegular}`);
+            console.log('✅ Données JSON validées et prêtes à l'utilisation');
             
         } catch (error) {
-            console.warn('⚠️ Erreur lors du chargement, utilisation des données de fallback:', error);
+            console.error('❌ Erreur lors du chargement JSON:', error.message);
+            console.log('💡 Cela peut être dû à:');
+            console.log('   - Restriction CORS en mode fichier local');
+            console.log('   - Serveur non démarré');
+            console.log('   - Fichier JSON manquant ou corrompu');
+            console.log('🔄 Basculement automatique vers les données de fallback...');
             this.useEmbeddedData();
         }
     }
     
     useEmbeddedData() {
-        console.log('🔧 Utilisation des données de fallback intégrées...');
-        // Données de secours intégrées
+        console.log('🔧 Activation des données de fallback intégrées...');
+        console.log('💡 Ces données permettront au jeu de fonctionner même sans serveur');
+        
+        // Données de secours plus complètes
         this.verbesData = {
             verbesIrreguliers: {
-                infinitif: ['être', 'avoir', 'aller', 'faire', 'dire', 'pouvoir', 'voir', 'savoir', 'vouloir', 'venir', 'prendre', 'mettre', 'devoir', 'partir', 'tenir', 'sortir', 'sentir', 'vivre', 'mourir', 'ouvrir'],
-                participe_passe: ['été', 'eu', 'allé', 'fait', 'dit', 'pu', 'vu', 'su', 'voulu', 'venu', 'pris', 'mis', 'dû', 'parti', 'tenu', 'sorti', 'senti', 'vécu', 'mort', 'ouvert'],
-                futur: ['serai', 'aurai', 'irai', 'ferai', 'dirai', 'pourrai', 'verrai', 'saurai', 'voudrai', 'viendrai', 'prendrai', 'mettrai', 'devrai', 'partirai', 'tiendrai', 'sortirai', 'sentirai', 'vivrai', 'mourrai', 'ouvrirai'],
-                imparfait: ['étais', 'avais', 'allais', 'faisais', 'disais', 'pouvais', 'voyais', 'savais', 'voulais', 'venais', 'prenais', 'mettais', 'devais', 'partais', 'tenais', 'sortais', 'sentais', 'vivais', 'mourais', 'ouvrais'],
-                subjonctif: ['sois', 'aies', 'ailles', 'fasses', 'dises', 'puisses', 'voies', 'saches', 'veuilles', 'viennes', 'prennes', 'mettes', 'doives', 'partes', 'tiennes', 'sortes', 'sentes', 'vives', 'meures', 'ouvres']
+                infinitif: [
+                    'être', 'avoir', 'aller', 'faire', 'dire', 'pouvoir', 'voir', 'savoir', 
+                    'vouloir', 'venir', 'prendre', 'mettre', 'devoir', 'partir', 'tenir', 
+                    'sortir', 'sentir', 'vivre', 'mourir', 'ouvrir', 'suivre', 'courir',
+                    'servir', 'dormir', 'mentir', 'croire', 'boire', 'lire', 'écrire', 'connaître'
+                ],
+                participe_passe: [
+                    'été', 'eu', 'allé', 'fait', 'dit', 'pu', 'vu', 'su', 
+                    'voulu', 'venu', 'pris', 'mis', 'dû', 'parti', 'tenu', 
+                    'sorti', 'senti', 'vécu', 'mort', 'ouvert', 'suivi', 'couru',
+                    'servi', 'dormi', 'menti', 'cru', 'bu', 'lu', 'écrit', 'connu'
+                ],
+                futur: [
+                    'serai', 'aurai', 'irai', 'ferai', 'dirai', 'pourrai', 'verrai', 'saurai', 
+                    'voudrai', 'viendrai', 'prendrai', 'mettrai', 'devrai', 'partirai', 'tiendrai', 
+                    'sortirai', 'sentirai', 'vivrai', 'mourrai', 'ouvrirai', 'suivrai', 'courrai',
+                    'servirai', 'dormirai', 'mentirai', 'croirai', 'boirai', 'lirai', 'écrirai', 'connaîtrai'
+                ],
+                imparfait: [
+                    'étais', 'avais', 'allais', 'faisais', 'disais', 'pouvais', 'voyais', 'savais', 
+                    'voulais', 'venais', 'prenais', 'mettais', 'devais', 'partais', 'tenais', 
+                    'sortais', 'sentais', 'vivais', 'mourais', 'ouvrais', 'suivais', 'courais',
+                    'servais', 'dormais', 'mentais', 'croyais', 'buvais', 'lisais', 'écrivais', 'connaissais'
+                ],
+                subjonctif: [
+                    'sois', 'aies', 'ailles', 'fasses', 'dises', 'puisses', 'voies', 'saches', 
+                    'veuilles', 'viennes', 'prennes', 'mettes', 'doives', 'partes', 'tiennes', 
+                    'sortes', 'sentes', 'vives', 'meures', 'ouvres', 'suives', 'coures',
+                    'serves', 'dormes', 'mentes', 'croies', 'boives', 'lises', 'écrives', 'connaisses'
+                ]
             },
-            motsDivers: ['parler', 'aimer', 'donner', 'porter', 'arriver', 'rester', 'entrer', 'montrer', 'passer', 'regarder', 'trouver', 'rendre', 'appeler', 'demander', 'garder', 'suivre', 'connaître', 'paraître', 'croire', 'attendre']
+            motsDivers: [
+                'parler', 'aimer', 'donner', 'porter', 'arriver', 'rester', 'entrer', 'montrer', 
+                'passer', 'regarder', 'trouver', 'rendre', 'appeler', 'demander', 'garder', 'attendre',
+                'chanter', 'danser', 'jouer', 'manger', 'travailler', 'étudier', 'marcher', 'penser',
+                'chercher', 'écouter', 'habiter', 'finir', 'choisir', 'réussir', 'grandir', 'réfléchir',
+                'parlé', 'aimé', 'donné', 'porté', 'arrivé', 'resté', 'entré', 'montré',
+                'passé', 'regardé', 'trouvé', 'rendu', 'appelé', 'demandé', 'gardé', 'attendu',
+                'chanté', 'dansé', 'joué', 'mangé', 'travaillé', 'étudié', 'marché', 'pensé',
+                'cherché', 'écouté', 'habité', 'fini', 'choisi', 'réussi', 'grandi', 'réfléchi'
+            ]
         };
         
         this.isDataLoaded = true;
         console.log('✅ Données de fallback chargées avec succès');
         
-        // CRITIQUE : Initialiser les verbes immédiatement après le chargement des données de fallback
+        // CRITIQUE : Initialiser les verbes immédiatement
         this.initializeCurrentVerbs();
-        console.log('🎲 Verbes initialisés depuis fallback:', this.currentVerbs ? this.currentVerbs.length : 0, 'mots');
+        
+        const totalIrregular = Object.values(this.verbesData.verbesIrreguliers).flat().length;
+        const totalRegular = this.verbesData.motsDivers.length;
+        console.log(`📊 Fallback - Verbes irréguliers: ${totalIrregular}, mots réguliers: ${totalRegular}`);
+        console.log('🎮 Le jeu est maintenant prêt à fonctionner avec les données de fallback');
     }
     
     setupCanvas() {
@@ -1017,16 +1117,35 @@ class VerbeSlicer {
     }
     
     showScreen(screenId) {
+        console.log('🖥️ Changement d\'écran vers:', screenId);
+        
         const screens = document.querySelectorAll('.game-screen');
         if (screens.length > 0) {
+            // Masquer tous les écrans
             screens.forEach(screen => {
                 screen.classList.remove('active');
+                console.log(`📺 Masquage de l'écran: ${screen.id}`);
             });
             
+            // Afficher l'écran cible
             const targetScreen = document.getElementById(screenId);
             if (targetScreen) {
                 targetScreen.classList.add('active');
-                console.log('🖥️ Affichage de l\'écran:', screenId);
+                console.log('✅ Écran affiché:', screenId);
+                
+                // Vérification supplémentaire pour les écrans overlay
+                if (targetScreen.classList.contains('overlay')) {
+                    console.log('🔍 Écran overlay détecté, vérification CSS...');
+                    // Forcer le display pour les overlays
+                    setTimeout(() => {
+                        const computedStyle = window.getComputedStyle(targetScreen);
+                        console.log('🎨 Display calculé:', computedStyle.display);
+                        if (computedStyle.display === 'none') {
+                            console.warn('⚠️ Overlay mal affiché, correction...');
+                            targetScreen.style.display = 'flex';
+                        }
+                    }, 10);
+                }
             } else {
                 console.warn('⚠️ Écran non trouvé:', screenId, '- Mode test détecté');
             }
