@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Debug - Verbe Slicer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        .debug-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .test-btn:hover {
+            background: #45a049;
+        }
+        .error { color: #f44336; }
+        .success { color: #4CAF50; }
+        .warning { color: #ff9800; }
+        .info { color: #2196F3; }
+        #console-output {
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Test Debug - Verbe Slicer</h1>
+    
+    <div class="debug-panel">
+        <h2>🧪 Tests de Diagnostic</h2>
+        <button class="test-btn" onclick="testFileAccess()">📁 Test Accès Fichiers</button>
+        <button class="test-btn" onclick="testJSONLoad()">📄 Test Chargement JSON</button>
+        <button class="test-btn" onclick="testGameInit()">🎮 Test Initialisation Jeu</button>
+        <button class="test-btn" onclick="clearConsole()">🧹 Effacer Console</button>
+    </div>
+    
+    <div class="debug-panel">
+        <h2>📊 Console de Debug</h2>
+        <div id="console-output"></div>
+    </div>
+    
+    <div class="debug-panel">
+        <h2>🎮 Jeu en Iframe</h2>
+        <iframe src="index.html" id="game-iframe"></iframe>
+    </div>
+
+    <script>
+        // Rediriger console.log vers notre affichage
+        const consoleOutput = document.getElementById('console-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        function addToConsole(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const colorClass = type === 'error' ? 'error' : type === 'warn' ? 'warning' : type === 'success' ? 'success' : 'info';
+            consoleOutput.innerHTML += `<span class="${colorClass}">[${timestamp}] ${message}</span>\n`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToConsole(args.join(' '), 'info');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToConsole('❌ ' + args.join(' '), 'error');
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addToConsole('⚠️ ' + args.join(' '), 'warning');
+        };
+        
+        function clearConsole() {
+            consoleOutput.innerHTML = '';
+        }
+        
+        async function testFileAccess() {
+            console.log('🔍 Test d\'accès aux fichiers...');
+            
+            const files = [
+                'index.html',
+                'verbe-slicer-game.js',
+                'verbe-slicer-styles.css',
+                'jeu-verbes.json'
+            ];
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        console.log(`✅ ${file} accessible (${response.status})`);
+                    } else {
+                        console.error(`❌ ${file} non accessible (${response.status})`);
+                    }
+                } catch (error) {
+                    console.error(`❌ Erreur accès ${file}:`, error.message);
+                }
+            }
+        }
+        
+        async function testJSONLoad() {
+            console.log('📄 Test de chargement du JSON...');
+            
+            try {
+                const response = await fetch('./jeu-verbes.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ JSON chargé avec succès');
+                console.log('📊 Structure:', Object.keys(data));
+                
+                if (data.verbesIrreguliers) {
+                    const types = Object.keys(data.verbesIrreguliers);
+                    console.log('📚 Types de verbes:', types);
+                    
+                    types.forEach(type => {
+                        const count = data.verbesIrreguliers[type].length;
+                        console.log(`  - ${type}: ${count} verbes`);
+                    });
+                }
+                
+                if (data.motsDivers) {
+                    console.log(`📝 Mots divers: ${data.motsDivers.length} mots`);
+                }
+                
+            } catch (error) {
+                console.error('❌ Erreur chargement JSON:', error.message);
+            }
+        }
+        
+        function testGameInit() {
+            console.log('🎮 Test d\'initialisation du jeu...');
+            
+            // Accéder au jeu dans l'iframe
+            const iframe = document.getElementById('game-iframe');
+            
+            iframe.onload = function() {
+                try {
+                    const iframeWindow = iframe.contentWindow;
+                    const game = iframeWindow.game;
+                    
+                    if (game) {
+                        console.log('✅ Instance de jeu trouvée dans l\'iframe');
+                        console.log('📊 État du jeu:', {
+                            gameState: game.gameState,
+                            isDataLoaded: game.isDataLoaded,
+                            canvas: game.canvas ? 'configuré' : 'null',
+                            currentVerbs: game.currentVerbs ? game.currentVerbs.length : 'non initialisé'
+                        });
+                        
+                        // Test spécifique de l'initialisation des verbes
+                        if (game.currentVerbs && game.currentVerbs.length > 0) {
+                            console.log('✅ Verbes initialisés avec succès');
+                            console.log('📝 Exemples de verbes:', game.currentVerbs.slice(0, 5));
+                        } else {
+                            console.error('❌ Verbes non initialisés');
+                            
+                            // Tentative de force l'initialisation
+                            if (game.isDataLoaded) {
+                                console.log('🔧 Tentative de force l\'initialisation...');
+                                game.initializeCurrentVerbs();
+                                
+                                if (game.currentVerbs && game.currentVerbs.length > 0) {
+                                    console.log('✅ Initialisation forcée réussie');
+                                } else {
+                                    console.error('❌ Échec de l\'initialisation forcée');
+                                }
+                            }
+                        }
+                        
+                        // Test de démarrage
+                        setTimeout(() => {
+                            console.log('🚀 Test de démarrage du jeu...');
+                            game.startGame();
+                        }, 1000);
+                        
+                    } else {
+                        console.error('❌ Aucune instance de jeu trouvée dans l\'iframe');
+                    }
+                } catch (error) {
+                    console.error('❌ Erreur accès iframe:', error.message);
+                }
+            };
+            
+            // Recharger l'iframe
+            iframe.src = iframe.src;
+        }
+        
+        // Test initial
+        console.log('🔧 Debug panel initialisé');
+        console.log('💡 Utilisez les boutons ci-dessus pour diagnostiquer les problèmes');
+    </script>
+</body>
+</html> 

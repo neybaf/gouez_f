@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verbe Slicer - Jeu d'Action FLE</title>
-    <link rel="stylesheet" href="../../../css/game-styles.css">
     <link rel="stylesheet" href="verbe-slicer-styles.css">
     <meta name="description" content="Jeu d'action pour apprendre les verbes irréguliers français - Cliquez sur les verbes qui tombent !">
 </head>
@@ -229,7 +228,7 @@
     <audio id="level-up-sound" preload="auto"></audio>
 
     <script>
-        // Script de débogage
+        // Script de débogage amélioré
         console.log('🔍 Script de débogage chargé');
         
         // Vérifier que tous les éléments existent
@@ -245,12 +244,14 @@
                 'game-over-screen'
             ];
             
+            let allElementsFound = true;
             requiredElements.forEach(id => {
                 const element = document.getElementById(id);
                 if (element) {
                     console.log(`✅ Élément ${id} trouvé`);
                 } else {
                     console.error(`❌ Élément ${id} manquant`);
+                    allElementsFound = false;
                 }
             });
             
@@ -262,8 +263,45 @@
             const gameScreens = document.querySelectorAll('.game-screen');
             console.log(`🖥️ ${gameScreens.length} écrans de jeu trouvés`);
             
-            console.log('🎯 Prêt pour l\'initialisation du jeu');
+            // Vérifier l'écran actif
+            const activeScreen = document.querySelector('.game-screen.active');
+            console.log('🎯 Écran actif:', activeScreen ? activeScreen.id : 'aucun');
+            
+            // Test du bouton de démarrage
+            const startBtn = document.getElementById('start-game-btn');
+            if (startBtn) {
+                console.log('🔘 Bouton de démarrage trouvé, test du clic...');
+                startBtn.addEventListener('click', () => {
+                    console.log('🖱️ Clic sur le bouton de démarrage détecté !');
+                });
+            }
+            
+            if (allElementsFound) {
+                console.log('🎯 Tous les éléments requis sont présents, prêt pour l\'initialisation du jeu');
+            } else {
+                console.error('❌ Des éléments manquent, le jeu pourrait ne pas fonctionner correctement');
+            }
         });
+        
+        // Fonction de test globale
+        window.testGame = function() {
+            console.log('🧪 Test manuel du jeu...');
+            if (window.game) {
+                console.log('🎮 Instance de jeu trouvée:', window.game);
+                console.log('📊 État du jeu:', {
+                    gameState: window.game.gameState,
+                    isDataLoaded: window.game.isDataLoaded,
+                    verbesData: window.game.verbesData ? 'chargé' : 'null',
+                    canvas: window.game.canvas ? 'configuré' : 'null'
+                });
+                
+                // Test de démarrage forcé
+                console.log('🚀 Test de démarrage forcé...');
+                window.game.startGame();
+            } else {
+                console.error('❌ Aucune instance de jeu trouvée');
+            }
+        };
     </script>
     
     <script src="verbe-slicer-game.js"></script>

@@ -1,191 +1,68 @@
-# Verbe Slicer - Jeu d'Action FLE
+# ⚔️ Verbe Slicer - Jeu FLE
 
-## Vue d'ensemble
+Un jeu d'action pour apprendre les verbes irréguliers français en s'amusant !
 
-Verbe Slicer est un jeu d'action pour apprendre les verbes irréguliers français. Les joueurs doivent cliquer sur les verbes irréguliers qui tombent du ciel tout en évitant les verbes réguliers.
+## 🎯 Description
 
-## Fonctionnalités
+**Verbe Slicer** est un jeu éducatif interactif où les apprenants doivent cliquer rapidement sur les verbes irréguliers qui tombent du ciel, tout en évitant les verbes réguliers. Plus vous progressez, plus les défis deviennent intéressants avec différents temps et modes verbaux.
 
-### 🎮 Gameplay
-- **Objectif** : Cliquer uniquement sur les verbes irréguliers
-- **Système de vies** : 3 vies, perdues en cliquant sur des verbes réguliers ou en ratant des irréguliers
-- **Progression par niveaux** : 5 niveaux avec différents types de verbes
-- **Système de séries** : Bonus pour les clics consécutifs corrects
+## 🚀 Démarrage Rapide
 
-### 📈 Niveaux de progression
-1. **Niveau 1** - Infinitifs (0-24 points)
-2. **Niveau 2** - Participes passés (25-49 points)
-3. **Niveau 3** - Futur (50-74 points)
-4. **Niveau 4** - Imparfait (75-99 points)
-5. **Niveau 5** - Subjonctif (100+ points)
-
-### ⚙️ Difficultés
-- **Facile** : Vitesse réduite, moins de mots simultanés
-- **Normal** : Paramètres équilibrés
-- **Difficile** : Vitesse élevée, plus de mots simultanés
-
-### 🎨 Effets visuels
-- **Particules colorées** lors des succès
-- **Effets de tranchage** avec lignes lumineuses
-- **Textes flottants** pour le feedback
-- **Animations de niveau** lors des progressions
-- **Arrière-plan animé** avec dégradés dynamiques
-
-### 🔊 Audio
-- **Sons générés** via Web Audio API
-- **Feedback sonore** pour succès, erreurs et montées de niveau
-- **Pas de fichiers audio** requis
-
-### 📊 Statistiques détaillées
-- Score et niveau en temps réel
-- Précision (pourcentage de clics corrects)
-- Nombre de verbes tranchés
-- Temps de jeu
-- Meilleure série de succès consécutifs
-- Barre de progression vers le niveau suivant
-
-## Structure des fichiers
-
-```
-verbe-slicer/
-├── index.html                 # Interface moderne du jeu
-├── verbe-slicer-styles.css   # Styles spécifiques
-├── verbe-slicer-game.js      # Logique de jeu complète
-├── jeu-verbes.json           # Base de données des verbes
-├── jeu-verbes.html           # Ancienne version (conservée)
-├── jeu-verbes.js             # Ancien script (conservé)
-├── jeu-verbes-style.css      # Anciens styles (conservés)
-└── README.md                 # Cette documentation
+### Lancement Local
+```bash
+cd enseignement/jeu/verbe-slicer
+python3 -m http.server 8000
 ```
 
-## Technologies utilisées
+Puis ouvrir : `http://localhost:8000`
 
-### Frontend
-- **HTML5 Canvas** pour le rendu du jeu
-- **CSS3** avec variables personnalisées et animations
-- **JavaScript ES6+** avec classes et async/await
-- **Web Audio API** pour la génération de sons
+### Utilisation
+1. Choisissez votre niveau de difficulté
+2. Cliquez sur "Commencer l'aventure" 
+3. Cliquez sur les **verbes irréguliers** uniquement
+4. Évitez les verbes réguliers (sinon vous perdez une vie)
+5. Progressez à travers 5 niveaux de difficulté croissante
 
-### Fonctionnalités modernes
-- **Responsive design** adaptatif mobile/tablette
-- **Raccourcis clavier** (Espace, R, Échap)
-- **Support tactile** pour appareils mobiles
-- **API de partage** native ou fallback presse-papiers
-- **Animations CSS** avec GPU acceleration
+## 📁 Structure des Fichiers
 
-## Contrôles
+- `index.html` - Interface principale du jeu
+- `verbe-slicer-game.js` - Logique du jeu et gameplay  
+- `verbe-slicer-styles.css` - Styles et animations
+- `jeu-verbes.json` - Base de données des verbes
+- `legacy/` - Fichiers de développement et tests
 
-### Souris/Tactile
-- **Clic gauche / Tap** : Trancher un verbe
-- **Boutons UI** : Navigation dans les menus
+## 🎮 Niveaux de Jeu
 
-### Clavier
+1. **Infinitifs** (0-24 pts) - être, avoir, aller...
+2. **Participes passés** (25-49 pts) - été, eu, allé...
+3. **Futur** (50-74 pts) - serai, aurai, irai...
+4. **Imparfait** (75-99 pts) - étais, avais, allais...
+5. **Subjonctif** (100+ pts) - sois, aie, aille...
+
+## ⚡ Contrôles
+
+- **Clic gauche** : Trancher un verbe
 - **Espace** : Pause/Reprendre
 - **R** : Redémarrer la partie
 - **Échap** : Mettre en pause
 
-## Données de jeu
+## 🏆 Fonctionnalités
 
-### Structure JSON (`jeu-verbes.json`)
-```json
-{
-  "verbesIrreguliers": {
-    "infinitif": ["être", "avoir", "aller", ...],
-    "participe_passe": ["été", "eu", "allé", ...],
-    "futur": ["serai", "aurai", "irai", ...],
-    "imparfait": ["étais", "avais", "allais", ...],
-    "subjonctif": ["sois", "aie", "aille", ...]
-  },
-  "motsDivers": ["parler", "aimer", "chanter", ...]
-}
-```
+- ✅ 5 niveaux progressifs
+- ✅ 3 niveaux de difficulté (Facile, Normal, Difficile)
+- ✅ Effets visuels et sonores
+- ✅ Système de vies et de score
+- ✅ Statistiques détaillées
+- ✅ Interface responsive
+- ✅ Sauvegarde automatique des performances
 
-### Logique de détection
-- Les verbes irréguliers sont identifiés par recherche dans toutes les catégories
-- Les mots réguliers servent de distracteurs
-- Mélange aléatoire pour chaque niveau
+## 🔧 Développement
 
-## Système de scoring
+Pour les développeurs et contributeurs, consultez le dossier `legacy/` qui contient :
+- Fichiers de test et de débogage
+- Documentation technique détaillée
+- Historique des corrections
 
-### Points
-- **+1 point** par verbe irrégulier tranché
-- **Bonus de série** : +1 point supplémentaire tous les 5 succès consécutifs
-- **Pénalités** : Perte de vie pour erreurs ou verbes ratés
+---
 
-### Métriques
-- **Précision** : (Clics corrects / Total clics) × 100
-- **Efficacité** : Verbes tranchés par minute
-- **Constance** : Meilleure série de succès
-
-## Responsive Design
-
-### Breakpoints
-- **Desktop** : > 768px - Interface complète
-- **Tablette** : 481-768px - Adaptation des grilles
-- **Mobile** : ≤ 480px - Interface simplifiée
-
-### Adaptations mobiles
-- Boutons plus grands pour le tactile
-- Interface verticale optimisée
-- Gestion des événements touch
-- Canvas redimensionnable
-
-## Performance
-
-### Optimisations
-- **RequestAnimationFrame** pour animations fluides
-- **Object pooling** pour particules et effets
-- **Canvas optimisé** avec transformations GPU
-- **Gestion mémoire** avec nettoyage automatique
-
-### Compatibilité
-- **Navigateurs modernes** : Chrome 60+, Firefox 55+, Safari 12+
-- **Appareils** : Desktop, tablette, smartphone
-- **Fallbacks** : Audio optionnel, partage alternatif
-
-## Pédagogie
-
-### Objectifs d'apprentissage
-- **Reconnaissance** des verbes irréguliers français
-- **Mémorisation** par répétition espacée
-- **Différenciation** verbes réguliers/irréguliers
-- **Conjugaisons** à différents temps
-
-### Progression adaptative
-- **Difficulté croissante** avec les niveaux
-- **Feedback immédiat** visuel et sonore
-- **Statistiques motivantes** pour l'engagement
-- **Récompenses** pour maintenir l'intérêt
-
-## Installation et utilisation
-
-### Prérequis
-- Serveur web (pour éviter les restrictions CORS)
-- Navigateur moderne avec support Canvas et Web Audio
-
-### Lancement
-1. Ouvrir `index.html` dans un navigateur
-2. Choisir la difficulté souhaitée
-3. Cliquer sur "Commencer l'aventure"
-4. Suivre les instructions à l'écran
-
-### Intégration
-- Lien depuis la page principale des jeux
-- Iframe possible pour intégration externe
-- Compatible avec systèmes de gestion d'apprentissage
-
-## Évolutions futures
-
-### Fonctionnalités envisagées
-- **Multijoueur** en temps réel
-- **Classements** globaux
-- **Personnalisation** des thèmes visuels
-- **Mode entraînement** par catégorie
-- **Analyse détaillée** des erreurs
-- **Sauvegarde** des progressions
-
-### Améliorations techniques
-- **WebGL** pour effets 3D
-- **Service Worker** pour mode hors ligne
-- **Base de données** pour persistance
-- **API REST** pour synchronisation 
+**Créé pour l'apprentissage du français langue étrangère (FLE)** 
