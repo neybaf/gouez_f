@@ -78,6 +78,13 @@ class VerbeSlicer {
             console.log('📊 Chargement des données...');
             await this.loadVerbsData();
             
+            // CORRECTION CRITIQUE : Initialiser les verbes immédiatement après le chargement des données
+            if (this.isDataLoaded) {
+                console.log('🎲 Initialisation immédiate des verbes...');
+                this.initializeCurrentVerbs();
+                console.log('✅ Verbes initialisés:', this.currentVerbs ? this.currentVerbs.length : 0, 'mots disponibles');
+            }
+            
             console.log('🎨 Configuration du canvas...');
             this.setupCanvas();
             
@@ -93,33 +100,50 @@ class VerbeSlicer {
     
     setupEventListeners() {
         try {
-            // Boutons de démarrage
+            // Boutons de démarrage - rendre optionnel pour les tests
             const startBtn = document.getElementById('start-game-btn');
-            if (!startBtn) {
-                throw new Error('Bouton de démarrage non trouvé');
+            if (startBtn) {
+                startBtn.addEventListener('click', () => this.startGame());
+                console.log('✅ Bouton de démarrage configuré');
+            } else {
+                console.warn('⚠️ Bouton de démarrage non trouvé - Mode test détecté');
             }
-            startBtn.addEventListener('click', () => this.startGame());
             
-            // Sélection de difficulté
-            document.querySelectorAll('.difficulty-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
-                    e.target.closest('.difficulty-btn').classList.add('active');
-                    this.difficulty = e.target.closest('.difficulty-btn').dataset.difficulty;
-                    console.log('🎚️ Difficulté sélectionnée:', this.difficulty);
+            // Sélection de difficulté - rendre optionnel
+            const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+            if (difficultyBtns.length > 0) {
+                difficultyBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                        e.target.closest('.difficulty-btn').classList.add('active');
+                        this.difficulty = e.target.closest('.difficulty-btn').dataset.difficulty;
+                        console.log('🎚️ Difficulté sélectionnée:', this.difficulty);
+                    });
                 });
-            });
+                console.log('✅ Boutons de difficulté configurés');
+            } else {
+                console.warn('⚠️ Boutons de difficulté non trouvés - Mode test détecté');
+            }
             
-            // Boutons de pause
-            document.getElementById('pause-btn')?.addEventListener('click', () => this.togglePause());
-            document.getElementById('resume-btn')?.addEventListener('click', () => this.togglePause());
-            document.getElementById('restart-btn')?.addEventListener('click', () => this.restartGame());
-            document.getElementById('quit-btn')?.addEventListener('click', () => this.quitToMenu());
+            // Boutons de pause - rendre optionnels
+            const pauseBtn = document.getElementById('pause-btn');
+            const resumeBtn = document.getElementById('resume-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const quitBtn = document.getElementById('quit-btn');
             
-            // Boutons de fin de jeu
-            document.getElementById('play-again-btn')?.addEventListener('click', () => this.startGame());
-            document.getElementById('back-to-menu-btn')?.addEventListener('click', () => this.quitToMenu());
-            document.getElementById('share-score-btn')?.addEventListener('click', () => this.shareScore());
+            if (pauseBtn) pauseBtn.addEventListener('click', () => this.togglePause());
+            if (resumeBtn) resumeBtn.addEventListener('click', () => this.togglePause());
+            if (restartBtn) restartBtn.addEventListener('click', () => this.restartGame());
+            if (quitBtn) quitBtn.addEventListener('click', () => this.quitToMenu());
+            
+            // Boutons de fin de jeu - rendre optionnels
+            const playAgainBtn = document.getElementById('play-again-btn');
+            const backToMenuBtn = document.getElementById('back-to-menu-btn');
+            const shareScoreBtn = document.getElementById('share-score-btn');
+            
+            if (playAgainBtn) playAgainBtn.addEventListener('click', () => this.startGame());
+            if (backToMenuBtn) backToMenuBtn.addEventListener('click', () => this.quitToMenu());
+            if (shareScoreBtn) shareScoreBtn.addEventListener('click', () => this.shareScore());
             
             // Raccourcis clavier
             document.addEventListener('keydown', (e) => {
@@ -143,7 +167,7 @@ class VerbeSlicer {
                 }
             });
             
-            console.log('✅ Événements configurés');
+            console.log('✅ Événements configurés (mode:', startBtn ? 'complet' : 'test', ')');
         } catch (error) {
             console.error('❌ Erreur lors de la configuration des événements:', error);
             throw error;
@@ -196,52 +220,72 @@ class VerbeSlicer {
     
     async loadVerbsData() {
         try {
-            console.log('📥 Tentative de chargement du fichier JSON...');
-            const response = await fetch('./jeu-verbes.json'); // Chemin relatif corrigé
+            console.log('📡 Chargement du fichier JSON...');
+            
+            // Essayer de charger le fichier JSON depuis le serveur
+            const response = await fetch('./jeu-verbes.json');
             
             if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                console.warn('⚠️ Erreur HTTP:', response.status, '- Utilisation des données de fallback');
+                this.useEmbeddedData();
+                return;
             }
             
-            this.verbesData = await response.json();
-            console.log('✅ Données JSON chargées:', this.verbesData);
+            const data = await response.json();
+            console.log('✅ Données JSON chargées:', data);
             
-            // Vérifier la structure des données
-            if (!this.verbesData.verbesIrreguliers || !this.verbesData.motsDivers) {
-                throw new Error('Structure JSON invalide');
+            // Valider les données
+            if (!data.verbesIrreguliers || !data.motsDivers) {
+                console.warn('⚠️ Structure de données invalide - Utilisation des données de fallback');
+                this.useEmbeddedData();
+                return;
             }
             
-            // Compter le total des verbes
+            this.verbesData = data;
+            this.isDataLoaded = true;
+            
+            // Log détaillé des données chargées
             const totalIrregular = Object.values(this.verbesData.verbesIrreguliers).flat().length;
             console.log(`📊 Total verbes irréguliers: ${totalIrregular}, mots réguliers: ${this.verbesData.motsDivers.length}`);
             
-            this.isDataLoaded = true;
-            
         } catch (error) {
-            console.warn('⚠️ Erreur lors du chargement des verbes, utilisation des données de fallback:', error);
-            
-            // Données de fallback étendues
-            this.verbesData = {
-                verbesIrreguliers: {
-                    infinitif: ['être', 'avoir', 'aller', 'faire', 'venir', 'prendre', 'mettre', 'voir', 'savoir', 'vouloir'],
-                    participe_passe: ['été', 'eu', 'allé', 'fait', 'venu', 'pris', 'mis', 'vu', 'su', 'voulu'],
-                    futur: ['serai', 'aurai', 'irai', 'ferai', 'viendrai', 'prendrai', 'mettrai', 'verrai', 'saurai', 'voudrai'],
-                    imparfait: ['étais', 'avais', 'allais', 'faisais', 'venais', 'prenais', 'mettais', 'voyais', 'savais', 'voulais'],
-                    subjonctif: ['sois', 'aie', 'aille', 'fasse', 'vienne', 'prenne', 'mette', 'voie', 'sache', 'veuille']
-                },
-                motsDivers: ['parler', 'aimer', 'chanter', 'danser', 'jouer', 'regarder', 'écouter', 'travailler', 'manger', 'habiter']
-            };
-            
-            this.isDataLoaded = true;
-            console.log('✅ Données de fallback chargées');
+            console.warn('⚠️ Erreur lors du chargement, utilisation des données de fallback:', error);
+            this.useEmbeddedData();
         }
+    }
+    
+    useEmbeddedData() {
+        console.log('🔧 Utilisation des données de fallback intégrées...');
+        // Données de secours intégrées
+        this.verbesData = {
+            verbesIrreguliers: {
+                infinitif: ['être', 'avoir', 'aller', 'faire', 'dire', 'pouvoir', 'voir', 'savoir', 'vouloir', 'venir', 'prendre', 'mettre', 'devoir', 'partir', 'tenir', 'sortir', 'sentir', 'vivre', 'mourir', 'ouvrir'],
+                participe_passe: ['été', 'eu', 'allé', 'fait', 'dit', 'pu', 'vu', 'su', 'voulu', 'venu', 'pris', 'mis', 'dû', 'parti', 'tenu', 'sorti', 'senti', 'vécu', 'mort', 'ouvert'],
+                futur: ['serai', 'aurai', 'irai', 'ferai', 'dirai', 'pourrai', 'verrai', 'saurai', 'voudrai', 'viendrai', 'prendrai', 'mettrai', 'devrai', 'partirai', 'tiendrai', 'sortirai', 'sentirai', 'vivrai', 'mourrai', 'ouvrirai'],
+                imparfait: ['étais', 'avais', 'allais', 'faisais', 'disais', 'pouvais', 'voyais', 'savais', 'voulais', 'venais', 'prenais', 'mettais', 'devais', 'partais', 'tenais', 'sortais', 'sentais', 'vivais', 'mourais', 'ouvrais'],
+                subjonctif: ['sois', 'aies', 'ailles', 'fasses', 'dises', 'puisses', 'voies', 'saches', 'veuilles', 'viennes', 'prennes', 'mettes', 'doives', 'partes', 'tiennes', 'sortes', 'sentes', 'vives', 'meures', 'ouvres']
+            },
+            motsDivers: ['parler', 'aimer', 'donner', 'porter', 'arriver', 'rester', 'entrer', 'montrer', 'passer', 'regarder', 'trouver', 'rendre', 'appeler', 'demander', 'garder', 'suivre', 'connaître', 'paraître', 'croire', 'attendre']
+        };
+        
+        this.isDataLoaded = true;
+        console.log('✅ Données de fallback chargées avec succès');
+        
+        // CRITIQUE : Initialiser les verbes immédiatement après le chargement des données de fallback
+        this.initializeCurrentVerbs();
+        console.log('🎲 Verbes initialisés depuis fallback:', this.currentVerbs ? this.currentVerbs.length : 0, 'mots');
     }
     
     setupCanvas() {
         try {
             this.canvas = document.getElementById('game-canvas');
             if (!this.canvas) {
-                throw new Error('Canvas element not found!');
+                console.warn('⚠️ Canvas non trouvé - Mode test détecté');
+                // Créer un canvas virtuel pour les tests
+                this.canvas = document.createElement('canvas');
+                this.canvas.width = 800;
+                this.canvas.height = 600;
+                console.log('📊 Canvas virtuel créé pour les tests');
             }
             
             this.ctx = this.canvas.getContext('2d');
@@ -253,20 +297,23 @@ class VerbeSlicer {
             this.ctx.fillStyle = 'red';
             this.ctx.fillRect(0, 0, 1, 1);
             
-            this.resizeCanvas();
-            window.addEventListener('resize', () => this.resizeCanvas());
-            
-            // Événements de clic
-            this.canvas.addEventListener('click', (e) => this.handleClick(e));
-            this.canvas.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const rect = this.canvas.getBoundingClientRect();
-                this.handleClick({
-                    clientX: touch.clientX,
-                    clientY: touch.clientY
+            // Redimensionner seulement si le canvas est dans le DOM
+            if (this.canvas.parentNode) {
+                this.resizeCanvas();
+                window.addEventListener('resize', () => this.resizeCanvas());
+                
+                // Événements de clic seulement si le canvas est dans le DOM
+                this.canvas.addEventListener('click', (e) => this.handleClick(e));
+                this.canvas.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.handleClick({
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
                 });
-            });
+            }
             
             console.log('✅ Canvas configuré:', this.canvas.width, 'x', this.canvas.height);
             
@@ -290,35 +337,86 @@ class VerbeSlicer {
     
     startGame() {
         console.log('🚀 Tentative de démarrage du jeu...');
+        console.log('📊 État actuel:', {
+            isDataLoaded: this.isDataLoaded,
+            gameState: this.gameState,
+            verbesData: this.verbesData ? 'chargé' : 'null',
+            canvas: this.canvas ? 'trouvé' : 'null'
+        });
         
         // Vérifier que les données sont chargées
         if (!this.isDataLoaded) {
             console.error('❌ Impossible de démarrer : données non chargées');
-            alert('Les données du jeu ne sont pas encore chargées. Veuillez patienter...');
+            console.log('🔄 Tentative de rechargement des données...');
+            this.loadVerbsData().then(() => {
+                if (this.isDataLoaded) {
+                    console.log('✅ Données rechargées, nouvelle tentative de démarrage');
+                    this.startGame();
+                } else {
+                    alert('Les données du jeu ne peuvent pas être chargées. Vérifiez votre connexion.');
+                }
+            });
             return;
         }
         
         console.log('🎯 Démarrage du jeu confirmé');
         this.resetGameStats();
         this.initializeCurrentVerbs(); // CRITIQUE : Initialiser les verbes actuels
+        
+        // CORRECTION CRITIQUE : S'assurer que le gameState est bien défini AVANT gameLoop
         this.gameState = 'playing';
+        console.log('✅ GameState défini sur "playing"');
+        
         this.gameStartTime = Date.now();
         this.lastSpawnTime = Date.now(); // Initialiser le timer de spawn
+        
+        console.log('🖥️ Affichage de l\'écran de jeu...');
         this.showScreen('game-screen');
+        
+        console.log('🔄 Lancement de la GameLoop...');
         this.gameLoop();
+        
+        console.log('🎮 Jeu démarré avec succès !');
     }
     
     // NOUVELLE FONCTION CRITIQUE : Initialise correctement la liste des verbes
     initializeCurrentVerbs() {
+        console.log('🎲 Début initialisation des verbes...');
+        
+        // Vérifier que les données sont disponibles
+        if (!this.verbesData) {
+            console.error('❌ verbesData non disponible lors de l\'initialisation');
+            return;
+        }
+        
+        if (!this.verbesData.verbesIrreguliers || !this.verbesData.motsDivers) {
+            console.error('❌ Structure de données incomplète:', this.verbesData);
+            return;
+        }
+        
         const currentLevel = this.getCurrentLevel();
+        console.log('📊 Niveau actuel:', currentLevel);
+        
+        // Récupérer les verbes irréguliers pour le niveau actuel
         const irregularVerbs = this.verbesData.verbesIrreguliers[currentLevel.verbType] || [];
+        console.log(`📚 Verbes irréguliers trouvés pour ${currentLevel.verbType}:`, irregularVerbs.length);
+        
+        // Récupérer les mots réguliers
         const regularWords = this.verbesData.motsDivers || [];
+        console.log('📝 Mots réguliers trouvés:', regularWords.length);
         
         // Mélanger les verbes irréguliers avec des mots réguliers
         this.currentVerbs = [...irregularVerbs, ...regularWords];
         
         console.log(`🎲 Verbes initialisés pour niveau ${this.level} (${currentLevel.name}):`, 
                    `${irregularVerbs.length} irréguliers + ${regularWords.length} réguliers = ${this.currentVerbs.length} total`);
+        
+        // Vérification finale
+        if (this.currentVerbs.length === 0) {
+            console.error('❌ ERREUR CRITIQUE: Aucun verbe initialisé !');
+        } else {
+            console.log('✅ Initialisation des verbes réussie:', this.currentVerbs.slice(0, 5), '...');
+        }
     }
     
     resetGameStats() {
@@ -368,6 +466,8 @@ class VerbeSlicer {
     }
     
     gameLoop() {
+        console.log('🔄 GameLoop appelée, état actuel:', this.gameState);
+        
         if (this.gameState !== 'playing') {
             console.log('🛑 GameLoop arrêtée, état:', this.gameState);
             return;
@@ -378,8 +478,13 @@ class VerbeSlicer {
             console.log('🔄 GameLoop active, mots à l\'écran:', this.fallingWords.length);
         }
         
-        this.update();
-        this.render();
+        try {
+            this.update();
+            this.render();
+        } catch (error) {
+            console.error('❌ Erreur dans GameLoop:', error);
+            // Continue quand même pour éviter que le jeu plante complètement
+        }
         
         requestAnimationFrame(() => this.gameLoop());
     }
@@ -745,27 +850,45 @@ class VerbeSlicer {
     }
     
     updateUI() {
-        document.getElementById('score').textContent = this.score;
-        document.getElementById('level').textContent = this.level;
-        document.getElementById('level-name').textContent = this.getCurrentLevel().name;
+        // Mise à jour seulement si les éléments existent
+        const scoreElement = document.getElementById('score');
+        const levelElement = document.getElementById('level');
+        const levelNameElement = document.getElementById('level-name');
+        
+        if (scoreElement) scoreElement.textContent = this.score;
+        if (levelElement) levelElement.textContent = this.level;
+        if (levelNameElement) levelNameElement.textContent = this.getCurrentLevel().name;
         
         this.updateProgressBar();
         this.updateLivesDisplay();
     }
     
     updateProgressBar() {
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        
+        if (!progressFill || !progressText) {
+            // Mode test - pas d'interface
+            return;
+        }
+        
         const currentLevel = this.getCurrentLevel();
         const nextLevel = this.levels[this.level] || this.levels[this.levels.length - 1];
         
         const progress = Math.min(100, ((this.score - currentLevel.threshold) / (nextLevel.threshold - currentLevel.threshold)) * 100);
         
-        document.getElementById('progress-fill').style.width = progress + '%';
-        document.getElementById('progress-text').textContent = 
+        progressFill.style.width = progress + '%';
+        progressText.textContent = 
             `${this.score - currentLevel.threshold} / ${nextLevel.threshold - currentLevel.threshold}`;
     }
     
     updateLivesDisplay() {
         const hearts = document.querySelectorAll('.heart');
+        if (hearts.length === 0) {
+            // Mode test - pas d'interface
+            return;
+        }
+        
         hearts.forEach((heart, index) => {
             if (index < this.lives) {
                 heart.classList.remove('lost');
@@ -894,11 +1017,22 @@ class VerbeSlicer {
     }
     
     showScreen(screenId) {
-        document.querySelectorAll('.game-screen').forEach(screen => {
-            screen.classList.remove('active');
-        });
-        document.getElementById(screenId).classList.add('active');
-        console.log('🖥️ Affichage de l\'écran:', screenId);
+        const screens = document.querySelectorAll('.game-screen');
+        if (screens.length > 0) {
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                console.log('🖥️ Affichage de l\'écran:', screenId);
+            } else {
+                console.warn('⚠️ Écran non trouvé:', screenId, '- Mode test détecté');
+            }
+        } else {
+            console.warn('⚠️ Aucun écran de jeu trouvé - Mode test détecté');
+        }
     }
     
     playSound(soundName) {
@@ -909,6 +1043,35 @@ class VerbeSlicer {
                 console.warn('Erreur audio:', error);
             }
         }
+    }
+    
+    // Méthode utilitaire pour détecter le mode test
+    isTestMode() {
+        return !document.getElementById('start-game-btn') || !document.getElementById('game-canvas');
+    }
+    
+    // Méthode publique pour les tests
+    runTestSequence() {
+        console.log('🧪 Démarrage de la séquence de test...');
+        
+        if (!this.isDataLoaded) {
+            console.error('❌ Données non chargées');
+            return false;
+        }
+        
+        if (!this.currentVerbs || this.currentVerbs.length === 0) {
+            console.error('❌ Verbes non initialisés');
+            return false;
+        }
+        
+        console.log('✅ Test réussi - Jeu prêt à fonctionner');
+        console.log('📊 Résumé:');
+        console.log(`  - Données chargées: ${this.isDataLoaded}`);
+        console.log(`  - Verbes disponibles: ${this.currentVerbs.length}`);
+        console.log(`  - Mode test: ${this.isTestMode()}`);
+        console.log(`  - État du jeu: ${this.gameState}`);
+        
+        return true;
     }
 }
 
