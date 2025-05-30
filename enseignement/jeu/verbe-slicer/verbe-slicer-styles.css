@@ -43,10 +43,19 @@ body {
 .game-screen.overlay {
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
+  z-index: 100;
+}
+
+/* CORRECTION CRITIQUE: Les écrans overlay actifs utilisent flex */
+.game-screen.overlay.active {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+}
+
+/* S'assurer que les écrans overlay non actifs sont masqués */
+.game-screen.overlay:not(.active) {
+  display: none !important;
 }
 
 /* Écran de démarrage */
