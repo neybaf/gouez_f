@@ -472,6 +472,11 @@
                     <span class="stat-label">Précision</span>
                     <span id="pause-accuracy" class="stat-value">100%</span>
                 </div>
+                <div class="stat-item">
+                    <span class="stat-label">Progression</span>
+                    <span id="pause-progress" class="stat-value">0%</span>
+                    <span id="pause-progress-text" class="stat-label">0 / 25</span>
+                </div>
             </div>
             <div class="pause-buttons">
                 <button id="resume-btn" class="game-btn primary">
@@ -485,6 +490,10 @@
                 <button id="quit-btn" class="game-btn">
                     <span class="btn-icon">🏠</span>
                     Quitter
+                </button>
+                <button id="menu-games-btn" class="game-btn">
+                    <span class="btn-icon">🎮</span>
+                    Menu des jeux
                 </button>
             </div>
         </div>
@@ -691,6 +700,7 @@
                 const quitBtn = document.getElementById('quit-btn');
                 const playAgainBtn = document.getElementById('play-again-btn');
                 const backToMenuBtn = document.getElementById('back-to-menu-btn');
+                const menuGamesBtn = document.getElementById('menu-games-btn');
                 
                 if (pauseBtn) pauseBtn.addEventListener('click', () => this.togglePause());
                 if (resumeBtn) resumeBtn.addEventListener('click', () => this.togglePause());
@@ -698,6 +708,7 @@
                 if (quitBtn) quitBtn.addEventListener('click', () => this.quitToMenu());
                 if (playAgainBtn) playAgainBtn.addEventListener('click', () => this.startGame());
                 if (backToMenuBtn) backToMenuBtn.addEventListener('click', () => this.quitToMenu());
+                if (menuGamesBtn) menuGamesBtn.addEventListener('click', () => this.goToGamesMenu());
                 
                 document.addEventListener('keydown', (e) => {
                     switch(e.code) {
@@ -937,14 +948,16 @@
                     this.currentStreak++;
                     this.bestStreak = Math.max(this.bestStreak, this.currentStreak);
                     
-                    // Récupération d'un coeur si on en a perdu
+                    // Récupération d'un coeur et affichage du texte combiné
+                    let mainText = '+1';
                     if (this.lives < this.maxLives) {
                         this.lives++;
-                        this.addFloatingText(word.x, word.y - 50, '+1 ❤️', 'success');
+                        mainText = '+1 ❤️'; // Combiner les deux messages en un seul
                         console.log('💚 Coeur récupéré ! Vies actuelles:', this.lives);
                     }
                     
-                    this.addFloatingText(word.x, word.y, '+1', 'success');
+                    // Un seul texte flottant
+                    this.addFloatingText(word.x, word.y, mainText, 'success');
                     console.log('✅ Verbe irrégulier tranché:', word.text, 'Score:', this.score);
                 } else {
                     // Mauvais clic sur verbe régulier
@@ -1154,6 +1167,11 @@
                 } else {
                     console.error('❌ Écran non trouvé:', screenId);
                 }
+            }
+            
+            goToGamesMenu() {
+                // Implémentation de la fonction goToGamesMenu
+                console.log('🎮 Menu des jeux');
             }
         }
         

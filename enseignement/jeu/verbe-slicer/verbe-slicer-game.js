@@ -114,7 +114,7 @@ class VerbeSlicer {
             screen.classList.remove('active');
             // Réinitialiser les styles inline
             screen.style.display = '';
-            console.log(`🚫 Écran ${screen.id} masqué et réinitialisé`);
+            console.log('🚫 Écran ' + screen.id + ' masqué et réinitialisé');
         });
         
         // Afficher explicitement l'écran de démarrage
@@ -282,7 +282,7 @@ class VerbeSlicer {
             console.log('📥 Réponse reçue:', response.status, response.statusText);
             
             if (!response.ok) {
-                console.warn(`⚠️ Erreur HTTP: ${response.status} - ${response.statusText}`);
+                console.warn('⚠️ Erreur HTTP: ' + response.status + ' - ' + response.statusText);
                 console.log('🔄 Basculement vers les données de fallback...');
                 this.useEmbeddedData();
                 return;
@@ -293,14 +293,6 @@ class VerbeSlicer {
             console.log('📊 Structure des données:', Object.keys(data));
             
             // Valider les données
-            if (!data.verbesIrreguliers || !data.motsDivers) {
-                console.warn('⚠️ Structure de données invalide:', data);
-                console.log('🔄 Basculement vers les données de fallback...');
-                this.useEmbeddedData();
-                return;
-            }
-            
-            // Vérifier le contenu des données
             const totalIrregular = Object.values(data.verbesIrreguliers).flat().length;
             const totalRegular = data.motsDivers.length;
             
@@ -314,9 +306,9 @@ class VerbeSlicer {
             this.verbesData = data;
             this.isDataLoaded = true;
             
-            console.log(`📈 Total verbes irréguliers: ${totalIrregular}`);
-            console.log(`📈 Total mots réguliers: ${totalRegular}`);
-            console.log('✅ Données JSON validées et prêtes à l'utilisation');
+            console.log('📈 Total verbes irréguliers:', totalIrregular);
+            console.log('📈 Total mots réguliers:', totalRegular);
+            console.log('✅ Données JSON validées et prêtes à l\'utilisation');
             
         } catch (error) {
             console.error('❌ Erreur lors du chargement JSON:', error.message);
@@ -387,7 +379,7 @@ class VerbeSlicer {
         
         const totalIrregular = Object.values(this.verbesData.verbesIrreguliers).flat().length;
         const totalRegular = this.verbesData.motsDivers.length;
-        console.log(`📊 Fallback - Verbes irréguliers: ${totalIrregular}, mots réguliers: ${totalRegular}`);
+        console.log('📊 Fallback - Verbes irréguliers: ' + totalIrregular + ', mots réguliers: ' + totalRegular);
         console.log('🎮 Le jeu est maintenant prêt à fonctionner avec les données de fallback');
     }
     
@@ -531,7 +523,7 @@ class VerbeSlicer {
         
         // Récupérer les verbes irréguliers pour le niveau actuel
         const irregularVerbs = this.verbesData.verbesIrreguliers[currentLevel.verbType] || [];
-        console.log(`📚 Verbes irréguliers trouvés pour ${currentLevel.verbType}:`, irregularVerbs.length);
+        console.log('📚 Verbes irréguliers trouvés pour ' + currentLevel.verbType + ':', irregularVerbs.length);
         
         // Récupérer les mots réguliers
         const regularWords = this.verbesData.motsDivers || [];
@@ -540,8 +532,8 @@ class VerbeSlicer {
         // Mélanger les verbes irréguliers avec des mots réguliers
         this.currentVerbs = [...irregularVerbs, ...regularWords];
         
-        console.log(`🎲 Verbes initialisés pour niveau ${this.level} (${currentLevel.name}):`, 
-                   `${irregularVerbs.length} irréguliers + ${regularWords.length} réguliers = ${this.currentVerbs.length} total`);
+        console.log('🎲 Verbes initialisés pour niveau ' + this.level + ' (' + currentLevel.name + '):', 
+                   irregularVerbs.length + ' irréguliers + ' + regularWords.length + ' réguliers = ' + this.currentVerbs.length + ' total');
         
         // Vérification finale
         if (this.currentVerbs.length === 0) {
@@ -584,8 +576,8 @@ class VerbeSlicer {
         // Mélanger les verbes irréguliers avec des mots réguliers
         this.currentVerbs = [...irregularVerbs, ...regularWords];
         
-        console.log(`📚 Verbes mis à jour pour niveau ${this.level}:`, 
-                   `${irregularVerbs.length} irréguliers + ${regularWords.length} réguliers`);
+        console.log('📚 Verbes mis à jour pour niveau ' + this.level + ':', 
+                   irregularVerbs.length + ' irréguliers + ' + regularWords.length + ' réguliers');
     }
     
     getCurrentLevel() {
@@ -688,7 +680,7 @@ class VerbeSlicer {
         
         this.fallingWords.push(newWord);
         
-        console.log(`✨ Mot spawné: "${word}" (${isIrregular ? 'irrégulier' : 'régulier'}), total à l'écran: ${this.fallingWords.length}`);
+        console.log('✨ Mot spawné: "' + word + '" (' + (isIrregular ? 'irrégulier' : 'régulier') + '), total à l\'écran: ' + this.fallingWords.length);
     }
     
     isIrregularVerb(word) {
@@ -811,14 +803,16 @@ class VerbeSlicer {
             this.currentStreak++;
             this.bestStreak = Math.max(this.bestStreak, this.currentStreak);
             
-            // Récupération d'un coeur si on en a perdu
+            // Récupération d'un coeur si on en a perdu - MAIS SANS TEXTE ADDITIONNEL
+            let mainText = '+1';
             if (this.lives < this.maxLives) {
                 this.lives++;
-                this.addFloatingText(word.x, word.y - 50, '+1 ❤️', 'success');
+                mainText = '+1 ❤️'; // Combiner les deux messages en un seul
                 console.log('💚 Coeur récupéré ! Vies actuelles:', this.lives);
             }
             
-            this.addFloatingText(word.x, word.y, '+1', 'success');
+            // Un seul texte flottant qui combine le point et éventuellement le coeur
+            this.addFloatingText(word.x, word.y, mainText, 'success');
             this.createParticles(word.x, word.y, word.color);
             this.createSliceEffect(word.x, word.y);
             this.playSound('success');
@@ -829,7 +823,7 @@ class VerbeSlicer {
             if (this.currentStreak > 0 && this.currentStreak % 5 === 0) {
                 const bonus = Math.floor(this.currentStreak / 5);
                 this.score += bonus;
-                this.addFloatingText(word.x, word.y - 30, `Série +${bonus}!`, 'bonus');
+                this.addFloatingText(word.x, word.y - 30, 'Série +' + bonus + '!', 'bonus');
                 console.log('🔥 Bonus série:', bonus);
             }
         } else {
@@ -1106,7 +1100,7 @@ class VerbeSlicer {
         
         progressFill.style.width = progress + '%';
         progressText.textContent = 
-            `${this.score - currentLevel.threshold} / ${nextLevel.threshold - currentLevel.threshold}`;
+            this.score - currentLevel.threshold + ' / ' + (nextLevel.threshold - currentLevel.threshold);
     }
     
     updateLivesDisplay() {
@@ -1155,10 +1149,38 @@ class VerbeSlicer {
     }
     
     updatePauseStats() {
-        document.getElementById('pause-score').textContent = this.score;
-        document.getElementById('pause-level').textContent = this.level;
-        document.getElementById('pause-accuracy').textContent = 
-            this.totalClicks > 0 ? Math.round((this.correctClicks / this.totalClicks) * 100) + '%' : '100%';
+        // Mise à jour des éléments de base avec vérification d'existence
+        const pauseScoreEl = document.getElementById('pause-score');
+        const pauseLevelEl = document.getElementById('pause-level');
+        const pauseAccuracyEl = document.getElementById('pause-accuracy');
+        
+        if (pauseScoreEl) pauseScoreEl.textContent = this.score;
+        if (pauseLevelEl) pauseLevelEl.textContent = this.level;
+        if (pauseAccuracyEl) {
+            const accuracy = this.totalClicks > 0 ? Math.round((this.correctClicks / this.totalClicks) * 100) : 100;
+            pauseAccuracyEl.textContent = accuracy + '%';
+        }
+        
+        // Mise à jour de la progression vers le niveau suivant
+        const pauseProgressEl = document.getElementById('pause-progress');
+        const pauseProgressTextEl = document.getElementById('pause-progress-text');
+        
+        if (pauseProgressEl && pauseProgressTextEl) {
+            const currentLevel = this.getCurrentLevel();
+            const nextLevelIndex = this.level; // Index du prochain niveau
+            const nextLevel = this.levels[nextLevelIndex] || this.levels[this.levels.length - 1];
+            
+            if (nextLevelIndex < this.levels.length) {
+                const progress = Math.min(100, ((this.score - currentLevel.threshold) / (nextLevel.threshold - currentLevel.threshold)) * 100);
+                pauseProgressEl.textContent = Math.round(progress) + '%';
+                pauseProgressTextEl.textContent = (this.score - currentLevel.threshold) + ' / ' + (nextLevel.threshold - currentLevel.threshold);
+            } else {
+                pauseProgressEl.textContent = '100%';
+                pauseProgressTextEl.textContent = 'Niveau maximum atteint !';
+            }
+        }
+        
+        console.log('📊 Stats de pause mises à jour - Score:', this.score, 'Niveau:', this.level);
     }
     
     restartGame() {
@@ -1189,7 +1211,7 @@ class VerbeSlicer {
         document.getElementById('final-level').textContent = this.level;
         document.getElementById('final-accuracy').textContent = accuracy + '%';
         document.getElementById('verbs-sliced').textContent = this.verbsSliced;
-        document.getElementById('game-time').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        document.getElementById('game-time').textContent = minutes + ':' + seconds.toString().padStart(2, '0');
         document.getElementById('best-streak').textContent = this.bestStreak;
         
         // Message de performance
@@ -1207,7 +1229,7 @@ class VerbeSlicer {
             level: this.level,
             accuracy: accuracy + '%',
             verbesSliced: this.verbsSliced,
-            gameTime: `${minutes}:${seconds}`,
+            gameTime: minutes + ':' + seconds,
             bestStreak: this.bestStreak
         });
     }
@@ -1225,7 +1247,7 @@ class VerbeSlicer {
     }
     
     shareScore() {
-        const text = `J'ai obtenu ${this.score} points au Verbe Slicer ! Niveau ${this.level} atteint avec ${Math.round((this.correctClicks / this.totalClicks) * 100)}% de précision. 🎯⚔️`;
+        const text = 'J'ai obtenu ' + this.score + ' points au Verbe Slicer ! Niveau ' + this.level + ' atteint avec ' + Math.round((this.correctClicks / this.totalClicks) * 100) + '% de précision. 🎯⚔️';
         
         if (navigator.share) {
             navigator.share({
@@ -1238,7 +1260,7 @@ class VerbeSlicer {
             navigator.clipboard.writeText(text).then(() => {
                 alert('Score copié dans le presse-papiers !');
             }).catch(() => {
-                alert(`Mon score : ${text}`);
+                alert('Mon score : ' + text);
             });
         }
     }
@@ -1251,7 +1273,7 @@ class VerbeSlicer {
             // Masquer tous les écrans
             screens.forEach(screen => {
                 screen.classList.remove('active');
-                console.log(`📺 Masquage de l'écran: ${screen.id}`);
+                console.log('📺 Masquage de l\'écran: ' + screen.id);
             });
             
             // Afficher l'écran cible
@@ -1312,10 +1334,10 @@ class VerbeSlicer {
         
         console.log('✅ Test réussi - Jeu prêt à fonctionner');
         console.log('📊 Résumé:');
-        console.log(`  - Données chargées: ${this.isDataLoaded}`);
-        console.log(`  - Verbes disponibles: ${this.currentVerbs.length}`);
-        console.log(`  - Mode test: ${this.isTestMode()}`);
-        console.log(`  - État du jeu: ${this.gameState}`);
+        console.log('  - Données chargées: ' + this.isDataLoaded);
+        console.log('  - Verbes disponibles: ' + this.currentVerbs.length);
+        console.log('  - Mode test: ' + this.isTestMode());
+        console.log('  - État du jeu: ' + this.gameState);
         
         return true;
     }
