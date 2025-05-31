@@ -723,8 +723,8 @@
                 this.currentVerbs = [...irregularVerbs, ...regularWords];
                 
                 // VÉRIFICATION que nous utilisons bien les données fallback
-                console.log(`🎲 Verbes initialisés: ${this.currentVerbs.length} mots`);
-                console.log(`📚 Niveau ${currentLevel.name} (${currentLevel.verbType}):`);
+                console.log(` Verbes initialisés: ${this.currentVerbs.length} mots`);
+                console.log(` Niveau ${currentLevel.name} (${currentLevel.verbType}):`);
                 console.log(`  - ${irregularVerbs.length} verbes irréguliers: ${irregularVerbs.slice(0, 5).join(', ')}...`);
                 console.log(`  - ${regularWords.length} mots réguliers: ${regularWords.slice(0, 5).join(', ')}...`);
                 console.log('🔒 SOURCE: Données fallback intégrées (autonome)');
