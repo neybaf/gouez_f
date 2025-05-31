@@ -33,33 +33,66 @@ class MemoryMots {
     }
 
     async init() {
+        console.log('🚀 Initialisation du Memory des Mots...');
+        console.log('🌐 URL de base:', window.location.href);
+        
         await this.scanAvailableLevels();
         this.setupEventListeners();
         this.updateStats();
-        this.showLevelSelection();
+        
+        // Vérifier si des niveaux sont disponibles
+        const hasAvailableLevels = Object.values(this.availableSublevels).some(sublevels => sublevels.length > 0);
+        
+        if (!hasAvailableLevels) {
+            console.log('⚠️ Aucun niveau JSON disponible');
+            this.showLoadingMessage('Aucun fichier de données trouvé. Veuillez vérifier la configuration.');
+        } else {
+            this.showLevelSelection();
+        }
+        
+        console.log('✅ Initialisation terminée');
+        console.log('📊 Niveaux disponibles:', this.availableSublevels);
     }
 
     async scanAvailableLevels() {
+        console.log('🔍 Scan des niveaux disponibles...');
+        
         // Scanner les niveaux disponibles
         for (const level of this.availableLevels) {
+            console.log(`📁 Scanning niveau ${level}...`);
             this.availableSublevels[level] = await this.scanSublevels(level);
+            console.log(`✅ Niveau ${level}: ${this.availableSublevels[level].length} sous-niveaux trouvés`);
         }
         this.updateLevelButtons();
     }
 
     async scanSublevels(level) {
         const sublevels = [];
+        console.log(`🔎 Recherche des sous-niveaux pour ${level}...`);
+        
         // Tenter de charger les sous-niveaux de 1 à 9
         for (let i = 1; i <= 9; i++) {
             try {
-                const response = await fetch(`data/${level}/niveau_${i}.json`);
+                const url = `data/${level}/niveau_${i}.json`;
+                console.log(`📡 Test de chargement: ${url}`);
+                
+                const response = await fetch(url);
+                console.log(`📥 Réponse pour ${url}:`, response.status, response.statusText);
+                
                 if (response.ok) {
+                    // Tester aussi si le JSON est valide
+                    const testData = await response.json();
+                    console.log(`✅ JSON valide pour ${url}, ${testData.length} éléments`);
                     sublevels.push(i);
+                } else {
+                    console.log(`❌ Échec de chargement ${url}: ${response.status}`);
                 }
             } catch (error) {
-                // Fichier non trouvé, on continue
+                console.log(`⚠️ Erreur lors du test ${level}/niveau_${i}.json:`, error.message);
             }
         }
+        
+        console.log(`📋 Sous-niveaux trouvés pour ${level}:`, sublevels);
         return sublevels;
     }
 
@@ -81,26 +114,121 @@ class MemoryMots {
 
     async loadCardsFromLevel(level, sublevel) {
         try {
-            const response = await fetch(`data/${level}/niveau_${sublevel}.json`);
+            const url = `data/${level}/niveau_${sublevel}.json`;
+            console.log(`📡 Chargement des cartes depuis: ${url}`);
+            
+            const response = await fetch(url);
+            console.log(`📥 Réponse HTTP:`, response.status, response.statusText);
+            
             if (!response.ok) {
-                throw new Error(`Impossible de charger le niveau ${level} - ${sublevel}`);
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
             
             const cardsData = await response.json();
+            console.log(`📊 Données chargées: ${cardsData.length} mots`);
+            console.log(`🔍 Premier élément:`, cardsData[0]);
+            
+            // Vérifier que les données ont la bonne structure
+            if (!Array.isArray(cardsData) || cardsData.length === 0) {
+                throw new Error('Données JSON invalides ou vides');
+            }
+            
+            // Vérifier que chaque élément a les propriétés nécessaires
+            const firstItem = cardsData[0];
+            if (!firstItem.french || !firstItem.chinese) {
+                throw new Error('Structure de données incorrecte: propriétés french/chinese manquantes');
+            }
             
             // Créer les paires pour le memory (français + chinois)
+            console.log(`🔄 Création des paires de cartes...`);
             this.createMemoryPairs(cardsData);
+            console.log(`✅ ${this.cards.length} cartes créées`);
+            
             this.shuffleCards();
+            console.log(`🔀 Cartes mélangées`);
+            
+            // Afficher les cartes
+            console.log(`🎮 Rendu des cartes sur l'écran...`);
             this.renderCards();
+            
             this.updateStats();
             
-            // Afficher un message de confirmation
-            this.showLoadingMessage(`Niveau ${level} - Sous-niveau ${sublevel} chargé ! ${this.stats.totalPairs} paires disponibles.`);
+            // Afficher un message de confirmation dans la console
+            console.log(`🎉 Niveau chargé avec succès: ${this.stats.totalPairs} paires créées et affichées`);
             
         } catch (error) {
-            console.error('Erreur lors du chargement:', error);
-            this.showErrorMessage(`Erreur: ${error.message}`);
+            console.error('❌ Erreur lors du chargement:', error);
+            console.log('🔄 Tentative avec données de fallback...');
+            
+            // Utiliser des données de fallback
+            this.loadFallbackData(level);
         }
+    }
+    
+    loadFallbackData(level) {
+        console.log('🆘 Chargement des données de fallback pour', level);
+        
+        // Données de démonstration basées sur le niveau
+        const fallbackData = this.getFallbackDataForLevel(level);
+        
+        console.log(`📊 Données de fallback: ${fallbackData.length} mots`);
+        
+        console.log(`🔄 Création des paires de cartes avec données de fallback...`);
+        this.createMemoryPairs(fallbackData);
+        console.log(`✅ ${this.cards.length} cartes créées`);
+        
+        this.shuffleCards();
+        console.log(`🔀 Cartes mélangées`);
+        
+        // Afficher les cartes
+        console.log(`🎮 Rendu des cartes sur l'écran (mode fallback)...`);
+        this.renderCards();
+        
+        this.updateStats();
+        
+        console.log(`🎉 Mode test chargé avec succès: ${this.stats.totalPairs} paires affichées`);
+    }
+    
+    getFallbackDataForLevel(level) {
+        const fallbackData = {
+            A1: [
+                {"french": "bonjour", "chinese": "你好", "pinyin": "nǐ hǎo", "category": "salutations", "difficulty": 1},
+                {"french": "au revoir", "chinese": "再见", "pinyin": "zài jiàn", "category": "salutations", "difficulty": 1},
+                {"french": "merci", "chinese": "谢谢", "pinyin": "xiè xiè", "category": "politesse", "difficulty": 1},
+                {"french": "oui", "chinese": "是", "pinyin": "shì", "category": "réponses", "difficulty": 1},
+                {"french": "non", "chinese": "不是", "pinyin": "bù shì", "category": "réponses", "difficulty": 1},
+                {"french": "chat", "chinese": "猫", "pinyin": "māo", "category": "animaux", "difficulty": 1},
+                {"french": "chien", "chinese": "狗", "pinyin": "gǒu", "category": "animaux", "difficulty": 1},
+                {"french": "eau", "chinese": "水", "pinyin": "shuǐ", "category": "nourriture", "difficulty": 1},
+                {"french": "pain", "chinese": "面包", "pinyin": "miàn bāo", "category": "nourriture", "difficulty": 1},
+                {"french": "maison", "chinese": "房子", "pinyin": "fáng zi", "category": "lieux", "difficulty": 1},
+                {"french": "école", "chinese": "学校", "pinyin": "xué xiào", "category": "lieux", "difficulty": 1},
+                {"french": "rouge", "chinese": "红色", "pinyin": "hóng sè", "category": "couleurs", "difficulty": 1}
+            ],
+            A2: [
+                {"french": "voyage", "chinese": "旅行", "pinyin": "lǚ xíng", "category": "voyage", "difficulty": 2},
+                {"french": "restaurant", "chinese": "餐厅", "pinyin": "cān tīng", "category": "lieux", "difficulty": 2},
+                {"french": "travail", "chinese": "工作", "pinyin": "gōng zuò", "category": "profession", "difficulty": 2},
+                {"french": "médecin", "chinese": "医生", "pinyin": "yī shēng", "category": "profession", "difficulty": 2},
+                {"french": "temps", "chinese": "时间", "pinyin": "shí jiān", "category": "temps", "difficulty": 2},
+                {"french": "aujourd'hui", "chinese": "今天", "pinyin": "jīn tiān", "category": "temps", "difficulty": 2},
+                {"french": "argent", "chinese": "钱", "pinyin": "qián", "category": "économie", "difficulty": 2},
+                {"french": "acheter", "chinese": "买", "pinyin": "mǎi", "category": "verbes", "difficulty": 2},
+                {"french": "comprendre", "chinese": "理解", "pinyin": "lǐ jiě", "category": "verbes", "difficulty": 2}
+            ],
+            B1: [
+                {"french": "expérience", "chinese": "经验", "pinyin": "jīng yàn", "category": "abstrait", "difficulty": 3},
+                {"french": "développement", "chinese": "发展", "pinyin": "fā zhǎn", "category": "abstrait", "difficulty": 3},
+                {"french": "environnement", "chinese": "环境", "pinyin": "huán jìng", "category": "nature", "difficulty": 3},
+                {"french": "technologie", "chinese": "技术", "pinyin": "jì shù", "category": "technologie", "difficulty": 3},
+                {"french": "gouvernement", "chinese": "政府", "pinyin": "zhèng fǔ", "category": "politique", "difficulty": 3},
+                {"french": "culture", "chinese": "文化", "pinyin": "wén huà", "category": "culture", "difficulty": 3},
+                {"french": "communication", "chinese": "交流", "pinyin": "jiāo liú", "category": "communication", "difficulty": 3},
+                {"french": "réussir", "chinese": "成功", "pinyin": "chéng gōng", "category": "verbes", "difficulty": 3}
+            ]
+        };
+        
+        return fallbackData[level] || fallbackData.A1;
     }
 
     createMemoryPairs(wordsData) {
@@ -134,6 +262,13 @@ class MemoryMots {
                 isFlipped: false
             });
         });
+        
+        // Mélange immédiat après création
+        console.log('🔀 Premier mélange après création des paires...');
+        for (let i = this.cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+        }
     }
 
     selectRandomWords(wordsData, count) {
@@ -153,6 +288,8 @@ class MemoryMots {
                     this.selectLevel(e.target.dataset.level);
                 } else if (e.target.dataset.difficulty) {
                     this.selectDifficulty(e.target.dataset.difficulty);
+                } else if (e.target.dataset.sublevel) {
+                    this.selectSublevel(parseInt(e.target.dataset.sublevel));
                 }
             });
         });
@@ -182,10 +319,19 @@ class MemoryMots {
         document.getElementById('next-level-btn')?.addEventListener('click', () => {
             this.nextLevel();
         });
+        
+        // Bouton de démarrage du jeu
+        document.getElementById('start-game-btn')?.addEventListener('click', () => {
+            if (this.currentLevel && this.currentSublevel) {
+                console.log(`🎮 Démarrage du jeu: ${this.currentLevel} - Niveau ${this.currentSublevel}`);
+                this.loadCardsFromLevel(this.currentLevel, this.currentSublevel);
+            }
+        });
     }
 
     selectLevel(level) {
         this.currentLevel = level;
+        this.currentSublevel = null; // Reset sublevel selection
         
         // Mettre à jour les boutons de niveau
         document.querySelectorAll('.difficulty-btn[data-level]').forEach(btn => {
@@ -193,11 +339,65 @@ class MemoryMots {
         });
         document.querySelector(`[data-level="${level}"]`)?.classList.add('active');
         
-        // Pour simplifier, on prend le premier sous-niveau disponible
+        // Afficher les sous-niveaux disponibles
         const availableSublevels = this.availableSublevels[level] || [];
-        if (availableSublevels.length > 0) {
-            this.currentSublevel = availableSublevels[0];
-            this.loadCardsFromLevel(level, this.currentSublevel);
+        this.showSublevels(availableSublevels);
+        
+        // Désactiver le bouton de démarrage jusqu'à ce qu'un sous-niveau soit sélectionné
+        this.updateStartButton();
+    }
+
+    showSublevels(sublevels) {
+        const sublevelSection = document.getElementById('sublevel-section');
+        const sublevelButtons = document.getElementById('sublevel-buttons');
+        
+        if (sublevels.length > 0) {
+            sublevelSection.style.display = 'block';
+            sublevelButtons.innerHTML = '';
+            
+            sublevels.forEach(sublevel => {
+                const button = document.createElement('button');
+                button.className = 'difficulty-btn';
+                button.dataset.sublevel = sublevel;
+                button.textContent = `Niveau ${sublevel}`;
+                button.addEventListener('click', () => {
+                    this.selectSublevel(sublevel);
+                });
+                sublevelButtons.appendChild(button);
+            });
+        } else {
+            sublevelSection.style.display = 'none';
+        }
+    }
+    
+    selectSublevel(sublevel) {
+        this.currentSublevel = sublevel;
+        
+        // Mettre à jour les boutons de sous-niveau
+        document.querySelectorAll('.difficulty-btn[data-sublevel]').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`[data-sublevel="${sublevel}"]`)?.classList.add('active');
+        
+        // Activer le bouton de démarrage
+        this.updateStartButton();
+        
+        console.log(`📋 Sélection: ${this.currentLevel} - Niveau ${sublevel}`);
+    }
+    
+    updateStartButton() {
+        const startBtn = document.getElementById('start-game-btn');
+        if (startBtn) {
+            const canStart = this.currentLevel && this.currentSublevel;
+            startBtn.disabled = !canStart;
+            
+            if (canStart) {
+                startBtn.textContent = `🚀 Commencer ${this.currentLevel} - Niveau ${this.currentSublevel}`;
+                startBtn.style.background = '#28a745';
+            } else {
+                startBtn.textContent = '🚀 Commencer le jeu';
+                startBtn.style.background = '#6c757d';
+            }
         }
     }
 
@@ -217,43 +417,82 @@ class MemoryMots {
     }
 
     shuffleCards() {
+        console.log('🔀 Mélange des cartes...');
+        
+        // Utiliser l'algorithme Fisher-Yates pour un mélange parfait
         for (let i = this.cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
         }
+        
+        // Double mélange pour être sûr
+        for (let i = this.cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+        }
+        
+        console.log('✅ Cartes mélangées:', this.cards.map(c => `${c.type}:${c.text}`).slice(0, 8), '...');
     }
 
     renderCards() {
+        console.log('🎨 Rendu des cartes...', this.cards.length);
         const container = document.getElementById('memory-grid');
+        
+        // Vider complètement le conteneur
         container.innerHTML = '';
+        container.style.display = 'grid';
 
         if (this.cards.length === 0) {
-            container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">Sélectionnez un niveau pour commencer à jouer !</div>';
+            console.log('⚠️ Aucune carte à afficher');
+            container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666; grid-column: 1 / -1;">Sélectionnez un niveau pour commencer à jouer !</div>';
             return;
         }
 
-        // Ajuster le grid selon le nombre de cartes
-        const totalCards = this.cards.length;
-        const columns = Math.ceil(Math.sqrt(totalCards));
-        container.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+        console.log(`🃏 Affichage de ${this.cards.length} cartes`);
 
+        // Ajouter l'attribut data pour le CSS responsive
+        container.setAttribute('data-card-count', this.cards.length);
+
+        // Configuration de la grille selon le nombre de cartes
+        const totalCards = this.cards.length;
+        if (totalCards <= 12) {
+            container.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            container.style.maxWidth = '800px';
+        } else if (totalCards <= 16) {
+            container.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            container.style.maxWidth = '900px';
+        } else if (totalCards <= 24) {
+            container.style.gridTemplateColumns = 'repeat(6, 1fr)';
+            container.style.maxWidth = '1100px';
+        } else {
+            container.style.gridTemplateColumns = 'repeat(6, 1fr)';
+            container.style.maxWidth = '1200px';
+        }
+
+        // Créer et ajouter chaque carte
         this.cards.forEach((card, index) => {
             const cardElement = this.createCardElement(card, index);
             container.appendChild(cardElement);
         });
 
+        console.log(`✅ ${this.cards.length} cartes ajoutées au DOM`);
+        console.log(`🔍 Grid columns: ${container.style.gridTemplateColumns}`);
+
         // Démarrer le timer si nécessaire
         this.startTimer();
         this.gameState = 'playing';
 
-        // Animation d'apparition
+        // Animation d'apparition avec délai
         setTimeout(() => {
-            document.querySelectorAll('.memory-card').forEach((card, index) => {
+            const cardElements = document.querySelectorAll('.memory-card');
+            console.log(`🎭 Animation pour ${cardElements.length} cartes`);
+            
+            cardElements.forEach((card, index) => {
                 setTimeout(() => {
                     card.classList.add('fade-in');
-                }, index * 100);
+                }, index * 50);
             });
-        }, 50);
+        }, 100);
     }
 
     createCardElement(cardData, index) {
@@ -519,6 +758,12 @@ class MemoryMots {
         this.currentSublevel = null;
         this.cards = [];
         
+        // Masquer la section des sous-niveaux
+        document.getElementById('sublevel-section').style.display = 'none';
+        
+        // Réinitialiser le bouton de démarrage
+        this.updateStartButton();
+        
         this.renderCards();
         this.showLevelSelection();
     }
@@ -554,7 +799,27 @@ class MemoryMots {
     }
 
     showLevelSelection() {
-        this.showLoadingMessage('Sélectionnez un niveau et une difficulté pour commencer !');
+        const hasAvailableLevels = Object.values(this.availableSublevels).some(sublevels => sublevels.length > 0);
+        
+        if (hasAvailableLevels) {
+            // Compter les niveaux disponibles
+            let levelInfo = '';
+            Object.entries(this.availableSublevels).forEach(([level, sublevels]) => {
+                if (sublevels.length > 0) {
+                    levelInfo += `<div style="margin: 5px 0;"><strong>${level}:</strong> ${sublevels.length} sous-niveau(s)</div>`;
+                }
+            });
+            
+            this.showLoadingMessage(`
+                <div>Sélectionnez un niveau et une difficulté pour commencer !</div>
+                <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; text-align: left;">
+                    <div style="font-weight: bold; margin-bottom: 10px;">📋 Niveaux disponibles :</div>
+                    ${levelInfo}
+                </div>
+            `);
+        } else {
+            this.showLoadingMessage('Chargement en cours...');
+        }
     }
 
     showLoadingMessage(message) {

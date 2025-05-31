@@ -3,410 +3,206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎮 Jeux FLE - Apprendre le français en s'amusant</title>
-  <link rel="stylesheet" href="../../css/game-styles.css">
+  <title>Jeux Éducatifs FLE</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
-      margin: 0;
-      padding: 20px;
+      color: #333;
+      line-height: 1.6;
     }
-    
-    .main-container {
+
+    .container {
       max-width: 1200px;
       margin: 0 auto;
-      background: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      overflow: hidden;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    
-    .hero-section {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: white;
-      padding: 3rem 2rem;
+
+    .header {
       text-align: center;
+      margin-bottom: 3rem;
+      color: white;
     }
-    
-    .hero-title {
+
+    .header h1 {
       font-size: 3rem;
-      margin: 0 0 1rem 0;
       font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
-    
-    .hero-subtitle {
+
+    .header p {
       font-size: 1.3rem;
       opacity: 0.9;
-      margin: 0;
+      font-weight: 300;
     }
-    
-    .games-section {
-      padding: 3rem 2rem;
-    }
-    
-    .section-title {
-      font-size: 2rem;
-      color: var(--dark-color);
-      margin-bottom: 2rem;
-      text-align: center;
-      position: relative;
-    }
-    
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 4px;
-      background: var(--primary-color);
-      border-radius: 2px;
-    }
-    
+
     .games-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
-      margin-bottom: 3rem;
+      flex: 1;
     }
-    
+
     .game-card {
-      background: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      overflow: hidden;
-      transition: var(--transition);
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-    }
-    
-    .game-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-    
-    .game-card-header {
-      padding: 1.5rem;
-      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-      border-bottom: 1px solid #e0e0e0;
-    }
-    
-    .game-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-    
-    .game-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin: 0 0 0.5rem 0;
-      color: var(--dark-color);
-    }
-    
-    .game-description {
-      color: #666;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-    
-    .game-card-body {
-      padding: 1.5rem;
-    }
-    
-    .game-features {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    
-    .game-features li {
-      padding: 0.3rem 0;
-      color: #666;
-      font-size: 0.9rem;
-    }
-    
-    .game-features li::before {
-      content: '✓';
-      color: var(--success-color);
-      font-weight: bold;
-      margin-right: 0.5rem;
-    }
-    
-    .difficulty-badge {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-    
-    .difficulty-facile {
-      background: var(--success-color);
-      color: white;
-    }
-    
-    .difficulty-moyen {
-      background: var(--warning-color);
-      color: white;
-    }
-    
-    .difficulty-difficile {
-      background: var(--danger-color);
-      color: white;
-    }
-    
-    .new-badge {
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      background: var(--accent-color);
-      color: white;
-      padding: 5px 10px;
-      border-radius: 0 0 15px 0;
-      font-size: 0.7rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    
-    .stats-section {
-      background: var(--light-color);
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
       padding: 2rem;
       text-align: center;
-      border-top: 1px solid #e0e0e0;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
     }
-    
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     }
-    
-    .stat-item {
-      text-align: center;
+
+    .game-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
     }
-    
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: var(--primary-color);
-      display: block;
+
+    .game-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #333;
     }
-    
-    .stat-label {
+
+    .game-description {
+      font-size: 1rem;
       color: #666;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      margin-bottom: 2rem;
+      line-height: 1.5;
     }
-    
+
+    .game-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #4285f4, #34a853);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+    }
+
+    .game-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+
     @media (max-width: 768px) {
-      .hero-title {
+      .header h1 {
         font-size: 2rem;
+      }
+      
+      .header p {
+        font-size: 1.1rem;
       }
       
       .games-grid {
         grid-template-columns: 1fr;
       }
       
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .game-card {
+        padding: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="main-container">
-    <div class="hero-section">
-      <h1 class="hero-title">🎮 Jeux FLE</h1>
-      <p class="hero-subtitle">Apprendre le français en s'amusant avec des jeux interactifs</p>
-    </div>
+  <div class="container">
+    <header class="header">
+      <h1>🎮 Jeux Éducatifs FLE</h1>
+      <p>Apprenez le français avec des jeux interactifs et amusants</p>
+    </header>
 
-    <div class="games-section">
-      <h2 class="section-title">🎯 Activités Interactives</h2>
-      <div class="games-grid">
-        <a href="jeu-cartes/jeu-cartes.html" class="game-card">
-          <div class="new-badge">Nouveau!</div>
-          <div class="difficulty-badge difficulty-moyen">Moyen</div>
-          <div class="game-card-header">
-            <span class="game-icon">🎴</span>
-            <h3 class="game-title">Jeu de Cartes FLE</h3>
-            <p class="game-description">Retournez les cartes pour révéler les réponses et testez vos connaissances</p>
-          </div>
-          <div class="game-card-body">
-            <ul class="game-features">
-              <li>Cartes par catégorie (grammaire, vocabulaire...)</li>
-              <li>Système de progression et statistiques</li>
-              <li>Animations fluides et design moderne</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="jeu-memory/memory-mots.html" class="game-card">
-          <div class="new-badge">Nouveau!</div>
-          <div class="difficulty-badge difficulty-facile">Facile</div>
-          <div class="game-card-header">
-            <span class="game-icon">🧠</span>
-            <h3 class="game-title">Memory des Mots</h3>
-            <p class="game-description">Associez les mots français avec leurs traductions</p>
-          </div>
-          <div class="game-card-body">
-            <ul class="game-features">
-              <li>3 niveaux de difficulté</li>
-              <li>Système d'indices</li>
-              <li>Chronomètre et compteur de coups</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="quiz-interactifs/jeu.html?game=passe-compose" class="game-card">
-          <div class="difficulty-badge difficulty-moyen">Moyen</div>
-          <div class="game-card-header">
-            <span class="game-icon">📚</span>
-            <h3 class="game-title">Quiz Passé Composé</h3>
-            <p class="game-description">Maîtrisez la conjugaison du passé composé avec ce quiz interactif</p>
-          </div>
-          <div class="game-card-body">
-            <ul class="game-features">
-              <li>Questions sur les auxiliaires</li>
-              <li>Drag & drop interactif</li>
-              <li>Feedback immédiat</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="quiz-interactifs/jeu.html?game=villes-de-france" class="game-card">
-          <div class="difficulty-badge difficulty-facile">Facile</div>
-          <div class="game-card-header">
-            <span class="game-icon">🏛️</span>
-            <h3 class="game-title">Quiz Culturel</h3>
-            <p class="game-description">Découvrez les villes de France et enrichissez votre culture générale</p>
-          </div>
-          <div class="game-card-body">
-            <ul class="game-features">
-              <li>Géographie française</li>
-              <li>Culture et monuments</li>
-              <li>Questions variées</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="jeu-phonetique/jeu-phonetique.html" class="game-card">
-          <div class="difficulty-badge difficulty-difficile">Difficile</div>
-          <div class="game-card-header">
-            <span class="game-icon">🔊</span>
-            <h3 class="game-title">Quiz Phonétique</h3>
-            <p class="game-description">Améliorez votre discrimination auditive avec des exercices sonores</p>
-          </div>
-          <div class="game-card-body">
-            <ul class="game-features">
-              <li>Exercices d'écoute</li>
-              <li>Discrimination phonétique</li>
-              <li>Sons du français</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="jeu-lexique/index.html" class="game-card">
-          <div class="new-badge">Nouveau!</div>
-          <div class="difficulty-badge difficulty-moyen">Moyen</div>
-          <div class="game-card-header">
-            <span class="game-icon">🎯</span>
-            <h3 class="game-title">Association Lexicale</h3>
-            <p class="game-description">Associez les mots français à leurs images ou sons correspondants</p>
-          </div>
-          <div class="game-card-body">
-            <ul class="game-features">
-              <li>Interface moderne et responsive</li>
-              <li>Niveaux CECR dynamiques</li>
-              <li>3 modes de difficulté</li>
-              <li>Support multimédia avancé</li>
-              <li>Statistiques détaillées</li>
-            </ul>
-          </div>
-        </a>
+    <main class="games-grid">
+      <div class="game-card">
+        <div class="game-icon">🧠</div>
+        <h2 class="game-title">Memory des Mots</h2>
+        <p class="game-description">
+          Associez les mots français avec leurs traductions chinoises dans ce jeu de mémoire amusant.
+          Plusieurs niveaux disponibles (A1, A2, B1).
+        </p>
+        <a href="jeu-memory/memory-mots.html" class="game-btn">Jouer au Memory</a>
       </div>
 
-      <h2 class="section-title">🎮 Jeux d'Action</h2>
-      <div class="games-grid">
-        <a href="verbe-slicer/index.html" class="game-card">
-          <div class="new-badge">Refait!</div>
-          <div class="difficulty-badge difficulty-difficile">Difficile</div>
-          <div class="game-card-header">
-            <span class="game-icon">⚔️</span>
-            <h3 class="game-title">Verbe Slicer</h3>
-            <p class="game-description">Jeu d'action moderne pour maîtriser les verbes irréguliers français</p>
-          </div>
-          <div class="game-card-body">
-            <ul class="game-features">
-              <li>Interface moderne avec effets visuels</li>
-              <li>5 niveaux de progression</li>
-              <li>Système de vies et séries</li>
-              <li>Statistiques détaillées</li>
-              <li>3 niveaux de difficulté</li>
-              <li>Support mobile et tactile</li>
-            </ul>
-          </div>
-        </a>
-
-        <a href="jeu-phrases/index.html" class="game-card">
-          <div class="new-badge">Nouveau!</div>
-          <div class="difficulty-badge difficulty-moyen">Moyen</div>
-          <div class="game-card-header">
-            <span class="game-icon">🔗</span>
-            <h3 class="game-title">Connecteurs Logiques</h3>
-            <p class="game-description">Maîtrisez les connecteurs français : cause, conséquence, opposition...</p>
-          </div>
-          <div class="game-card-body">
-            <ul class="game-features">
-              <li>QCM avec 4 choix de connecteurs</li>
-              <li>3 niveaux de difficulté</li>
-              <li>Timer dynamique avec bonus</li>
-              <li>Système de séries et statistiques</li>
-              <li>Interface moderne responsive</li>
-              <li>Feedback visuel et sonore</li>
-            </ul>
-          </div>
-        </a>
+      <div class="game-card">
+        <div class="game-icon">🎯</div>
+        <h2 class="game-title">Verbe Slicer</h2>
+        <p class="game-description">
+          Maîtrisez la conjugaison française en associant les infinitifs avec leurs participes passés.
+          Parfait pour améliorer vos connaissances verbales.
+        </p>
+        <a href="verbe-slicer/index.html" class="game-btn">Jouer au Verbe Slicer</a>
       </div>
-    </div>
 
-    <div class="stats-section">
-      <h2 class="section-title">📊 Statistiques</h2>
-      <div class="stats-grid">
-        <div class="stat-item">
-          <span class="stat-number">8</span>
-          <span class="stat-label">Jeux disponibles</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">4</span>
-          <span class="stat-label">Catégories</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">3</span>
-          <span class="stat-label">Niveaux</span>
-        </div>
-        <div class="stat-item">
-        </div>
+      <div class="game-card">
+        <div class="game-icon">🃏</div>
+        <h2 class="game-title">Jeu de Cartes</h2>
+        <p class="game-description">
+          Découvrez le vocabulaire français à travers un jeu de cartes interactif.
+          Idéal pour enrichir votre vocabulaire de base.
+        </p>
+        <a href="jeu-cartes/" class="game-btn">Jouer aux Cartes</a>
       </div>
-    </div>
+
+      <div class="game-card">
+        <div class="game-icon">📚</div>
+        <h2 class="game-title">Jeu de Lexique</h2>
+        <p class="game-description">
+          Explorez le lexique français avec des exercices ciblés par niveau et par thème.
+          Progression adaptée à votre niveau.
+        </p>
+        <a href="jeu-lexique/" class="game-btn">Explorer le Lexique</a>
+      </div>
+
+      <div class="game-card">
+        <div class="game-icon">🔊</div>
+        <h2 class="game-title">Jeu Phonétique</h2>
+        <p class="game-description">
+          Améliorez votre prononciation française avec des exercices phonétiques interactifs.
+          Entraînement audio et visuel.
+        </p>
+        <a href="jeu-phonetique/" class="game-btn">Pratiquer la Phonétique</a>
+      </div>
+
+      <div class="game-card">
+        <div class="game-icon">📝</div>
+        <h2 class="game-title">Quiz Interactifs</h2>
+        <p class="game-description">
+          Testez vos connaissances avec des quiz variés couvrant grammaire, vocabulaire et culture.
+          Multiple choix et feedback immédiat.
+        </p>
+        <a href="quiz-interactifs/" class="game-btn">Faire un Quiz</a>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>© 2024 Jeux Éducatifs FLE - Apprentissage ludique du français</p>
+    </footer>
   </div>
-
-  <footer style="text-align: center; padding: 2rem; color: white; font-size: 0.9rem;">
-    <div data-include="/gouez_f/partials/footer.html"></div>
-  </footer>
 </body>
 </html>

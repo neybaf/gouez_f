@@ -12,6 +12,10 @@ class VerbeSlicer {
         this.gameState = 'menu'; // menu, playing, paused, gameOver
         this.difficulty = 'normal';
         
+        // Debug et optimisations tactiles
+        this.debugMode = false; // Activer pour voir les zones cliquables
+        this.showClickZones = false;
+        
         // Données de jeu
         this.verbesData = null;
         this.currentVerbs = [];
@@ -21,8 +25,8 @@ class VerbeSlicer {
         // Statistiques de jeu
         this.score = 0;
         this.level = 1;
-        this.lives = 3;
-        this.maxLives = 3;
+        this.lives = 5;
+        this.maxLives = 5;
         this.verbsSliced = 0;
         this.totalClicks = 0;
         this.correctClicks = 0;
@@ -39,13 +43,13 @@ class VerbeSlicer {
         this.lastSpawnTime = 0;
         this.spawnInterval = 1000; // Spawn toutes les 1 seconde
         
-        // Niveaux et progression
+        // Niveaux et progression - SEUILS AJUSTÉS POUR PROGRESSION PLUS RAPIDE
         this.levels = [
             { name: 'Infinitifs', threshold: 0, verbType: 'infinitif', color: '#3498db' },
-            { name: 'Participes passés', threshold: 25, verbType: 'participe_passe', color: '#9b59b6' },
-            { name: 'Futur', threshold: 50, verbType: 'futur', color: '#e67e22' },
-            { name: 'Imparfait', threshold: 75, verbType: 'imparfait', color: '#e74c3c' },
-            { name: 'Subjonctif', threshold: 100, verbType: 'subjonctif', color: '#f39c12' }
+            { name: 'Participes passés', threshold: 10, verbType: 'participe_passe', color: '#9b59b6' },
+            { name: 'Futur', threshold: 25, verbType: 'futur', color: '#e67e22' },
+            { name: 'Imparfait', threshold: 45, verbType: 'imparfait', color: '#e74c3c' },
+            { name: 'Subjonctif', threshold: 70, verbType: 'subjonctif', color: '#f39c12' }
         ];
         
         // Multiplicateurs de difficulté
@@ -201,6 +205,17 @@ class VerbeSlicer {
                         if (this.gameState === 'playing') {
                             this.togglePause();
                         }
+                        break;
+                    case 'KeyD':
+                        // Activer/désactiver le mode debug avec 'D'
+                        this.debugMode = !this.debugMode;
+                        this.showClickZones = this.debugMode;
+                        console.log('🐛 Mode debug:', this.debugMode ? 'ACTIVÉ' : 'DÉSACTIVÉ');
+                        break;
+                    case 'KeyZ':
+                        // Activer/désactiver uniquement les zones cliquables avec 'Z'
+                        this.showClickZones = !this.showClickZones;
+                        console.log('🎯 Zones cliquables:', this.showClickZones ? 'VISIBLES' : 'MASQUÉES');
                         break;
                 }
             });
@@ -404,15 +419,32 @@ class VerbeSlicer {
                 
                 // Événements de clic seulement si le canvas est dans le DOM
                 this.canvas.addEventListener('click', (e) => this.handleClick(e));
+                
+                // Amélioration des événements tactiles pour mobile
                 this.canvas.addEventListener('touchstart', (e) => {
                     e.preventDefault();
                     const touch = e.touches[0];
-                    const rect = this.canvas.getBoundingClientRect();
                     this.handleClick({
                         clientX: touch.clientX,
                         clientY: touch.clientY
                     });
-                });
+                }, { passive: false });
+                
+                // Empêcher le zoom sur double-tap et autres gestes tactiles
+                this.canvas.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                }, { passive: false });
+                
+                this.canvas.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                }, { passive: false });
+                
+                // Optimisation pour les appareils mobiles
+                this.canvas.style.touchAction = 'none';
+                this.canvas.style.userSelect = 'none';
+                this.canvas.style.webkitUserSelect = 'none';
+                this.canvas.style.mozUserSelect = 'none';
+                this.canvas.style.msUserSelect = 'none';
             }
             
             console.log('✅ Canvas configuré:', this.canvas.width, 'x', this.canvas.height);
@@ -691,6 +723,9 @@ class VerbeSlicer {
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
         
+        // Feedback visuel immédiat pour le clic
+        this.createClickFeedback(x, y);
+        
         this.totalClicks++;
         let hit = false;
         
@@ -703,9 +738,42 @@ class VerbeSlicer {
         });
         
         if (!hit) {
-            // Clic dans le vide
+            // Clic dans le vide - feedback plus visible
             this.addFloatingText(x, y, 'Raté !', 'error');
-            console.log('🎯 Clic dans le vide');
+            this.createMissEffect(x, y);
+            console.log('❌ Clic dans le vide');
+        }
+    }
+    
+    createClickFeedback(x, y) {
+        // Effet de clic rapide pour feedback tactile
+        this.particles.push({
+            x: x,
+            y: y,
+            vx: 0,
+            vy: 0,
+            color: '#ffffff',
+            life: 0.3,
+            decay: 0.1,
+            size: 8,
+            type: 'click'
+        });
+    }
+    
+    createMissEffect(x, y) {
+        // Effet spécial pour les clics ratés
+        for (let i = 0; i < 4; i++) {
+            this.particles.push({
+                x: x,
+                y: y,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4,
+                color: '#ff6b6b',
+                life: 0.5,
+                decay: 0.05,
+                size: 4,
+                type: 'miss'
+            });
         }
     }
     
@@ -715,10 +783,21 @@ class VerbeSlicer {
         const wordWidth = metrics.width;
         const wordHeight = 30;
         
-        return x >= word.x - wordWidth/2 && 
-               x <= word.x + wordWidth/2 && 
-               y >= word.y - wordHeight/2 && 
-               y <= word.y + wordHeight/2;
+        // Augmentation significative des zones cliquables pour mobile et ordinateur
+        // Zones de sécurité généreuses autour du texte
+        const extraWidthPadding = 40; // 20px de chaque côté
+        const extraHeightPadding = 25; // 12.5px au-dessus et en-dessous
+        const minClickableWidth = 80; // Largeur minimale cliquable
+        const minClickableHeight = 60; // Hauteur minimale cliquable
+        
+        // Calculer les dimensions finales avec padding
+        const finalWidth = Math.max(wordWidth + extraWidthPadding, minClickableWidth);
+        const finalHeight = Math.max(wordHeight + extraHeightPadding, minClickableHeight);
+        
+        return x >= word.x - finalWidth/2 && 
+               x <= word.x + finalWidth/2 && 
+               y >= word.y - finalHeight/2 && 
+               y <= word.y + finalHeight/2;
     }
     
     handleWordClick(word, index) {
@@ -731,6 +810,13 @@ class VerbeSlicer {
             this.correctClicks++;
             this.currentStreak++;
             this.bestStreak = Math.max(this.bestStreak, this.currentStreak);
+            
+            // Récupération d'un coeur si on en a perdu
+            if (this.lives < this.maxLives) {
+                this.lives++;
+                this.addFloatingText(word.x, word.y - 50, '+1 ❤️', 'success');
+                console.log('💚 Coeur récupéré ! Vies actuelles:', this.lives);
+            }
             
             this.addFloatingText(word.x, word.y, '+1', 'success');
             this.createParticles(word.x, word.y, word.color);
@@ -882,7 +968,48 @@ class VerbeSlicer {
             }
             
             this.ctx.restore();
+            
+            // Debug : afficher les zones cliquables
+            if (this.debugMode || this.showClickZones) {
+                this.renderClickZone(word);
+            }
         });
+    }
+    
+    renderClickZone(word) {
+        this.ctx.save();
+        
+        // Calculer les dimensions de la zone cliquable (même logique que isPointInWord)
+        this.ctx.font = '30px Arial';
+        const metrics = this.ctx.measureText(word.text);
+        const wordWidth = metrics.width;
+        const wordHeight = 30;
+        
+        const extraWidthPadding = 40;
+        const extraHeightPadding = 25;
+        const minClickableWidth = 80;
+        const minClickableHeight = 60;
+        
+        const finalWidth = Math.max(wordWidth + extraWidthPadding, minClickableWidth);
+        const finalHeight = Math.max(wordHeight + extraHeightPadding, minClickableHeight);
+        
+        // Dessiner la zone cliquable
+        this.ctx.strokeStyle = word.isIrregular ? 'rgba(0, 255, 0, 0.5)' : 'rgba(255, 0, 0, 0.5)';
+        this.ctx.lineWidth = 2;
+        this.ctx.setLineDash([5, 5]);
+        this.ctx.strokeRect(
+            word.x - finalWidth/2, 
+            word.y - finalHeight/2, 
+            finalWidth, 
+            finalHeight
+        );
+        
+        // Point central
+        this.ctx.fillStyle = word.isIrregular ? 'rgba(0, 255, 0, 0.8)' : 'rgba(255, 0, 0, 0.8)';
+        this.ctx.fillRect(word.x - 2, word.y - 2, 4, 4);
+        
+        this.ctx.setLineDash([]); // Reset line dash
+        this.ctx.restore();
     }
     
     renderSliceEffects() {
