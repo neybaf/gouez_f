@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Chargement - Memory des Mots</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-result {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test de Chargement - Memory des Mots</h1>
+        <p>Cette page teste le chargement des données JSON pour le jeu Memory.</p>
+        
+        <div id="test-results"></div>
+        
+        <button onclick="testAllLevels()">🔍 Tester tous les niveaux</button>
+        <button onclick="testSpecificFile()">📁 Tester A1/niveau_1</button>
+        <button onclick="clearLog()">🗑️ Effacer les logs</button>
+        
+        <h3>📊 Logs:</h3>
+        <div id="log" class="log"></div>
+    </div>
+
+    <script>
+        let logDiv = document.getElementById('log');
+        let resultsDiv = document.getElementById('test-results');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.textContent += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            
+            console.log(message);
+        }
+
+        function showResult(message, isSuccess = true) {
+            const div = document.createElement('div');
+            div.className = `test-result ${isSuccess ? 'success' : 'error'}`;
+            div.textContent = message;
+            resultsDiv.appendChild(div);
+        }
+
+        function clearLog() {
+            logDiv.textContent = '';
+            resultsDiv.innerHTML = '';
+        }
+
+        async function testSpecificFile() {
+            log('🚀 Test de chargement du fichier A1/niveau_1.json...');
+            
+            try {
+                const url = 'data/A1/niveau_1.json';
+                log(`📡 Requête vers: ${url}`);
+                
+                const response = await fetch(url);
+                log(`📥 Réponse HTTP: ${response.status} ${response.statusText}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                log(`✅ JSON parsé avec succès`);
+                log(`📊 Nombre d'éléments: ${data.length}`);
+                log(`🔍 Premier élément: ${JSON.stringify(data[0], null, 2)}`);
+                
+                showResult(`✅ A1/niveau_1.json chargé avec succès (${data.length} éléments)`, true);
+                
+            } catch (error) {
+                log(`❌ Erreur: ${error.message}`);
+                showResult(`❌ Échec du chargement: ${error.message}`, false);
+            }
+        }
+
+        async function testAllLevels() {
+            log('🔍 Test de tous les niveaux disponibles...');
+            
+            const levels = ['A1', 'A2', 'B1'];
+            let totalFound = 0;
+            
+            for (const level of levels) {
+                log(`📁 Test du niveau ${level}...`);
+                let levelCount = 0;
+                
+                for (let i = 1; i <= 3; i++) {
+                    try {
+                        const url = `data/${level}/niveau_${i}.json`;
+                        const response = await fetch(url);
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            log(`  ✅ ${level}/niveau_${i}.json: ${data.length} éléments`);
+                            levelCount++;
+                            totalFound++;
+                        } else {
+                            log(`  ❌ ${level}/niveau_${i}.json: ${response.status}`);
+                        }
+                    } catch (error) {
+                        log(`  ⚠️ ${level}/niveau_${i}.json: ${error.message}`);
+                    }
+                }
+                
+                log(`📋 Niveau ${level}: ${levelCount} fichiers trouvés`);
+            }
+            
+            showResult(`📊 Total: ${totalFound} fichiers JSON trouvés`, totalFound > 0);
+            
+            if (totalFound === 0) {
+                log('🆘 Aucun fichier trouvé - le jeu utilisera les données de fallback');
+                showResult('ℹ️ Aucun fichier JSON trouvé - utilisation des données intégrées', true);
+            }
+        }
+
+        // Test automatique au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            log('🌐 Page chargée, URL: ' + window.location.href);
+            log('📍 Chemin de base: ' + window.location.origin + window.location.pathname);
+            
+            // Test automatique
+            setTimeout(() => {
+                testSpecificFile();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

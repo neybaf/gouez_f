@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbe Slicer - Jeu d'Action FLE</title>
+    <link rel="stylesheet" href="verbe-slicer-styles.css">
+    <meta name="description" content="Jeu d'action pour apprendre les verbes irréguliers français - Cliquez sur les verbes qui tombent !">
+</head>
+<body>
+    <!-- Écran de démarrage -->
+    <div id="start-screen" class="game-screen active">
+        <div class="game-header">
+            <h1 class="game-title">
+                <span class="title-icon">⚔️</span>
+                Verbe Slicer
+            </h1>
+            <p class="game-subtitle">Maîtrisez les verbes irréguliers français !</p>
+        </div>
+
+        <div class="game-instructions">
+            <div class="instruction-card">
+                <h3>🎯 Objectif</h3>
+                <p>Cliquez uniquement sur les <strong>verbes irréguliers</strong> qui tombent du ciel. Évitez les verbes réguliers !</p>
+            </div>
+            
+            <div class="instruction-card">
+                <h3>📈 Progression</h3>
+                <div class="level-progression">
+                    <div class="level-item">
+                        <span class="level-badge">Niveau 1</span>
+                        <span class="level-desc">Infinitifs (0-9 pts)</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-badge">Niveau 2</span>
+                        <span class="level-desc">Participes passés (10-24 pts)</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-badge">Niveau 3</span>
+                        <span class="level-desc">Futur (25-44 pts)</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-badge">Niveau 4</span>
+                        <span class="level-desc">Imparfait (45-69 pts)</span>
+                    </div>
+                    <div class="level-item">
+                        <span class="level-badge">Niveau 5</span>
+                        <span class="level-desc">Subjonctif (70+ pts)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instruction-card">
+                <h3>⚡ Contrôles</h3>
+                <p><strong>Clic gauche :</strong> Trancher un verbe<br>
+                <strong>Espace :</strong> Pause/Reprendre<br>
+                <strong>R :</strong> Redémarrer</p>
+            </div>
+        </div>
+
+        <div class="difficulty-selector">
+            <h3>Choisissez votre difficulté :</h3>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn" data-difficulty="facile">
+                    <span class="difficulty-icon">🌱</span>
+                    <span class="difficulty-name">Facile</span>
+                    <span class="difficulty-desc">Vitesse lente</span>
+                </button>
+                <button class="difficulty-btn active" data-difficulty="normal">
+                    <span class="difficulty-icon">⚡</span>
+                    <span class="difficulty-name">Normal</span>
+                    <span class="difficulty-desc">Vitesse standard</span>
+                </button>
+                <button class="difficulty-btn" data-difficulty="difficile">
+                    <span class="difficulty-icon">🔥</span>
+                    <span class="difficulty-name">Difficile</span>
+                    <span class="difficulty-desc">Vitesse rapide</span>
+                </button>
+            </div>
+        </div>
+
+        <button id="start-game-btn" class="game-btn primary">
+            <span class="btn-icon">🚀</span>
+            Commencer l'aventure
+        </button>
+        
+        <!-- Bouton de test pour le développement -->
+        <div style="margin-top: 20px;">
+            <button id="test-fallback-btn" class="game-btn secondary" style="font-size: 0.9rem;">
+                <span class="btn-icon">🧪</span>
+                Mode test (données intégrées)
+            </button>
+        </div>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="game-screen">
+        <div class="game-ui">
+            <div class="ui-top">
+                <div class="score-display">
+                    <span class="score-label">Score</span>
+                    <span id="score" class="score-value">0</span>
+                </div>
+                
+                <div class="level-display">
+                    <span class="level-label">Niveau</span>
+                    <span id="level" class="level-value">1</span>
+                    <span id="level-name" class="level-name">Infinitifs</span>
+                </div>
+
+                <div class="lives-display">
+                    <span class="lives-label">Vies</span>
+                    <div id="lives" class="lives-hearts">
+                        <span class="heart">❤️</span>
+                        <span class="heart">❤️</span>
+                        <span class="heart">❤️</span>
+                    </div>
+                </div>
+
+                <button id="pause-btn" class="ui-btn">⏸️</button>
+            </div>
+
+            <div class="ui-bottom">
+                <div class="progress-container">
+                    <div class="progress-label">Progression vers le niveau suivant</div>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <div id="progress-text" class="progress-text">0 / 25</div>
+                </div>
+            </div>
+        </div>
+
+        <canvas id="game-canvas"></canvas>
+
+        <!-- Effets visuels -->
+        <div id="particles-container"></div>
+        <div id="floating-texts"></div>
+    </div>
+
+    <!-- Écran de pause -->
+    <div id="pause-screen" class="game-screen overlay">
+        <div class="pause-content">
+            <h2>⏸️ Jeu en pause</h2>
+            <div class="pause-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Score actuel</span>
+                    <span id="pause-score" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Niveau</span>
+                    <span id="pause-level" class="stat-value">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Précision</span>
+                    <span id="pause-accuracy" class="stat-value">100%</span>
+                </div>
+            </div>
+            <div class="pause-buttons">
+                <button id="resume-btn" class="game-btn primary">
+                    <span class="btn-icon">▶️</span>
+                    Reprendre
+                </button>
+                <button id="restart-btn" class="game-btn secondary">
+                    <span class="btn-icon">🔄</span>
+                    Redémarrer
+                </button>
+                <button id="quit-btn" class="game-btn">
+                    <span class="btn-icon">🏠</span>
+                    Quitter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de fin -->
+    <div id="game-over-screen" class="game-screen overlay">
+        <div class="game-over-content">
+            <h2 id="game-over-title">🎯 Partie terminée !</h2>
+            
+            <div class="final-stats">
+                <div class="stat-card">
+                    <span class="stat-icon">🏆</span>
+                    <span class="stat-label">Score final</span>
+                    <span id="final-score" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">📊</span>
+                    <span class="stat-label">Niveau atteint</span>
+                    <span id="final-level" class="stat-value">1</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🎯</span>
+                    <span class="stat-label">Précision</span>
+                    <span id="final-accuracy" class="stat-value">100%</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">⚔️</span>
+                    <span class="stat-label">Verbes tranchés</span>
+                    <span id="verbs-sliced" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">⏱️</span>
+                    <span class="stat-label">Temps de jeu</span>
+                    <span id="game-time" class="stat-value">0:00</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🔥</span>
+                    <span class="stat-label">Meilleure série</span>
+                    <span id="best-streak" class="stat-value">0</span>
+                </div>
+            </div>
+
+            <div id="performance-message" class="performance-message"></div>
+
+            <div class="game-over-buttons">
+                <button id="play-again-btn" class="game-btn primary">
+                    <span class="btn-icon">🔄</span>
+                    Rejouer
+                </button>
+                <button id="back-to-menu-btn" class="game-btn secondary">
+                    <span class="btn-icon">🏠</span>
+                    Menu principal
+                </button>
+                <button id="share-score-btn" class="game-btn">
+                    <span class="btn-icon">📤</span>
+                    Partager le score
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio (généré dynamiquement) -->
+    <audio id="success-sound" preload="auto"></audio>
+    <audio id="error-sound" preload="auto"></audio>
+    <audio id="level-up-sound" preload="auto"></audio>
+
+    <script>
+        // Script de débogage amélioré
+        console.log('🔍 Script de débogage chargé');
+        
+        // Vérifier que tous les éléments existent
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM chargé, vérification des éléments...');
+            
+            const requiredElements = [
+                'start-game-btn',
+                'game-canvas',
+                'start-screen',
+                'game-screen',
+                'pause-screen',
+                'game-over-screen'
+            ];
+            
+            let allElementsFound = true;
+            requiredElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    console.log(`✅ Élément ${id} trouvé`);
+                } else {
+                    console.error(`❌ Élément ${id} manquant`);
+                    allElementsFound = false;
+                }
+            });
+            
+            // Vérifier les boutons de difficulté
+            const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+            console.log(`📊 ${difficultyBtns.length} boutons de difficulté trouvés`);
+            
+            // Vérifier les écrans de jeu
+            const gameScreens = document.querySelectorAll('.game-screen');
+            console.log(`🖥️ ${gameScreens.length} écrans de jeu trouvés`);
+            
+            // Vérifier l'écran actif
+            const activeScreen = document.querySelector('.game-screen.active');
+            console.log('🎯 Écran actif:', activeScreen ? activeScreen.id : 'aucun');
+            
+            // Test du bouton de démarrage
+            const startBtn = document.getElementById('start-game-btn');
+            if (startBtn) {
+                console.log('🔘 Bouton de démarrage trouvé, test du clic...');
+                startBtn.addEventListener('click', () => {
+                    console.log('🖱️ Clic sur le bouton de démarrage détecté !');
+                });
+            }
+            
+            if (allElementsFound) {
+                console.log('🎯 Tous les éléments requis sont présents, prêt pour l\'initialisation du jeu');
+            } else {
+                console.error('❌ Des éléments manquent, le jeu pourrait ne pas fonctionner correctement');
+            }
+        });
+        
+        // Fonction de test globale
+        window.testGame = function() {
+            console.log('🧪 Test manuel du jeu...');
+            if (window.game) {
+                console.log('🎮 Instance de jeu trouvée:', window.game);
+                console.log('📊 État du jeu:', {
+                    gameState: window.game.gameState,
+                    isDataLoaded: window.game.isDataLoaded,
+                    verbesData: window.game.verbesData ? 'chargé' : 'null',
+                    canvas: window.game.canvas ? 'configuré' : 'null'
+                });
+                
+                // Test de démarrage forcé
+                console.log('🚀 Test de démarrage forcé...');
+                window.game.startGame();
+            } else {
+                console.error('❌ Aucune instance de jeu trouvée');
+            }
+        };
+    </script>
+    
+    <script src="verbe-slicer-game.js"></script>
+</body>
+</html> 

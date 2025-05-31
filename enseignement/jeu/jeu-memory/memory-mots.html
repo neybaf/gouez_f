@@ -7,12 +7,35 @@
     <link rel="stylesheet" href="../../../css/game-styles.css">
     <style>
         .memory-grid {
-            display: grid;
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
             gap: 1rem;
             padding: 2rem;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             justify-content: center;
+            min-height: 200px;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+            justify-items: center;
+            align-items: start;
+        }
+
+        /* Ajustements spécifiques selon le nombre de cartes */
+        .memory-grid[data-card-count="12"] {
+            grid-template-columns: repeat(4, 1fr) !important;
+            max-width: 800px;
+        }
+        
+        .memory-grid[data-card-count="16"] {
+            grid-template-columns: repeat(4, 1fr) !important;
+            max-width: 900px;
+        }
+        
+        .memory-grid[data-card-count="24"] {
+            grid-template-columns: repeat(6, 1fr) !important;
+            max-width: 1100px;
         }
 
         .memory-card {
@@ -24,8 +47,17 @@
             position: relative;
             perspective: 1000px;
             transition: transform 0.2s ease;
+            width: 100%;
+            max-width: 160px;
             min-width: 120px;
-            max-width: 180px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .memory-card.fade-in {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .memory-card:hover {
@@ -93,14 +125,18 @@
         }
 
         .card-language {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             opacity: 0.8;
             margin-bottom: 0.5rem;
+            font-weight: 500;
         }
 
         .card-text {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
+            line-height: 1.2;
+            word-break: break-word;
+            hyphens: auto;
         }
 
         .level-selection {
@@ -238,29 +274,58 @@
             animation: fadeIn 0.5s ease;
         }
 
+        .sublevel-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
         @media (max-width: 768px) {
             .memory-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.8rem;
                 padding: 1rem;
+                max-width: 100% !important;
+            }
+            
+            .memory-card {
+                min-width: 100px;
+                max-width: 140px;
             }
             
             .game-info {
                 flex-direction: column;
                 text-align: center;
+                gap: 0.5rem;
             }
             
             .card-text {
-                font-size: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .card-language {
+                font-size: 0.7rem;
             }
         }
 
         @media (max-width: 480px) {
             .memory-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.6rem;
+                padding: 0.8rem;
+            }
+            
+            .memory-card {
+                min-width: 80px;
+                max-width: 120px;
             }
             
             .card-text {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
+            }
+            
+            .card-language {
+                font-size: 0.65rem;
             }
         }
     </style>
@@ -282,12 +347,29 @@
                     <button class="difficulty-btn" data-level="B1">B1 - Intermédiaire</button>
                 </div>
                 
+                <!-- Sélection des sous-niveaux -->
+                <div class="sublevel-section" id="sublevel-section" style="display: none;">
+                    <h4>Choisissez le sous-niveau :</h4>
+                    <div class="selection-buttons" id="sublevel-buttons">
+                        <!-- Les boutons de sous-niveaux seront générés dynamiquement -->
+                    </div>
+                </div>
+                
                 <div class="difficulty-section">
                     <h4>Difficulté :</h4>
                     <div class="selection-buttons">
                         <button class="difficulty-btn active" data-difficulty="facile">Facile (6 paires)</button>
                         <button class="difficulty-btn" data-difficulty="moyen">Moyen (8 paires, 2 min)</button>
                         <button class="difficulty-btn" data-difficulty="difficile">Difficile (12 paires, 1.5 min)</button>
+                    </div>
+                </div>
+                
+                <!-- Bouton de démarrage direct -->
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                    <div style="text-align: center;">
+                        <button class="difficulty-btn" id="start-game-btn" style="background: #28a745; color: white; font-size: 1rem; padding: 12px 24px;" disabled>
+                            🚀 Commencer le jeu
+                        </button>
                     </div>
                 </div>
             </div>
