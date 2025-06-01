@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verbe Slicer - Version Simple</title>
-    <!-- CSS AUTONOME - Pas de dépendances externes -->
+    <!-- CSS AUTONOME - Nécessaire car le jeu était perturbé par le CSS des autres jeux -->
+    <!-- Toutes les améliorations mobiles sont intégrées directement ici pour maintenir l'autonomie -->
     <style>
         * {
             margin: 0;
@@ -17,6 +18,37 @@
             background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
             color: white;
             overflow: hidden;
+            /* Optimisations mobiles intégrées */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* AMÉLIORATIONS MOBILES INTÉGRÉES */
+        
+        /* Optimisations tactiles pour tous les éléments cliquables */
+        button, .game-btn, .difficulty-btn, .ui-btn {
+            min-height: 44px; /* Taille recommandée Apple/Google pour les éléments tactiles */
+            min-width: 44px;
+            touch-action: manipulation; /* Évite le zoom sur double-tap */
+        }
+        
+        /* Optimisations pour écrans tactiles */
+        @media (pointer: coarse) {
+            .game-btn, .difficulty-btn {
+                min-height: 48px;
+                padding: 12px 24px;
+                font-size: 1.1rem;
+            }
+            
+            .ui-btn {
+                min-height: 48px;
+                min-width: 48px;
+                font-size: 1.3rem;
+            }
         }
         
         /* Debug styles */
@@ -449,6 +481,194 @@
                 height: 6px;
             }
         }
+        
+        /* RESPONSIVE BREAKPOINTS INTÉGRÉS */
+        @media (max-width: 1024px) {
+            .game-title {
+                font-size: 3rem;
+            }
+            
+            .difficulty-buttons {
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2.5rem;
+            }
+            
+            .game-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .difficulty-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .difficulty-btn {
+                min-width: 200px;
+                padding: 15px 20px;
+            }
+            
+            .ui-top {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .score-display, .level-display, .lives-display {
+                padding: 8px 16px;
+            }
+            
+            .pause-content, .game-over-content {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .final-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .game-subtitle {
+                font-size: 1rem;
+            }
+            
+            .game-btn {
+                min-width: 180px;
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .ui-top {
+                padding: 10px;
+            }
+            
+            .score-display, .level-display, .lives-display {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .score-value, .level-value {
+                font-size: 1.4rem;
+            }
+            
+            .final-stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .progress-container {
+                width: 200px;
+                bottom: 10px;
+            }
+            
+            .progress-bar {
+                height: 6px;
+            }
+        }
+        
+        /* OPTIMISATIONS ORIENTATION PAYSAGE */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .game-header {
+                margin-bottom: 20px;
+            }
+            
+            .game-title {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+            
+            .game-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 15px;
+            }
+            
+            .difficulty-selector {
+                margin: 15px 0;
+            }
+            
+            .difficulty-buttons {
+                flex-direction: row;
+                gap: 10px;
+            }
+            
+            .difficulty-btn {
+                min-width: 100px;
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .ui-top {
+                padding: 8px 15px;
+            }
+            
+            .progress-container {
+                bottom: 5px;
+                width: 250px;
+            }
+        }
+        
+        /* OPTIMISATIONS ÉCRANS HAUTE DENSITÉ */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            body {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            
+            .game-title {
+                text-rendering: optimizeLegibility;
+            }
+        }
+        
+        /* AMÉLIORATIONS ACCESSIBILITÉ MOBILE */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .game-title {
+                animation: none;
+            }
+            
+            .game-btn.primary {
+                animation: none;
+            }
+        }
+        
+        /* OPTIMISATIONS CONTRASTE ÉLEVÉ */
+        @media (prefers-contrast: high) {
+            .score-display, .level-display, .lives-display {
+                border: 2px solid white;
+                background: rgba(0, 0, 0, 0.9);
+            }
+            
+            .game-btn {
+                border: 2px solid white;
+            }
+        }
+        
+        /* SUPPORT MODE SOMBRE NATIF */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-color: #ffffff;
+                --bg-primary: #000000;
+                --bg-secondary: #1a1a1a;
+            }
+        }
+        
+        /* Debug styles - maintenu pour le développement */
     </style>
 </head>
 <body>
@@ -963,13 +1183,41 @@
                 const currentLevel = this.getCurrentLevel();
                 const isIrregular = this.isIrregularVerb(word);
                 
+                // AMÉLIORATION : Éviter les spawns trop proches dès le départ
+                let attemptCount = 0;
+                let spawnX, spawnY;
+                const maxAttempts = 10;
+                const minDistanceFromOthers = 80; // Distance minimale avec les autres mots
+                
+                do {
+                    spawnX = Math.random() * (this.canvas.width - 200) + 100;
+                    spawnY = -50;
+                    attemptCount++;
+                    
+                    // Vérifier la distance avec les autres mots existants
+                    let tooClose = false;
+                    for (let existingWord of this.fallingWords) {
+                        const distance = Math.sqrt(
+                            Math.pow(spawnX - existingWord.x, 2) + 
+                            Math.pow(spawnY - existingWord.y, 2)
+                        );
+                        if (distance < minDistanceFromOthers) {
+                            tooClose = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!tooClose) break; // Position valide trouvée
+                    
+                } while (attemptCount < maxAttempts);
+                
                 // COULEURS UNIFORMISÉES - Plus de distinction visuelle
                 let wordColor = currentLevel.color || '#ffffff'; // Couleur uniforme basée sur le niveau
                 
                 this.fallingWords.push({
                     text: word,
-                    x: Math.random() * (this.canvas.width - 200) + 100,
-                    y: -50,
+                    x: spawnX,
+                    y: spawnY,
                     speed: this.wordSpeed + Math.random() * 0.5,
                     isIrregular: isIrregular,
                     color: wordColor, // Couleur uniforme
@@ -977,7 +1225,7 @@
                     rotationSpeed: (Math.random() - 0.5) * 0.02
                 });
                 
-                console.log(`✨ Mot spawné: "${word}" (${isIrregular ? 'irrégulier' : 'régulier'}) - Couleur uniforme: ${wordColor}`);
+                console.log(`✨ Mot spawné: "${word}" (${isIrregular ? 'irrégulier' : 'régulier'}) à (${Math.round(spawnX)}, ${Math.round(spawnY)}), tentatives: ${attemptCount} - Couleur uniforme: ${wordColor}`);
             }
             
             isIrregularVerb(word) {
@@ -991,6 +1239,9 @@
                     word.y += word.speed;
                     word.rotation += word.rotationSpeed;
                     
+                    // NOUVEAU : Système de répulsion entre les mots pour éviter les superpositions
+                    this.applyRepulsionForces(word, index);
+                    
                     if (word.y > this.canvas.height + 50) {
                         this.fallingWords.splice(index, 1);
                         if (word.isIrregular) {
@@ -998,6 +1249,51 @@
                             this.loseLife();
                             console.log('💔 Vies après:', this.lives);
                         }
+                    }
+                });
+            }
+            
+            // NOUVELLE FONCTION : Système de répulsion pour éviter les collisions
+            applyRepulsionForces(currentWord, currentIndex) {
+                const repulsionRadius = 60; // Distance minimale entre les mots
+                const repulsionStrength = 0.5; // Force de répulsion
+                
+                this.fallingWords.forEach((otherWord, otherIndex) => {
+                    if (currentIndex === otherIndex) return; // Ne pas se repousser soi-même
+                    
+                    // Calculer la distance entre les deux mots
+                    const dx = currentWord.x - otherWord.x;
+                    const dy = currentWord.y - otherWord.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    // Si les mots sont trop proches, appliquer une force de répulsion
+                    if (distance < repulsionRadius && distance > 0) {
+                        // Calculer la force de répulsion normalisée
+                        const forceX = (dx / distance) * repulsionStrength;
+                        const forceY = (dy / distance) * repulsionStrength;
+                        
+                        // Appliquer la force - les verbes irréguliers ont la priorité
+                        if (currentWord.isIrregular && !otherWord.isIrregular) {
+                            // Le verbe irrégulier repousse le verbe régulier
+                            otherWord.x -= forceX * 2;
+                            otherWord.y -= forceY * 0.5; // Moins de force verticale pour ne pas trop perturber la chute
+                        } else if (!currentWord.isIrregular && otherWord.isIrregular) {
+                            // Le verbe régulier s'écarte du verbe irrégulier
+                            currentWord.x += forceX * 2;
+                            currentWord.y += forceY * 0.5;
+                        } else {
+                            // Répulsion mutuelle normale
+                            currentWord.x += forceX;
+                            otherWord.x -= forceX;
+                            // Moins de force verticale pour maintenir la chute naturelle
+                            currentWord.y += forceY * 0.3;
+                            otherWord.y -= forceY * 0.3;
+                        }
+                        
+                        // S'assurer que les mots restent dans les limites de l'écran
+                        const margin = 50;
+                        currentWord.x = Math.max(margin, Math.min(this.canvas.width - margin, currentWord.x));
+                        otherWord.x = Math.max(margin, Math.min(this.canvas.width - margin, otherWord.x));
                     }
                 });
             }
@@ -1011,11 +1307,46 @@
                 
                 this.totalClicks++;
                 
+                // AMÉLIORATION MAJEURE : Prioriser les verbes irréguliers lors des clics
+                // Créer deux listes : verbes irréguliers et réguliers
+                const irregularWords = [];
+                const regularWords = [];
+                
                 this.fallingWords.forEach((word, index) => {
                     if (this.isPointInWord(x, y, word)) {
-                        this.handleWordClick(word, index);
+                        if (word.isIrregular) {
+                            irregularWords.push({ word, index });
+                        } else {
+                            regularWords.push({ word, index });
+                        }
                     }
                 });
+                
+                // PRIORITÉ AUX VERBES IRRÉGULIERS : si on peut cliquer sur les deux types,
+                // on privilégie toujours le verbe irrégulier
+                let targetWord = null;
+                let targetIndex = -1;
+                let hit = false;
+                
+                if (irregularWords.length > 0) {
+                    // Prendre le premier verbe irrégulier trouvé
+                    targetWord = irregularWords[0].word;
+                    targetIndex = irregularWords[0].index;
+                    hit = true;
+                    console.log('🎯 Priorité donnée au verbe irrégulier:', targetWord.text);
+                } else if (regularWords.length > 0) {
+                    // Sinon prendre le premier verbe régulier
+                    targetWord = regularWords[0].word;
+                    targetIndex = regularWords[0].index;
+                    hit = true;
+                    console.log('🎯 Clic sur verbe régulier:', targetWord.text);
+                }
+                
+                if (hit && targetWord && targetIndex >= 0) {
+                    this.handleWordClick(targetWord, targetIndex);
+                } else {
+                    console.log('❌ Clic dans le vide');
+                }
             }
             
             isPointInWord(x, y, word) {
@@ -1024,10 +1355,21 @@
                 const wordWidth = metrics.width;
                 const wordHeight = 30;
                 
-                return x >= word.x - wordWidth/2 && 
-                       x <= word.x + wordWidth/2 && 
-                       y >= word.y - wordHeight/2 && 
-                       y <= word.y + wordHeight/2;
+                // CORRECTION MAJEURE : Zones cliquables BEAUCOUP plus grandes pour mobile et desktop
+                // Augmentation massive des zones de sécurité
+                const extraWidthPadding = 80; // 40px de chaque côté (doublé)
+                const extraHeightPadding = 60; // 30px au-dessus et en-dessous (doublé)
+                const minClickableWidth = 120; // Largeur minimale augmentée
+                const minClickableHeight = 80; // Hauteur minimale augmentée
+                
+                // Calculer les dimensions finales avec padding massif
+                const finalWidth = Math.max(wordWidth + extraWidthPadding, minClickableWidth);
+                const finalHeight = Math.max(wordHeight + extraHeightPadding, minClickableHeight);
+                
+                return x >= word.x - finalWidth/2 && 
+                       x <= word.x + finalWidth/2 && 
+                       y >= word.y - finalHeight/2 && 
+                       y <= word.y + finalHeight/2;
             }
             
             handleWordClick(word, index) {
