@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Progression et Niveaux</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0c0c0c;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        .btn {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #3baea3;
+        }
+        .progress-container {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .level-info {
+            background: rgba(78, 205, 196, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4ecdc4;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+        .log {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Test - Progression et Niveaux</h1>
+        
+        <div class="test-section">
+            <h2>Contrôles de Test</h2>
+            <div class="controls">
+                <button class="btn" onclick="addPoints(1)">+1 Point</button>
+                <button class="btn" onclick="addPoints(5)">+5 Points</button>
+                <button class="btn" onclick="addPoints(10)">+10 Points</button>
+                <button class="btn" onclick="setScore(0)">Reset (0 pts)</button>
+                <button class="btn" onclick="setScore(10)">Niveau 2 (10 pts)</button>
+                <button class="btn" onclick="setScore(25)">Niveau 3 (25 pts)</button>
+                <button class="btn" onclick="setScore(45)">Niveau 4 (45 pts)</button>
+                <button class="btn" onclick="setScore(70)">Niveau 5 (70 pts)</button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>État Actuel du Jeu</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <div>Score</div>
+                    <div id="current-score" class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div>Niveau</div>
+                    <div id="current-level" class="stat-value">1</div>
+                </div>
+                <div class="stat-item">
+                    <div>Type</div>
+                    <div id="current-type" class="stat-value">infinitif</div>
+                </div>
+                <div class="stat-item">
+                    <div>Verbes</div>
+                    <div id="current-verbs" class="stat-value">0</div>
+                </div>
+            </div>
+            
+            <div class="level-info">
+                <h3 id="level-name">Niveau 1 - Infinitifs</h3>
+                <p id="level-description">Identifiez les verbes irréguliers à l'infinitif</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Progression vers le Niveau Suivant</h2>
+            <div class="progress-container">
+                <div>Progression vers le niveau suivant</div>
+                <div class="progress-bar">
+                    <div id="test-progress-fill" class="progress-fill"></div>
+                </div>
+                <div id="test-progress-text">0 / 10</div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Journal des Changements</h2>
+            <div id="log" class="log">Démarrage du test...\n</div>
+        </div>
+    </div>
+    
+    <script>
+        // Simulation simplifiée du jeu pour tester la progression
+        class TestGame {
+            constructor() {
+                this.score = 0;
+                this.level = 1;
+                this.currentVerbs = [];
+                
+                this.levels = [
+                    { name: 'Infinitifs', threshold: 0, verbType: 'infinitif', color: '#3498db' },
+                    { name: 'Participes passés', threshold: 10, verbType: 'participe_passe', color: '#9b59b6' },
+                    { name: 'Futur', threshold: 25, verbType: 'futur', color: '#e67e22' },
+                    { name: 'Imparfait', threshold: 45, verbType: 'imparfait', color: '#e74c3c' },
+                    { name: 'Subjonctif', threshold: 70, verbType: 'subjonctif', color: '#f39c12' }
+                ];
+                
+                this.verbesData = {
+                    verbesIrreguliers: {
+                        infinitif: ['être', 'avoir', 'aller', 'faire'],
+                        participe_passe: ['été', 'eu', 'allé', 'fait'],
+                        futur: ['serai', 'aurai', 'irai', 'ferai'],
+                        imparfait: ['étais', 'avais', 'allais', 'faisais'],
+                        subjonctif: ['sois', 'aies', 'ailles', 'fasses']
+                    },
+                    verbesReguliers: {
+                        infinitif: ['parler', 'aimer', 'finir', 'choisir'],
+                        participe_passe: ['parlé', 'aimé', 'fini', 'choisi'],
+                        futur: ['parlerai', 'aimerai', 'finirai', 'choisirai'],
+                        imparfait: ['parlais', 'aimais', 'finissais', 'choisissais'],
+                        subjonctif: ['parle', 'aime', 'finisse', 'choisisse']
+                    }
+                };
+                
+                this.updateDisplay();
+                this.log('Test initialisé avec la nouvelle structure granulaire');
+            }
+            
+            getCurrentLevel() {
+                for (let i = this.levels.length - 1; i >= 0; i--) {
+                    if (this.score >= this.levels[i].threshold) {
+                        return this.levels[i];
+                    }
+                }
+                return this.levels[0];
+            }
+            
+            checkLevelUp() {
+                const newLevel = this.getCurrentLevel();
+                const newLevelIndex = this.levels.indexOf(newLevel) + 1;
+                
+                if (newLevelIndex !== this.level) {
+                    const oldLevel = this.level;
+                    this.level = newLevelIndex;
+                    this.updateCurrentVerbs();
+                    this.log(`🆙 Niveau supérieur: ${oldLevel} → ${this.level} (${newLevel.name})`);
+                    this.updateDisplay();
+                }
+            }
+            
+            updateCurrentVerbs() {
+                const currentLevel = this.getCurrentLevel();
+                const irregularVerbs = this.verbesData.verbesIrreguliers[currentLevel.verbType] || [];
+                const regularWords = this.verbesData.verbesReguliers[currentLevel.verbType] || [];
+                this.currentVerbs = [...irregularVerbs, ...regularWords];
+                
+                this.log(`📚 Verbes mis à jour: ${irregularVerbs.length} irréguliers + ${regularWords.length} réguliers = ${this.currentVerbs.length} total`);
+            }
+            
+            updateProgressBar() {
+                const progressFill = document.getElementById('test-progress-fill');
+                const progressText = document.getElementById('test-progress-text');
+                
+                const currentLevel = this.getCurrentLevel();
+                const currentLevelIndex = this.levels.indexOf(currentLevel);
+                const nextLevelIndex = currentLevelIndex + 1;
+                
+                if (nextLevelIndex >= this.levels.length) {
+                    progressFill.style.width = '100%';
+                    progressText.textContent = 'Niveau maximum !';
+                    return;
+                }
+                
+                const nextLevel = this.levels[nextLevelIndex];
+                const pointsInCurrentLevel = this.score - currentLevel.threshold;
+                const pointsNeededForNext = nextLevel.threshold - currentLevel.threshold;
+                
+                const progress = Math.min(100, (pointsInCurrentLevel / pointsNeededForNext) * 100);
+                
+                progressFill.style.width = progress + '%';
+                progressText.textContent = `${pointsInCurrentLevel} / ${pointsNeededForNext}`;
+                
+                this.log(`📊 Progression: ${Math.round(progress)}% vers ${nextLevel.name}`);
+            }
+            
+            updateDisplay() {
+                const currentLevel = this.getCurrentLevel();
+                
+                document.getElementById('current-score').textContent = this.score;
+                document.getElementById('current-level').textContent = this.level;
+                document.getElementById('current-type').textContent = currentLevel.verbType;
+                document.getElementById('current-verbs').textContent = this.currentVerbs.length;
+                
+                document.getElementById('level-name').textContent = `Niveau ${this.level} - ${currentLevel.name}`;
+                document.getElementById('level-description').textContent = `Type: ${currentLevel.verbType} | Seuil: ${currentLevel.threshold} pts`;
+                document.getElementById('level-description').style.color = currentLevel.color;
+                
+                this.updateProgressBar();
+            }
+            
+            setScore(newScore) {
+                this.score = newScore;
+                this.checkLevelUp();
+                this.updateDisplay();
+                this.log(`🎯 Score défini: ${newScore}`);
+            }
+            
+            addPoints(points) {
+                this.score += points;
+                this.checkLevelUp();
+                this.updateDisplay();
+                this.log(`+${points} points → Score: ${this.score}`);
+            }
+            
+            log(message) {
+                const logElement = document.getElementById('log');
+                const timestamp = new Date().toLocaleTimeString();
+                logElement.textContent += `[${timestamp}] ${message}\n`;
+                logElement.scrollTop = logElement.scrollHeight;
+            }
+        }
+        
+        // Initialiser le test
+        const testGame = new TestGame();
+        
+        // Fonctions globales pour les boutons
+        function setScore(score) {
+            testGame.setScore(score);
+        }
+        
+        function addPoints(points) {
+            testGame.addPoints(points);
+        }
+    </script>
+</body>
+</html> 
