@@ -49,14 +49,15 @@ class VerbeSlicer {
             { name: 'Participes passés', threshold: 10, verbType: 'participe_passe', color: '#9b59b6' },
             { name: 'Futur', threshold: 25, verbType: 'futur', color: '#e67e22' },
             { name: 'Imparfait', threshold: 45, verbType: 'imparfait', color: '#e74c3c' },
-            { name: 'Subjonctif', threshold: 70, verbType: 'subjonctif', color: '#f39c12' }
+            { name: 'Subjonctif', threshold: 70, verbType: 'subjonctif', color: '#f39c12' },
+            { name: 'Conditionnel', threshold: 100, verbType: 'conditionnel', color: '#8e44ad' }
         ];
         
         // Multiplicateurs de difficulté
         this.difficultySettings = {
             facile: { speedMultiplier: 0.7, spawnMultiplier: 0.8, maxWords: 6 },
-            normal: { speedMultiplier: 1.0, spawnMultiplier: 1.0, maxWords: 8 },
-            difficile: { speedMultiplier: 1.4, spawnMultiplier: 1.3, maxWords: 10 }
+            normal: { speedMultiplier: 1.0, spawnMultiplier: 1.0, maxWords: 10 },
+            difficile: { speedMultiplier: 2, spawnMultiplier: 2, maxWords: 20 }
         };
         
         // Effets visuels
@@ -325,7 +326,7 @@ class VerbeSlicer {
         console.log('🔧 Activation des données de fallback intégrées...');
         console.log('💡 Ces données permettront au jeu de fonctionner même sans serveur');
         
-        // Données de secours plus complètes
+        // Données de secours avec nouvelle structure organisée par catégorie grammaticale
         this.verbesData = {
             verbesIrreguliers: {
                 infinitif: [
@@ -359,16 +360,38 @@ class VerbeSlicer {
                     'serves', 'dormes', 'mentes', 'croies', 'boives', 'lises', 'écrives', 'connaisses'
                 ]
             },
-            motsDivers: [
-                'parler', 'aimer', 'donner', 'porter', 'arriver', 'rester', 'entrer', 'montrer', 
-                'passer', 'regarder', 'trouver', 'rendre', 'appeler', 'demander', 'garder', 'attendre',
-                'chanter', 'danser', 'jouer', 'manger', 'travailler', 'étudier', 'marcher', 'penser',
-                'chercher', 'écouter', 'habiter', 'finir', 'choisir', 'réussir', 'grandir', 'réfléchir',
-                'parlé', 'aimé', 'donné', 'porté', 'arrivé', 'resté', 'entré', 'montré',
-                'passé', 'regardé', 'trouvé', 'rendu', 'appelé', 'demandé', 'gardé', 'attendu',
-                'chanté', 'dansé', 'joué', 'mangé', 'travaillé', 'étudié', 'marché', 'pensé',
-                'cherché', 'écouté', 'habité', 'fini', 'choisi', 'réussi', 'grandi', 'réfléchi'
-            ]
+            verbesReguliers: {
+                infinitif: [
+                    'parler', 'aimer', 'donner', 'porter', 'arriver', 'rester', 'entrer', 'montrer', 
+                    'passer', 'regarder', 'trouver', 'appeler', 'demander', 'garder', 'attendre',
+                    'chanter', 'danser', 'jouer', 'manger', 'travailler', 'étudier', 'marcher', 'penser',
+                    'chercher', 'écouter', 'habiter', 'finir', 'choisir', 'réussir', 'grandir', 'réfléchir'
+                ],
+                participe_passe: [
+                    'parlé', 'aimé', 'donné', 'porté', 'arrivé', 'resté', 'entré', 'montré',
+                    'passé', 'regardé', 'trouvé', 'appelé', 'demandé', 'gardé', 'attendu',
+                    'chanté', 'dansé', 'joué', 'mangé', 'travaillé', 'étudié', 'marché', 'pensé',
+                    'cherché', 'écouté', 'habité', 'fini', 'choisi', 'réussi', 'grandi', 'réfléchi'
+                ],
+                futur: [
+                    'parlerai', 'aimerai', 'donnerai', 'porterai', 'arriverai', 'resterai', 'entrerai', 'montrerai',
+                    'passerai', 'regarderai', 'trouverai', 'appellerai', 'demanderai', 'garderai', 'attendrai',
+                    'chanterai', 'danserai', 'jouerai', 'mangerai', 'travaillerai', 'étudierai', 'marcherai', 'penserai',
+                    'chercherai', 'écouterai', 'habiterai', 'finirai', 'choisirai', 'réussirai', 'grandirai', 'réfléchirai'
+                ],
+                imparfait: [
+                    'parlais', 'aimais', 'donnais', 'portais', 'arrivais', 'restais', 'entrais', 'montrais',
+                    'passais', 'regardais', 'trouvais', 'appelais', 'demandais', 'gardais', 'attendais',
+                    'chantais', 'dansais', 'jouais', 'mangeais', 'travaillais', 'étudiais', 'marchais', 'pensais',
+                    'cherchais', 'écoutais', 'habitais', 'finissais', 'choisissais', 'réussissais', 'grandissais', 'réfléchissais'
+                ],
+                subjonctif: [
+                    'parle', 'aime', 'donne', 'porte', 'arrive', 'reste', 'entre', 'montre',
+                    'passe', 'regarde', 'trouve', 'appelle', 'demande', 'garde', 'attende',
+                    'chante', 'danse', 'joue', 'mange', 'travaille', 'étudie', 'marche', 'pense',
+                    'cherche', 'écoute', 'habite', 'finisse', 'choisisse', 'réussisse', 'grandisse', 'réfléchisse'
+                ]
+            }
         };
         
         this.isDataLoaded = true;
@@ -378,9 +401,9 @@ class VerbeSlicer {
         this.initializeCurrentVerbs();
         
         const totalIrregular = Object.values(this.verbesData.verbesIrreguliers).flat().length;
-        const totalRegular = this.verbesData.motsDivers.length;
-        console.log('📊 Fallback - Verbes irréguliers: ' + totalIrregular + ', mots réguliers: ' + totalRegular);
-        console.log('🎮 Le jeu est maintenant prêt à fonctionner avec les données de fallback');
+        const totalRegular = Object.values(this.verbesData.verbesReguliers).flat().length;
+        console.log('📊 Fallback - Verbes irréguliers: ' + totalIrregular + ', verbes réguliers: ' + totalRegular);
+        console.log('🎮 Le jeu est maintenant prêt à fonctionner avec la nouvelle structure organisée');
     }
     
     setupCanvas() {
@@ -513,7 +536,7 @@ class VerbeSlicer {
             return;
         }
         
-        if (!this.verbesData.verbesIrreguliers || !this.verbesData.motsDivers) {
+        if (!this.verbesData.verbesIrreguliers || !this.verbesData.verbesReguliers) {
             console.error('❌ Structure de données incomplète:', this.verbesData);
             return;
         }
@@ -525,15 +548,16 @@ class VerbeSlicer {
         const irregularVerbs = this.verbesData.verbesIrreguliers[currentLevel.verbType] || [];
         console.log('📚 Verbes irréguliers trouvés pour ' + currentLevel.verbType + ':', irregularVerbs.length);
         
-        // Récupérer les mots réguliers
-        const regularWords = this.verbesData.motsDivers || [];
-        console.log('📝 Mots réguliers trouvés:', regularWords.length);
+        // AMÉLIORATION : Récupérer les verbes réguliers de la même catégorie grammaticale
+        const regularWords = this.verbesData.verbesReguliers[currentLevel.verbType] || [];
+        console.log('📝 Verbes réguliers trouvés pour ' + currentLevel.verbType + ':', regularWords.length);
         
-        // Mélanger les verbes irréguliers avec des mots réguliers
+        // Mélanger les verbes irréguliers avec des verbes réguliers de la même catégorie
         this.currentVerbs = [...irregularVerbs, ...regularWords];
         
         console.log('🎲 Verbes initialisés pour niveau ' + this.level + ' (' + currentLevel.name + '):', 
                    irregularVerbs.length + ' irréguliers + ' + regularWords.length + ' réguliers = ' + this.currentVerbs.length + ' total');
+        console.log('🎯 COHÉRENCE GRAMMATICALE: Tous les mots sont de type "' + currentLevel.verbType + '"');
         
         // Vérification finale
         if (this.currentVerbs.length === 0) {
@@ -571,7 +595,7 @@ class VerbeSlicer {
     updateCurrentVerbs() {
         const currentLevel = this.getCurrentLevel();
         const irregularVerbs = this.verbesData.verbesIrreguliers[currentLevel.verbType] || [];
-        const regularWords = this.verbesData.motsDivers || [];
+        const regularWords = this.verbesData.verbesReguliers[currentLevel.verbType] || [];
         
         // Mélanger les verbes irréguliers avec des mots réguliers
         this.currentVerbs = [...irregularVerbs, ...regularWords];
@@ -642,12 +666,18 @@ class VerbeSlicer {
     
     checkLevelUp() {
         const newLevel = this.getCurrentLevel();
-        if (newLevel !== this.levels[this.level - 1]) {
-            this.level = this.levels.indexOf(newLevel) + 1;
+        const newLevelIndex = this.levels.indexOf(newLevel) + 1;
+        
+        if (newLevelIndex !== this.level) {
+            const oldLevel = this.level;
+            this.level = newLevelIndex;
             this.updateCurrentVerbs(); // Mettre à jour les verbes pour le nouveau niveau
             this.showLevelUpEffect();
             this.playSound('levelUp');
-            console.log('🆙 Niveau supérieur atteint:', this.level, newLevel.name);
+            console.log('🆙 Niveau supérieur atteint:', oldLevel, '→', this.level, '(' + newLevel.name + ')');
+            
+            // Forcer la mise à jour de l'interface
+            this.updateUI();
         }
     }
     
@@ -1094,13 +1124,35 @@ class VerbeSlicer {
         }
         
         const currentLevel = this.getCurrentLevel();
-        const nextLevel = this.levels[this.level] || this.levels[this.levels.length - 1];
+        const currentLevelIndex = this.levels.indexOf(currentLevel);
+        const nextLevelIndex = currentLevelIndex + 1;
         
-        const progress = Math.min(100, ((this.score - currentLevel.threshold) / (nextLevel.threshold - currentLevel.threshold)) * 100);
+        if (nextLevelIndex >= this.levels.length) {
+            // Niveau maximum atteint
+            progressFill.style.width = '100%';
+            progressText.textContent = 'Niveau maximum !';
+            return;
+        }
+        
+        const nextLevel = this.levels[nextLevelIndex];
+        const pointsInCurrentLevel = this.score - currentLevel.threshold;
+        const pointsNeededForNext = nextLevel.threshold - currentLevel.threshold;
+        
+        const progress = Math.min(100, (pointsInCurrentLevel / pointsNeededForNext) * 100);
         
         progressFill.style.width = progress + '%';
-        progressText.textContent = 
-            this.score - currentLevel.threshold + ' / ' + (nextLevel.threshold - currentLevel.threshold);
+        progressText.textContent = pointsInCurrentLevel + ' / ' + pointsNeededForNext;
+        
+        console.log('📊 Progression:', {
+            score: this.score,
+            currentLevel: currentLevel.name,
+            currentThreshold: currentLevel.threshold,
+            nextLevel: nextLevel.name,
+            nextThreshold: nextLevel.threshold,
+            pointsInLevel: pointsInCurrentLevel,
+            pointsNeeded: pointsNeededForNext,
+            progress: Math.round(progress) + '%'
+        });
     }
     
     updateLivesDisplay() {
@@ -1120,18 +1172,54 @@ class VerbeSlicer {
     }
     
     showLevelUpEffect() {
+        const currentLevel = this.getCurrentLevel();
         const effect = document.createElement('div');
         effect.className = 'level-up-effect';
         effect.innerHTML = `
-            <div>🎉 NIVEAU ${this.level} 🎉</div>
-            <div style="font-size: 1.2rem; margin-top: 0.5rem;">${this.getCurrentLevel().name}</div>
+            <div style="font-size: 2.5rem; font-weight: bold;">🎉 NIVEAU ${this.level} 🎉</div>
+            <div style="font-size: 1.4rem; margin: 0.5rem 0; color: ${currentLevel.color};">${currentLevel.name}</div>
+            <div style="font-size: 1rem; opacity: 0.9;">Score: ${this.score} points</div>
         `;
+        
+        effect.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(26,26,26,0.9));
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 10000;
+            border: 3px solid ${currentLevel.color};
+            box-shadow: 0 0 30px ${currentLevel.color}50;
+            animation: levelUpAnimation 2s ease-out;
+        `;
+        
+        // Ajouter l'animation CSS
+        if (!document.getElementById('levelUpStyles')) {
+            const style = document.createElement('style');
+            style.id = 'levelUpStyles';
+            style.textContent = `
+                @keyframes levelUpAnimation {
+                    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+                    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+                    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
         
         document.body.appendChild(effect);
         
         setTimeout(() => {
-            document.body.removeChild(effect);
+            if (document.body.contains(effect)) {
+                document.body.removeChild(effect);
+            }
         }, 2000);
+        
+        console.log('🎆 Effet de niveau affiché:', this.level, currentLevel.name);
     }
     
     togglePause() {
@@ -1167,16 +1255,21 @@ class VerbeSlicer {
         
         if (pauseProgressEl && pauseProgressTextEl) {
             const currentLevel = this.getCurrentLevel();
-            const nextLevelIndex = this.level; // Index du prochain niveau
-            const nextLevel = this.levels[nextLevelIndex] || this.levels[this.levels.length - 1];
+            const currentLevelIndex = this.levels.indexOf(currentLevel);
+            const nextLevelIndex = currentLevelIndex + 1;
             
-            if (nextLevelIndex < this.levels.length) {
-                const progress = Math.min(100, ((this.score - currentLevel.threshold) / (nextLevel.threshold - currentLevel.threshold)) * 100);
-                pauseProgressEl.textContent = Math.round(progress) + '%';
-                pauseProgressTextEl.textContent = (this.score - currentLevel.threshold) + ' / ' + (nextLevel.threshold - currentLevel.threshold);
-            } else {
+            if (nextLevelIndex >= this.levels.length) {
+                // Niveau maximum atteint
                 pauseProgressEl.textContent = '100%';
                 pauseProgressTextEl.textContent = 'Niveau maximum atteint !';
+            } else {
+                const nextLevel = this.levels[nextLevelIndex];
+                const pointsInCurrentLevel = this.score - currentLevel.threshold;
+                const pointsNeededForNext = nextLevel.threshold - currentLevel.threshold;
+                const progress = Math.min(100, (pointsInCurrentLevel / pointsNeededForNext) * 100);
+                
+                pauseProgressEl.textContent = Math.round(progress) + '%';
+                pauseProgressTextEl.textContent = pointsInCurrentLevel + ' / ' + pointsNeededForNext;
             }
         }
         
@@ -1220,7 +1313,7 @@ class VerbeSlicer {
         
         // Titre selon la performance
         const title = this.score >= 100 ? '🏆 Maître des verbes !' : 
-                     this.score >= 50 ? '🎯 Excellent travail !' : 
+                     this.score >= 60 ? '🎯 Excellent travail !' : 
                      '💪 Continue tes efforts !';
         document.getElementById('game-over-title').textContent = title;
         
@@ -1247,7 +1340,7 @@ class VerbeSlicer {
     }
     
     shareScore() {
-        const text = 'J'ai obtenu ' + this.score + ' points au Verbe Slicer ! Niveau ' + this.level + ' atteint avec ' + Math.round((this.correctClicks / this.totalClicks) * 100) + '% de précision. 🎯⚔️';
+        const text = 'J\'ai obtenu ' + this.score + ' points au Verbe Slicer ! Niveau ' + this.level + ' atteint avec ' + Math.round((this.correctClicks / this.totalClicks) * 100) + '% de précision. 🎯⚔️';
         
         if (navigator.share) {
             navigator.share({

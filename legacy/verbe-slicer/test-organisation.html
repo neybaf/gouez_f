@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Organisation Granulaire des Verbes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4ecdc4;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section h2 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+        
+        .section h3 {
+            color: #f39c12;
+            margin: 15px 0 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        .old-structure {
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+        
+        .new-structure {
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+        
+        .level-demo {
+            background: rgba(78, 205, 196, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .level-demo h2 {
+            color: #4ecdc4;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .verb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .verb-category {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .verb-category h4 {
+            color: #9b59b6;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .verb-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .verb-list li {
+            padding: 3px 0;
+            font-size: 0.9rem;
+        }
+        
+        .irregular {
+            color: #e67e22;
+            font-weight: bold;
+        }
+        
+        .regular {
+            color: #95a5a6;
+        }
+        
+        .benefits {
+            background: rgba(46, 204, 113, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(46, 204, 113, 0.3);
+        }
+        
+        .benefits h2 {
+            color: #2ecc71;
+            text-align: center;
+        }
+        
+        .benefits ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .benefits li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .benefits li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .demo-output {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            border: 1px solid #333;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Organisation Granulaire des Verbes Réguliers</h1>
+        
+        <div class="comparison">
+            <div class="section old-structure">
+                <h2>❌ Ancienne Structure (Problématique)</h2>
+                <h3>Structure JSON :</h3>
+                <pre>{
+  "verbesIrreguliers": {
+    "infinitif": [...],
+    "participe_passe": [...],
+    ...
+  },
+  "motsDivers": [
+    "parler", "aimé", "parlé", 
+    "chanterai", "finissais",
+    ...  // MÉLANGE DE TOUS LES TEMPS !
+  ]
+}</pre>
+                
+                <h3>Problèmes :</h3>
+                <ul>
+                    <li>• Mélange infinitifs et participes passés</li>
+                    <li>• Pas de cohérence grammaticale par niveau</li>
+                    <li>• Confusion pour l'apprenant</li>
+                    <li>• Difficile à maintenir</li>
+                </ul>
+            </div>
+            
+            <div class="section new-structure">
+                <h2>✅ Nouvelle Structure (Organisée)</h2>
+                <h3>Structure JSON :</h3>
+                <pre>{
+  "verbesIrreguliers": {
+    "infinitif": [...],
+    "participe_passe": [...],
+    ...
+  },
+  "verbesReguliers": {
+    "infinitif": ["parler", "aimer", ...],
+    "participe_passe": ["parlé", "aimé", ...],
+    "futur": ["parlerai", "aimerai", ...],
+    "imparfait": ["parlais", "aimais", ...],
+    "subjonctif": ["parle", "aime", ...]
+  }
+}</pre>
+                
+                <h3>Avantages :</h3>
+                <ul>
+                    <li>• Cohérence grammaticale parfaite</li>
+                    <li>• Un seul temps par niveau</li>
+                    <li>• Progression pédagogique logique</li>
+                    <li>• Structure symétrique avec les irréguliers</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="level-demo">
+            <h2>🎮 Démonstration par Niveau</h2>
+            
+            <div class="verb-grid">
+                <div class="verb-category">
+                    <h4>Niveau 1 - Infinitifs (0-9 pts)</h4>
+                    <ul class="verb-list">
+                        <li class="irregular">être, avoir, aller...</li>
+                        <li class="regular">parler, aimer, finir...</li>
+                    </ul>
+                    <p style="font-size: 0.8rem; color: #95a5a6;">
+                        ✅ Cohérent : Que des infinitifs
+                    </p>
+                </div>
+                
+                <div class="verb-category">
+                    <h4>Niveau 2 - Participes passés (10-24 pts)</h4>
+                    <ul class="verb-list">
+                        <li class="irregular">été, eu, fait...</li>
+                        <li class="regular">parlé, aimé, fini...</li>
+                    </ul>
+                    <p style="font-size: 0.8rem; color: #95a5a6;">
+                        ✅ Cohérent : Que des participes passés
+                    </p>
+                </div>
+                
+                <div class="verb-category">
+                    <h4>Niveau 3 - Futur (25-44 pts)</h4>
+                    <ul class="verb-list">
+                        <li class="irregular">serai, aurai, irai...</li>
+                        <li class="regular">parlerai, aimerai, finirai...</li>
+                    </ul>
+                    <p style="font-size: 0.8rem; color: #95a5a6;">
+                        ✅ Cohérent : Que du futur
+                    </p>
+                </div>
+                
+                <div class="verb-category">
+                    <h4>Niveau 4 - Imparfait (45-69 pts)</h4>
+                    <ul class="verb-list">
+                        <li class="irregular">étais, avais, allais...</li>
+                        <li class="regular">parlais, aimais, finissais...</li>
+                    </ul>
+                    <p style="font-size: 0.8rem; color: #95a5a6;">
+                        ✅ Cohérent : Que de l'imparfait
+                    </p>
+                </div>
+                
+                <div class="verb-category">
+                    <h4>Niveau 5 - Subjonctif (70+ pts)</h4>
+                    <ul class="verb-list">
+                        <li class="irregular">sois, aies, ailles...</li>
+                        <li class="regular">parle, aime, finisse...</li>
+                    </ul>
+                    <p style="font-size: 0.8rem; color: #95a5a6;">
+                        ✅ Cohérent : Que du subjonctif
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="benefits">
+            <h2>🚀 Bénéfices Pédagogiques</h2>
+            <ul>
+                <li><strong>Cohérence grammaticale :</strong> Chaque niveau se concentre sur un seul temps/mode</li>
+                <li><strong>Progression logique :</strong> De l'infinitif (simple) au subjonctif (complexe)</li>
+                <li><strong>Réduction cognitive :</strong> L'apprenant ne mélange plus les temps</li>
+                <li><strong>Mémorisation facilitée :</strong> Patterns grammaticaux plus clairs</li>
+                <li><strong>Feedback précis :</strong> Erreurs liées au temps spécifique étudié</li>
+                <li><strong>Extensibilité :</strong> Facile d'ajouter d'autres temps (conditionnel, etc.)</li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" onclick="testOldStructure()">Tester Ancienne Structure</button>
+            <button class="btn" onclick="testNewStructure()">Tester Nouvelle Structure</button>
+        </div>
+        
+        <div id="demo-output" class="demo-output" style="display: none;"></div>
+    </div>
+    
+    <script>
+        function testOldStructure() {
+            const oldData = {
+                verbesIrreguliers: {
+                    infinitif: ["être", "avoir", "aller"],
+                    participe_passe: ["été", "eu", "allé"]
+                },
+                motsDivers: [
+                    "parler", "aimer",        // infinitifs
+                    "parlé", "aimé",         // participes passés
+                    "parlerai", "aimerai",   // futur
+                    "parlais", "aimais"      // imparfait
+                ]
+            };
+            
+            // Simulation niveau 1 (infinitifs)
+            const irregularVerbs = oldData.verbesIrreguliers.infinitif;
+            const regularWords = oldData.motsDivers; // PROBLÈME : Tous les temps mélangés !
+            
+            const output = `
+ANCIENNE STRUCTURE - Test Niveau 1 (Infinitifs):
+
+🎯 Verbes irréguliers ciblés: ${irregularVerbs.join(', ')}
+❌ Verbes réguliers (MÉLANGÉS): ${regularWords.join(', ')}
+
+PROBLÈME DÉTECTÉ:
+- L'apprenant voit "parlé" (participe passé) quand il étudie les infinitifs
+- Confusion entre "parler" (correct) et "parlé" (hors sujet)
+- Mélange des temps grammaticaux sur un même niveau
+- Difficulté de compréhension et d'apprentissage
+
+🚨 INCOHÉRENCE PÉDAGOGIQUE !`;
+            
+            showOutput(output);
+        }
+        
+        function testNewStructure() {
+            const newData = {
+                verbesIrreguliers: {
+                    infinitif: ["être", "avoir", "aller"],
+                    participe_passe: ["été", "eu", "allé"]
+                },
+                verbesReguliers: {
+                    infinitif: ["parler", "aimer", "chanter"],
+                    participe_passe: ["parlé", "aimé", "chanté"],
+                    futur: ["parlerai", "aimerai", "chanterai"],
+                    imparfait: ["parlais", "aimais", "chantais"]
+                }
+            };
+            
+            // Simulation niveau 1 (infinitifs)
+            const irregularVerbs = newData.verbesIrreguliers.infinitif;
+            const regularWords = newData.verbesReguliers.infinitif; // ✅ Même catégorie !
+            
+            const output = `
+NOUVELLE STRUCTURE - Test Niveau 1 (Infinitifs):
+
+🎯 Verbes irréguliers ciblés: ${irregularVerbs.join(', ')}
+✅ Verbes réguliers (COHÉRENTS): ${regularWords.join(', ')}
+
+AVANTAGES CONFIRMÉS:
+- Tous les mots sont des infinitifs
+- Cohérence grammaticale parfaite
+- L'apprenant se concentre sur UN SEUL temps
+- Progression pédagogique logique
+
+✅ COHÉRENCE PÉDAGOGIQUE PARFAITE !
+
+Simulation autres niveaux:
+- Niveau 2: ${newData.verbesIrreguliers.participe_passe.join(', ')} vs ${newData.verbesReguliers.participe_passe.join(', ')}
+- Niveau 3: [irréguliers futur] vs ${newData.verbesReguliers.futur.join(', ')}
+- Niveau 4: [irréguliers imparfait] vs ${newData.verbesReguliers.imparfait.join(', ')}`;
+            
+            showOutput(output);
+        }
+        
+        function showOutput(text) {
+            const output = document.getElementById('demo-output');
+            output.textContent = text;
+            output.style.display = 'block';
+            output.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html> 

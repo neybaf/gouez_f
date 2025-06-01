@@ -367,6 +367,88 @@
                 padding: 20px;
             }
         }
+        
+        /* BARRE DE PROGRESSION - CSS MANQUANT */
+        .progress-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            text-align: center;
+            z-index: 1000;
+        }
+        
+        .progress-label {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progressShine 2s infinite;
+        }
+        
+        @keyframes progressShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .progress-text {
+            color: #4ecdc4;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Responsive pour la barre de progression */
+        @media (max-width: 768px) {
+            .progress-container {
+                width: 250px;
+                bottom: 15px;
+            }
+            
+            .progress-label, .progress-text {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .progress-container {
+                width: 200px;
+                bottom: 10px;
+            }
+            
+            .progress-bar {
+                height: 6px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -595,6 +677,12 @@
                             'veuilles', 'viennes', 'prennes', 'mettes', 'doives', 'partes', 'tiennes',
                             'sortes', 'sentes', 'vives', 'meures', 'ouvres', 'suives', 'coures',
                             'serves', 'dormes', 'mentes', 'croies', 'boives', 'lises', 'écrives', 'connaisses'
+                        ],
+                        conditionnel: [
+                            'serais', 'aurais', 'irais', 'ferais', 'dirais', 'pourrais', 'verrais', 'saurais', 
+                            'voudrais', 'viendrais', 'prendrais', 'mettrais', 'devrais', 'partirais', 'tiendrais',
+                            'sortirais', 'sentirais', 'vivrais', 'mourrais', 'ouvrirais', 'suivrais', 'courrais',
+                            'servirais', 'dormirais', 'mentirais', 'croirais', 'boirais', 'lirais', 'écrirais', 'connaîtrais'
                         ]
                     },
                     motsDivers: [
@@ -607,7 +695,12 @@
                         'parlé', 'aimé', 'donné', 'porté', 'arrivé', 'resté', 'entré', 'montré',
                         'passé', 'regardé', 'trouvé', 'appelé', 'demandé', 'gardé', 'attendu',
                         'chanté', 'dansé', 'joué', 'mangé', 'travaillé', 'étudié', 'marché',
-                        'cherché', 'écouté', 'habité', 'fini', 'choisi', 'réussi', 'grandi'
+                        'cherché', 'écouté', 'habité', 'fini', 'choisi', 'réussi', 'grandi',
+                        // Conditionnels réguliers
+                        'parlerais', 'aimerais', 'donnerais', 'porterais', 'arriverais', 'resterais', 'entrerais', 'montrerais',
+                        'passerais', 'regarderais', 'trouverais', 'appellerais', 'demanderais', 'garderais', 'attendrais',
+                        'chanterais', 'danserais', 'jouerais', 'mangerais', 'travaillerais', 'étudierais', 'marcherais',
+                        'chercherais', 'écouterais', 'habiterais', 'finirais', 'choisirais', 'réussirais', 'grandirais'
                     ]
                 };
                 console.log('📊 Données fallback enrichies chargées - Mode autonome confirmé');
@@ -647,13 +740,14 @@
                     { name: 'Participes passés', threshold: 10, verbType: 'participe_passe', color: '#9b59b6' },
                     { name: 'Futur', threshold: 25, verbType: 'futur', color: '#e67e22' },
                     { name: 'Imparfait', threshold: 45, verbType: 'imparfait', color: '#e74c3c' },
-                    { name: 'Subjonctif', threshold: 70, verbType: 'subjonctif', color: '#f39c12' }
+                    { name: 'Subjonctif', threshold: 70, verbType: 'subjonctif', color: '#f39c12' },
+                    { name: 'Conditionnel', threshold: 100, verbType: 'conditionnel', color: '#8e44ad' }
                 ];
                 
                 this.difficultySettings = {
-                    facile: { speedMultiplier: 0.7, spawnMultiplier: 0.8, maxWords: 6 },
-                    normal: { speedMultiplier: 1.0, spawnMultiplier: 1.0, maxWords: 8 },
-                    difficile: { speedMultiplier: 1.4, spawnMultiplier: 1.3, maxWords: 10 }
+                    facile: { speedMultiplier: 0.8, spawnMultiplier: 0.8, maxWords: 5 },
+                    normal: { speedMultiplier: 1.0, spawnMultiplier: 1.0, maxWords: 10 },
+                    difficile: { speedMultiplier: 2, spawnMultiplier: 2, maxWords: 20 }
                 };
                 
                 // Effets visuels
@@ -959,6 +1053,9 @@
                     // Un seul texte flottant
                     this.addFloatingText(word.x, word.y, mainText, 'success');
                     console.log('✅ Verbe irrégulier tranché:', word.text, 'Score:', this.score);
+                    
+                    // Vérifier changement de niveau
+                    this.checkLevelUp();
                 } else {
                     // Mauvais clic sur verbe régulier
                     this.currentStreak = 0;
@@ -968,6 +1065,74 @@
                 }
                 
                 this.updateUI();
+            }
+            
+            checkLevelUp() {
+                const previousLevel = this.level;
+                const currentLevel = this.getCurrentLevel();
+                const newLevel = this.levels.indexOf(currentLevel) + 1;
+                
+                if (newLevel > this.level) {
+                    this.level = newLevel;
+                    this.initializeCurrentVerbs(); // Recharger les verbes pour le nouveau niveau
+                    
+                    console.log('🔥 NIVEAU UP !', {
+                        previousLevel,
+                        newLevel: this.level,
+                        currentLevelName: currentLevel.name,
+                        score: this.score
+                    });
+                    
+                    // Affichage visuel du niveau up
+                    this.showLevelUpEffect();
+                }
+            }
+            
+            showLevelUpEffect() {
+                const currentLevel = this.getCurrentLevel();
+                
+                // Créer l'effet de niveau up
+                const effectElement = document.createElement('div');
+                effectElement.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: linear-gradient(135deg, ${currentLevel.color}, #ffd700);
+                        color: white;
+                        padding: 30px 50px;
+                        border-radius: 20px;
+                        font-size: 2rem;
+                        font-weight: bold;
+                        text-align: center;
+                        z-index: 10000;
+                        animation: levelUpPulse 2s ease-out;
+                        box-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
+                        border: 3px solid #ffd700;
+                    ">
+                        🎉 NIVEAU ${this.level} 🎉<br>
+                        <span style="font-size: 1.2rem; color: #fff;">${currentLevel.name}</span>
+                    </div>
+                `;
+                
+                // Ajouter l'animation CSS temporairement
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes levelUpPulse {
+                        0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+                        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+                        100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+                document.body.appendChild(effectElement);
+                
+                // Supprimer l'effet après l'animation
+                setTimeout(() => {
+                    document.body.removeChild(effectElement);
+                    document.head.removeChild(style);
+                }, 2000);
             }
             
             loseLife() {
@@ -1063,6 +1228,7 @@
                 if (levelNameEl) levelNameEl.textContent = this.getCurrentLevel().name;
                 
                 this.updateLivesDisplay();
+                this.updateProgressBar();
             }
             
             updateLivesDisplay() {
@@ -1077,14 +1243,92 @@
                 });
             }
             
+            updateProgressBar() {
+                const currentLevel = this.getCurrentLevel();
+                const currentLevelIndex = this.levels.indexOf(currentLevel);
+                const nextLevel = this.levels[currentLevelIndex + 1];
+                
+                if (nextLevel) {
+                    const pointsInCurrentLevel = this.score - currentLevel.threshold;
+                    const pointsNeededForNext = nextLevel.threshold - currentLevel.threshold;
+                    const progressPercentage = Math.min((pointsInCurrentLevel / pointsNeededForNext) * 100, 100);
+                    
+                    const progressFill = document.getElementById('progress-fill');
+                    const progressText = document.getElementById('progress-text');
+                    
+                    if (progressFill) {
+                        progressFill.style.width = progressPercentage + '%';
+                    }
+                    
+                    if (progressText) {
+                        progressText.textContent = `${pointsInCurrentLevel} / ${pointsNeededForNext}`;
+                    }
+                    
+                    console.log('🔄 Progression mise à jour:', {
+                        currentLevel: currentLevel.name,
+                        score: this.score,
+                        pointsInCurrentLevel,
+                        pointsNeededForNext,
+                        percentage: progressPercentage.toFixed(1) + '%'
+                    });
+                } else {
+                    // Niveau maximum atteint
+                    const progressFill = document.getElementById('progress-fill');
+                    const progressText = document.getElementById('progress-text');
+                    
+                    if (progressFill) {
+                        progressFill.style.width = '100%';
+                    }
+                    
+                    if (progressText) {
+                        progressText.textContent = 'Niveau MAX';
+                    }
+                    
+                    console.log('🏆 Niveau maximum atteint !');
+                }
+            }
+            
             togglePause() {
                 if (this.gameState === 'playing') {
                     this.gameState = 'paused';
+                    this.updatePauseStats();
                     this.showScreen('pause-screen');
                 } else if (this.gameState === 'paused') {
                     this.gameState = 'playing';
                     this.showScreen('game-screen');
                     this.gameLoop();
+                }
+            }
+            
+            updatePauseStats() {
+                const accuracy = this.totalClicks > 0 ? Math.round((this.correctClicks / this.totalClicks) * 100) : 100;
+                
+                // Mise à jour des stats de pause
+                const pauseScore = document.getElementById('pause-score');
+                const pauseLevel = document.getElementById('pause-level');
+                const pauseAccuracy = document.getElementById('pause-accuracy');
+                const pauseProgress = document.getElementById('pause-progress');
+                const pauseProgressText = document.getElementById('pause-progress-text');
+                
+                if (pauseScore) pauseScore.textContent = this.score;
+                if (pauseLevel) pauseLevel.textContent = this.level;
+                if (pauseAccuracy) pauseAccuracy.textContent = accuracy + '%';
+                
+                // Calcul de la progression
+                const currentLevel = this.getCurrentLevel();
+                const currentLevelIndex = this.levels.indexOf(currentLevel);
+                const nextLevel = this.levels[currentLevelIndex + 1];
+                
+                if (nextLevel) {
+                    const pointsInCurrentLevel = this.score - currentLevel.threshold;
+                    const pointsNeededForNext = nextLevel.threshold - currentLevel.threshold;
+                    const progressPercentage = Math.min((pointsInCurrentLevel / pointsNeededForNext) * 100, 100);
+                    
+                    if (pauseProgress) pauseProgress.textContent = Math.round(progressPercentage) + '%';
+                    if (pauseProgressText) pauseProgressText.textContent = `${pointsInCurrentLevel} / ${pointsNeededForNext}`;
+                } else {
+                    if (pauseProgress) pauseProgress.textContent = '100%';
+                    if (pauseProgressText) pauseProgressText.textContent = 'Niveau MAX';
                 }
             }
             
