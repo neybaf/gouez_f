@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Responsiveness - Blog Fabien Gouez</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .screen-info {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .device-tests {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .device-frame {
+            border: 3px solid #34495e;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .device-label {
+            background: #34495e;
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .device-content {
+            height: 400px;
+            overflow: auto;
+        }
+        
+        .device-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Simulations d'écrans */
+        .mobile-frame {
+            width: 375px;
+            margin: 0 auto;
+        }
+        
+        .tablet-frame {
+            width: 768px;
+            margin: 0 auto;
+        }
+        
+        .desktop-frame {
+            width: 100%;
+        }
+        
+        .test-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .test-link {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+        
+        .test-link:hover {
+            background: #2980b9;
+        }
+        
+        .responsive-check {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .responsive-check h3 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        
+        .check-item {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .check-icon {
+            color: #27ae60;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        /* Media queries pour cette page de test */
+        @media (max-width: 768px) {
+            .device-tests {
+                grid-template-columns: 1fr;
+            }
+            
+            .mobile-frame,
+            .tablet-frame {
+                width: 100%;
+            }
+            
+            .test-container {
+                padding: 10px;
+                margin: 10px;
+            }
+            
+            .device-content {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .test-links {
+                grid-template-columns: 1fr;
+            }
+            
+            .device-content {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔍 Test de Responsiveness - Blog Fabien Gouez</h1>
+        
+        <div class="screen-info">
+            <p><strong>Écran actuel:</strong> <span id="screen-size"></span></p>
+            <p><strong>Largeur disponible:</strong> <span id="available-width"></span>px</p>
+        </div>
+        
+        <div class="responsive-check">
+            <h3>✅ Vérifications Responsive du Blog</h3>
+            <div class="check-item">
+                <span class="check-icon">✓</span>
+                <span><strong>Balise viewport:</strong> Présente dans index.html et verbe-slicer</span>
+            </div>
+            <div class="check-item">
+                <span class="check-icon">✓</span>
+                <span><strong>CSS responsive:</strong> Media queries pour 768px et 480px</span>
+            </div>
+            <div class="check-item">
+                <span class="check-icon">✓</span>
+                <span><strong>Grilles adaptatives:</strong> CSS Grid avec auto-fit</span>
+            </div>
+            <div class="check-item">
+                <span class="check-icon">✓</span>
+                <span><strong>Jeu mobile:</strong> Touch events et zones tactiles optimisées</span>
+            </div>
+        </div>
+        
+        <h2>🔗 Pages à tester</h2>
+        <div class="test-links">
+            <a href="index.html" class="test-link" target="_blank">
+                📱 Page d'accueil
+            </a>
+            <a href="enseignement/jeu/verbe-slicer/index.html" class="test-link" target="_blank">
+                🎮 Jeu Verbe Slicer
+            </a>
+            <a href="about.html" class="test-link" target="_blank">
+                👤 Page À propos
+            </a>
+            <a href="enseignement/jeu/index_jeu.html" class="test-link" target="_blank">
+                🎯 Index des jeux
+            </a>
+        </div>
+        
+        <h2>🛠️ Recommandations d'amélioration mobile</h2>
+        <div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 5px; padding: 15px; margin: 20px 0;">
+            <h3 style="color: #856404; margin-bottom: 10px;">Améliorations possibles :</h3>
+            <ul style="margin-left: 20px; color: #856404;">
+                <li><strong>Menu hamburger :</strong> Ajouter un menu mobile déroulant</li>
+                <li><strong>Tailles de police :</strong> Augmenter légèrement sur mobile</li>
+                <li><strong>Espacement tactile :</strong> Boutons plus grands (44px minimum)</li>
+                <li><strong>Images adaptatives :</strong> Optimisation pour les écrans Retina</li>
+                <li><strong>Performance :</strong> Lazy loading des images</li>
+            </ul>
+        </div>
+        
+        <h2>📱 Test d'aperçu multi-appareils</h2>
+        <div class="device-tests">
+            <div class="device-frame mobile-frame">
+                <div class="device-label">📱 Mobile (375px)</div>
+                <div class="device-content">
+                    <iframe src="index.html"></iframe>
+                </div>
+            </div>
+            
+            <div class="device-frame tablet-frame">
+                <div class="device-label">📱 Tablette (768px)</div>
+                <div class="device-content">
+                    <iframe src="index.html"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateScreenInfo() {
+            const screenSize = `${window.innerWidth} x ${window.innerHeight}`;
+            const availableWidth = window.innerWidth;
+            
+            document.getElementById('screen-size').textContent = screenSize;
+            document.getElementById('available-width').textContent = availableWidth;
+            
+            // Détection du type d'appareil
+            let deviceType = 'Desktop';
+            if (availableWidth <= 480) {
+                deviceType = 'Mobile (Petit)';
+            } else if (availableWidth <= 768) {
+                deviceType = 'Mobile/Tablette';
+            } else if (availableWidth <= 1024) {
+                deviceType = 'Tablette/Laptop';
+            }
+            
+            document.querySelector('.screen-info p').innerHTML = 
+                `<strong>Type d'appareil détecté:</strong> ${deviceType} | <strong>Écran:</strong> ${screenSize}`;
+        }
+        
+        // Mise à jour au chargement et redimensionnement
+        updateScreenInfo();
+        window.addEventListener('resize', updateScreenInfo);
+        
+        // Test de detection des fonctionnalités mobiles
+        if ('ontouchstart' in window) {
+            console.log('✅ Écran tactile détecté');
+        }
+        
+        if (navigator.maxTouchPoints > 0) {
+            console.log('✅ Support multi-touch détecté');
+        }
+        
+        // Affichage des informations de l'appareil
+        console.log('📱 Informations de l\'appareil:');
+        console.log('- User Agent:', navigator.userAgent);
+        console.log('- Largeur écran:', screen.width);
+        console.log('- Hauteur écran:', screen.height);
+        console.log('- Pixel ratio:', window.devicePixelRatio);
+    </script>
+</body>
+</html> 

@@ -695,10 +695,38 @@ class VerbeSlicer {
         const currentLevel = this.getCurrentLevel();
         const isIrregular = this.isIrregularVerb(word);
         
+        // AMÉLIORATION : Éviter les spawns trop proches dès le départ
+        let attemptCount = 0;
+        let spawnX, spawnY;
+        const maxAttempts = 10;
+        const minDistanceFromOthers = 80; // Distance minimale avec les autres mots
+        
+        do {
+            spawnX = Math.random() * (this.canvas.width - 200) + 100;
+            spawnY = -50;
+            attemptCount++;
+            
+            // Vérifier la distance avec les autres mots existants
+            let tooClose = false;
+            for (let existingWord of this.fallingWords) {
+                const distance = Math.sqrt(
+                    Math.pow(spawnX - existingWord.x, 2) + 
+                    Math.pow(spawnY - existingWord.y, 2)
+                );
+                if (distance < minDistanceFromOthers) {
+                    tooClose = true;
+                    break;
+                }
+            }
+            
+            if (!tooClose) break; // Position valide trouvée
+            
+        } while (attemptCount < maxAttempts);
+        
         const newWord = {
             text: word,
-            x: Math.random() * (this.canvas.width - 200) + 100,
-            y: -50,
+            x: spawnX,
+            y: spawnY,
             speed: this.wordSpeed + Math.random() * 0.5,
             isIrregular: isIrregular,
             color: currentLevel.color,
@@ -710,7 +738,7 @@ class VerbeSlicer {
         
         this.fallingWords.push(newWord);
         
-        console.log('✨ Mot spawné: "' + word + '" (' + (isIrregular ? 'irrégulier' : 'régulier') + '), total à l\'écran: ' + this.fallingWords.length);
+        console.log('✨ Mot spawné: "' + word + '" (' + (isIrregular ? 'irrégulier' : 'régulier') + ') à (' + Math.round(spawnX) + ', ' + Math.round(spawnY) + '), tentatives: ' + attemptCount + ', total à l\'écran: ' + this.fallingWords.length);
     }
     
     isIrregularVerb(word) {
@@ -724,6 +752,9 @@ class VerbeSlicer {
             word.y += word.speed;
             word.rotation += word.rotationSpeed;
             
+            // NOUVEAU : Système de répulsion entre les mots pour éviter les superpositions
+            this.applyRepulsionForces(word, index);
+            
             // Supprimer les mots qui sortent de l'écran
             if (word.y > this.canvas.height + 50) {
                 this.fallingWords.splice(index, 1);
@@ -734,6 +765,53 @@ class VerbeSlicer {
                     this.addFloatingText(word.x, word.y - 50, 'Raté !', 'error');
                     console.log('❌ Verbe irrégulier raté:', word.text);
                 }
+            }
+        });
+    }
+    
+    // NOUVELLE FONCTION : Système de répulsion pour éviter les collisions
+    applyRepulsionForces(currentWord, currentIndex) {
+        const repulsionRadius = 60; // Distance minimale entre les mots
+        const repulsionStrength = 0.5; // Force de répulsion
+        
+        this.fallingWords.forEach((otherWord, otherIndex) => {
+            if (currentIndex === otherIndex) return; // Ne pas se repousser soi-même
+            
+            // Calculer la distance entre les deux mots
+            const dx = currentWord.x - otherWord.x;
+            const dy = currentWord.y - otherWord.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // Si les mots sont trop proches, appliquer une force de répulsion
+            if (distance < repulsionRadius && distance > 0) {
+                // Calculer la force de répulsion normalisée
+                const forceX = (dx / distance) * repulsionStrength;
+                const forceY = (dy / distance) * repulsionStrength;
+                
+                // Appliquer la force - les verbes irréguliers ont la priorité
+                if (currentWord.isIrregular && !otherWord.isIrregular) {
+                    // Le verbe irrégulier repousse le verbe régulier
+                    otherWord.x -= forceX * 2;
+                    otherWord.y -= forceY * 0.5; // Moins de force verticale pour ne pas trop perturber la chute
+                    console.log('🔄 Verbe irrégulier repousse verbe régulier');
+                } else if (!currentWord.isIrregular && otherWord.isIrregular) {
+                    // Le verbe régulier s'écarte du verbe irrégulier
+                    currentWord.x += forceX * 2;
+                    currentWord.y += forceY * 0.5;
+                    console.log('🔄 Verbe régulier s\'écarte du verbe irrégulier');
+                } else {
+                    // Répulsion mutuelle normale
+                    currentWord.x += forceX;
+                    otherWord.x -= forceX;
+                    // Moins de force verticale pour maintenir la chute naturelle
+                    currentWord.y += forceY * 0.3;
+                    otherWord.y -= forceY * 0.3;
+                }
+                
+                // S'assurer que les mots restent dans les limites de l'écran
+                const margin = 50;
+                currentWord.x = Math.max(margin, Math.min(this.canvas.width - margin, currentWord.x));
+                otherWord.x = Math.max(margin, Math.min(this.canvas.width - margin, otherWord.x));
             }
         });
     }
@@ -751,15 +829,43 @@ class VerbeSlicer {
         this.totalClicks++;
         let hit = false;
         
+        // AMÉLIORATION MAJEURE : Prioriser les verbes irréguliers lors des clics
+        // Créer deux listes : verbes irréguliers et réguliers
+        const irregularWords = [];
+        const regularWords = [];
+        
         this.fallingWords.forEach((word, index) => {
             if (this.isPointInWord(x, y, word)) {
-                hit = true;
-                this.handleWordClick(word, index);
-                return;
+                if (word.isIrregular) {
+                    irregularWords.push({ word, index });
+                } else {
+                    regularWords.push({ word, index });
+                }
             }
         });
         
-        if (!hit) {
+        // PRIORITÉ AUX VERBES IRRÉGULIERS : si on peut cliquer sur les deux types,
+        // on privilégie toujours le verbe irrégulier
+        let targetWord = null;
+        let targetIndex = -1;
+        
+        if (irregularWords.length > 0) {
+            // Prendre le premier verbe irrégulier trouvé
+            targetWord = irregularWords[0].word;
+            targetIndex = irregularWords[0].index;
+            hit = true;
+            console.log('🎯 Priorité donnée au verbe irrégulier:', targetWord.text);
+        } else if (regularWords.length > 0) {
+            // Sinon prendre le premier verbe régulier
+            targetWord = regularWords[0].word;
+            targetIndex = regularWords[0].index;
+            hit = true;
+            console.log('🎯 Clic sur verbe régulier:', targetWord.text);
+        }
+        
+        if (hit && targetWord && targetIndex >= 0) {
+            this.handleWordClick(targetWord, targetIndex);
+        } else {
             // Clic dans le vide - feedback plus visible
             this.addFloatingText(x, y, 'Raté !', 'error');
             this.createMissEffect(x, y);
@@ -805,14 +911,14 @@ class VerbeSlicer {
         const wordWidth = metrics.width;
         const wordHeight = 30;
         
-        // Augmentation significative des zones cliquables pour mobile et ordinateur
-        // Zones de sécurité généreuses autour du texte
-        const extraWidthPadding = 40; // 20px de chaque côté
-        const extraHeightPadding = 25; // 12.5px au-dessus et en-dessous
-        const minClickableWidth = 80; // Largeur minimale cliquable
-        const minClickableHeight = 60; // Hauteur minimale cliquable
+        // CORRECTION MAJEURE : Zones cliquables BEAUCOUP plus grandes pour mobile et desktop
+        // Augmentation massive des zones de sécurité
+        const extraWidthPadding = 80; // 40px de chaque côté (doublé)
+        const extraHeightPadding = 60; // 30px au-dessus et en-dessous (doublé)
+        const minClickableWidth = 120; // Largeur minimale augmentée de 80 à 120
+        const minClickableHeight = 80; // Hauteur minimale augmentée de 60 à 80
         
-        // Calculer les dimensions finales avec padding
+        // Calculer les dimensions finales avec padding massif
         const finalWidth = Math.max(wordWidth + extraWidthPadding, minClickableWidth);
         const finalHeight = Math.max(wordHeight + extraHeightPadding, minClickableHeight);
         
@@ -1009,18 +1115,19 @@ class VerbeSlicer {
         const wordWidth = metrics.width;
         const wordHeight = 30;
         
-        const extraWidthPadding = 40;
-        const extraHeightPadding = 25;
-        const minClickableWidth = 80;
-        const minClickableHeight = 60;
+        // MISE À JOUR : Utiliser les nouvelles valeurs augmentées
+        const extraWidthPadding = 80; // Mis à jour pour correspondre aux nouvelles valeurs
+        const extraHeightPadding = 60; // Mis à jour pour correspondre aux nouvelles valeurs
+        const minClickableWidth = 120; // Mis à jour
+        const minClickableHeight = 80; // Mis à jour
         
         const finalWidth = Math.max(wordWidth + extraWidthPadding, minClickableWidth);
         const finalHeight = Math.max(wordHeight + extraHeightPadding, minClickableHeight);
         
-        // Dessiner la zone cliquable
-        this.ctx.strokeStyle = word.isIrregular ? 'rgba(0, 255, 0, 0.5)' : 'rgba(255, 0, 0, 0.5)';
-        this.ctx.lineWidth = 2;
-        this.ctx.setLineDash([5, 5]);
+        // Dessiner la zone cliquable avec différentes couleurs selon le type
+        this.ctx.strokeStyle = word.isIrregular ? 'rgba(0, 255, 0, 0.7)' : 'rgba(255, 100, 100, 0.7)';
+        this.ctx.lineWidth = 3; // Ligne plus épaisse pour mieux voir
+        this.ctx.setLineDash([8, 4]); // Tirets plus visibles
         this.ctx.strokeRect(
             word.x - finalWidth/2, 
             word.y - finalHeight/2, 
@@ -1028,9 +1135,21 @@ class VerbeSlicer {
             finalHeight
         );
         
-        // Point central
-        this.ctx.fillStyle = word.isIrregular ? 'rgba(0, 255, 0, 0.8)' : 'rgba(255, 0, 0, 0.8)';
-        this.ctx.fillRect(word.x - 2, word.y - 2, 4, 4);
+        // Point central plus visible
+        this.ctx.fillStyle = word.isIrregular ? 'rgba(0, 255, 0, 0.9)' : 'rgba(255, 100, 100, 0.9)';
+        this.ctx.fillRect(word.x - 3, word.y - 3, 6, 6);
+        
+        // NOUVEAU : Afficher la taille de la zone cliquable
+        if (this.debugMode) {
+            this.ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            this.ctx.font = '12px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.fillText(
+                `${Math.round(finalWidth)}x${Math.round(finalHeight)}`, 
+                word.x, 
+                word.y - finalHeight/2 - 10
+            );
+        }
         
         this.ctx.setLineDash([]); // Reset line dash
         this.ctx.restore();

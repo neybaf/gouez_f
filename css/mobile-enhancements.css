@@ -1,0 +1,368 @@
+/**
+ * AMÉLIORATIONS MOBILE pour le Blog Fabien Gouez
+ * Optimisations spécifiques pour les appareils mobiles et tactiles
+ */
+
+/* ===== AMÉLIORATIONS GLOBALES MOBILE ===== */
+
+/* Optimisation pour les écrans tactiles */
+@media (pointer: coarse) {
+  /* Boutons et liens plus grands pour le tactile */
+  .nav-tab,
+  .project-card,
+  .resource-card,
+  .team-member {
+    min-height: 44px; /* Taille minimale recommandée pour le tactile */
+  }
+  
+  .nav-tab {
+    padding: 15px 24px; /* Plus d'espace pour les doigts */
+  }
+}
+
+/* ===== AMÉLIORATIONS PAR TAILLE D'ÉCRAN ===== */
+
+/* Tablettes et petits ordinateurs portables */
+@media (max-width: 1024px) {
+  .research-container {
+    margin: 10px;
+    border-radius: 0; /* Supprime les bordures arrondies sur tablette */
+  }
+  
+  .research-title {
+    font-size: 2.2rem;
+  }
+  
+  .projects-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* Mobiles grands (paysage) */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .research-container {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  .research-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .research-title {
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+  
+  .research-subtitle {
+    font-size: 1rem;
+  }
+  
+  .research-affiliation {
+    font-size: 0.8rem;
+  }
+  
+  /* Navigation mobile améliorée */
+  .nav-tabs {
+    flex-direction: row; /* Garde horizontal si possible */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+  
+  .nav-tab {
+    flex: 1;
+    min-width: 80px;
+    padding: 12px 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    border-radius: 5px;
+    margin: 2px;
+  }
+  
+  /* Contenu plus compact sur mobile */
+  .research-content {
+    padding: 1.5rem 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  /* Cartes projets optimisées mobile */
+  .project-card {
+    margin-bottom: 1rem;
+  }
+  
+  .project-header {
+    padding: 1rem;
+  }
+  
+  .project-title {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+  
+  .project-description {
+    font-size: 0.9rem;
+  }
+  
+  .project-body {
+    padding: 1rem;
+  }
+  
+  /* Stats de recherche plus compactes */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+/* Mobiles petits (portrait) */
+@media (max-width: 480px) {
+  body {
+    padding: 5px;
+  }
+  
+  .research-title {
+    font-size: 1.6rem;
+  }
+  
+  .research-subtitle {
+    font-size: 0.95rem;
+  }
+  
+  .research-affiliation {
+    font-size: 0.75rem;
+  }
+  
+  /* Navigation verticale sur très petits écrans */
+  .nav-tabs {
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .nav-tab {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+  }
+  
+  .research-content {
+    padding: 1rem 0.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.3rem;
+  }
+  
+  /* Projets en pleine largeur */
+  .projects-grid,
+  .resources-grid,
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .project-card {
+    border-radius: 8px;
+  }
+  
+  .project-header,
+  .project-body {
+    padding: 0.8rem;
+  }
+  
+  .project-title {
+    font-size: 1rem;
+  }
+  
+  .project-description {
+    font-size: 0.85rem;
+  }
+  
+  /* Stats en une colonne sur très petit écran */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+/* ===== AMÉLIORATIONS TACTILES SPÉCIFIQUES ===== */
+
+/* Optimisations pour les appareils avec écran tactile */
+@media (hover: none) {
+  /* Supprime les effets hover sur mobile */
+  .project-card:hover,
+  .resource-card:hover,
+  .team-member:hover,
+  .nav-tab:hover:not(.active) {
+    transform: none;
+    box-shadow: inherit;
+  }
+  
+  /* Active states pour le tactile */
+  .project-card:active,
+  .resource-card:active,
+  .team-member:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  .nav-tab:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* ===== AMÉLIORATIONS SPÉCIFIQUES POUR LES JEUX ===== */
+
+/* Optimisations pour les liens vers les jeux */
+.project-card[href*="jeu"] {
+  position: relative;
+}
+
+.project-card[href*="jeu"]::after {
+  content: "🎮";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.2rem;
+}
+
+/* ===== AMÉLIORATIONS DE LISIBILITÉ ===== */
+
+/* Amélioration des contrastes sur mobile */
+@media (max-width: 768px) {
+  .project-description,
+  .project-body p {
+    color: #2c3e50; /* Texte plus foncé pour mobile */
+    line-height: 1.5;
+  }
+  
+  .research-subtitle {
+    opacity: 1; /* Plus opaque sur mobile */
+  }
+  
+  .research-affiliation {
+    opacity: 0.9; /* Plus lisible */
+  }
+}
+
+/* ===== OPTIMISATIONS POUR ÉCRANS HAUTE RÉSOLUTION ===== */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Optimisations pour les écrans Retina */
+  .research-title {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  .section-title {
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* ===== AMÉLIORATIONS D'ACCESSIBILITÉ ===== */
+
+/* Amélioration de la navigation au clavier sur mobile */
+@media (max-width: 768px) {
+  .nav-tab:focus,
+  .project-card:focus,
+  .resource-card:focus {
+    outline: 3px solid #3498db;
+    outline-offset: 2px;
+  }
+}
+
+/* ===== ORIENTATION LANDSCAPE SUR MOBILE ===== */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .research-header {
+    padding: 1rem;
+  }
+  
+  .research-title {
+    font-size: 1.5rem;
+  }
+  
+  .research-subtitle {
+    display: none; /* Cache le sous-titre en mode paysage */
+  }
+  
+  .nav-tab {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .research-content {
+    padding: 1rem;
+  }
+}
+
+/* ===== AMÉLIORATIONS POUR LES PERFORMANCES ===== */
+
+/* Optimisations CSS pour les performances sur mobile */
+@media (max-width: 768px) {
+  /* Réduit les transitions sur mobile pour économiser la batterie */
+  * {
+    transition-duration: 0.2s !important;
+  }
+  
+  /* Simplifie les gradients sur mobile */
+  .research-header {
+    background: var(--primary-color); /* Simplifie le gradient */
+  }
+  
+  .research-stats {
+    background: var(--primary-color); /* Simplifie le gradient */
+  }
+}
+
+/* ===== DARK MODE MOBILE ===== */
+
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+  body {
+    background: #1a1a1a;
+  }
+  
+  .research-container {
+    background: #2d2d2d;
+    color: #f0f0f0;
+  }
+  
+  .project-card,
+  .resource-card,
+  .team-member {
+    background: #3d3d3d;
+    border-color: #555;
+    color: #f0f0f0;
+  }
+  
+  .nav-tab {
+    background: #3d3d3d;
+    color: #f0f0f0;
+    border-color: #555;
+  }
+  
+  .nav-tab.active {
+    background: var(--primary-color);
+  }
+} 
