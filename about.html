@@ -19,8 +19,6 @@
       <ul class="nav-tabs">
         <li><a href="#profil" class="nav-tab active" data-section="profil">Profil</a></li>
         <li><a href="#cv-liens" class="nav-tab" data-section="cv-liens">CV & Liens</a></li>
-        <li><a href="#methodologie" class="nav-tab" data-section="methodologie">Méthodologie</a></li>
-        <li><a href="#contact" class="nav-tab" data-section="contact">Contact</a></li>
       </ul>
     </nav>
 
@@ -139,112 +137,11 @@
             <h3 class="resource-title">Jeux Pédagogiques</h3>
             <p class="resource-description">Plateforme de jeux interactifs pour l'apprentissage du FLE</p>
           </a>
-        </div>
-      </section>
-
-      <section id="methodologie" class="section">
-        <h2 class="section-title">Positionnement Méthodologique</h2>
-        
-        <div class="citation">
-          <p>Ma recherche s'appuie sur une épistémologie articulant la réflexivité, la sociologie dispositionnaliste contextuelle des pratiques enseignantes et la géopolitique éducative des langues.</p>
-          <span class="citation-author">Approche méthodologique</span>
-        </div>
-
-        <div class="methodology-grid">
-          <div class="methodology-card">
-            <div class="card-header">
-              <span class="card-type">Qualitatif</span>
-              <h3 class="card-title">Entretiens Semi-directifs</h3>
-              <p class="card-description">Analyse thématique et lexicométrique</p>
-            </div>
-            <div class="card-body">
-              <ul class="card-features">
-                <li>Grilles d'entretien adaptées au terrain</li>
-                <li>Transcription et anonymisation</li>
-                <li>Validation par triangulation</li>
-                <li>Retour aux enquêtés</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="methodology-card">
-            <div class="card-header">
-              <span class="card-type">Quantitatif</span>
-              <h3 class="card-title">Analyse de Corpus</h3>
-              <p class="card-description">Textométrie et visualisation de données</p>
-            </div>
-            <div class="card-body">
-              <ul class="card-features">
-                <li>Statistiques textuelles et cooccurrences</li>
-                <li>Cartographie interactive (Leaflet, D3.js)</li>
-                <li>Classification et clustering</li>
-                <li>Modélisation des réseaux</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="methodology-card">
-            <div class="card-header">
-              <span class="card-type">Éthique</span>
-              <h3 class="card-title">Recherche Responsable</h3>
-              <p class="card-description">Protocoles éthiques et déontologiques</p>
-            </div>
-            <div class="card-body">
-              <ul class="card-features">
-                <li>Consentement éclairé systématique</li>
-                <li>Anonymisation et protection des données</li>
-                <li>Restitution aux communautés</li>
-                <li>Réflexivité sur la position du chercheur</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="note-section">
-          <p><strong>Note :</strong> Les détails techniques des outils et scripts d'analyse sont disponibles dans <a href="mkdocs/docs/">la documentation technique</a>. Les notes théoriques et épistémologiques se trouvent dans <a href="garden/">le jardin numérique</a>.</p>
-        </div>
-      </section>
-
-      <section id="contact" class="section">
-        <h2 class="section-title">Contact & Réseaux</h2>
-        
-        <div class="contact-grid">
-          <div class="contact-card">
-            <div class="card-header">
-              <span class="card-type">Institutionnel</span>
-              <h3 class="card-title">Affiliations Académiques</h3>
-              <p class="card-description">Universités et laboratoires de recherche</p>
-            </div>
-            <div class="card-body">
-              <ul class="card-features">
-                <li>Université de Franche-Comté (UFC)</li>
-                <li>Laboratoire ELLIADD</li>
-                <li>Beijing University of Aeronautics and Astronautics (BUAA)</li>
-                <li>Plateforme GachaFLE</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div class="card-header">
-              <span class="card-type">Collaboration</span>
-              <h3 class="card-title">Réseaux de Recherche</h3>
-              <p class="card-description">Communautés scientifiques et pédagogiques</p>
-            </div>
-            <div class="card-body">
-              <ul class="card-features">
-                <li>Réseau sinofrancophone d'enseignants</li>
-                <li>Communauté FLE et numérique</li>
-                <li>Chercheurs en glottopolitique</li>
-                <li>Développeurs d'IA éducative</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="citation" style="margin-top: 2rem;">
-          <p>Ouvert aux collaborations interdisciplinaires et aux échanges avec les praticiens de terrain, n'hésitez pas à me contacter pour toute question ou proposition de collaboration.</p>
-          <span class="citation-author">Contact scientifique</span>
+          <a href="mailto:fabien.gouez@univ-fcomte.fr" class="resource-card">
+            <span class="resource-icon">✉️</span>
+            <h3 class="resource-title">Contact</h3>
+            <p class="resource-description">Me contacter par email pour collaborations ou questions</p>
+          </a>
         </div>
       </section>
     </div>
@@ -291,7 +188,7 @@
         });
       }, observerOptions);
       
-      document.querySelectorAll('.about-card, .resource-card, .methodology-card, .contact-card, .approach-card').forEach(el => {
+      document.querySelectorAll('.about-card, .resource-card').forEach(el => {
         observer.observe(el);
       });
     });
@@ -309,7 +206,7 @@
       margin: 2rem 0;
     }
     
-    .about-card, .methodology-card, .contact-card {
+    .about-card {
       background: white;
       border-radius: 12px;
       padding: 1.5rem;
@@ -320,7 +217,7 @@
       flex-direction: column;
     }
     
-    .about-card:hover, .methodology-card:hover, .contact-card:hover {
+    .about-card:hover {
       transform: translateY(-5px);
     }
     
@@ -413,36 +310,44 @@
       margin: 0;
     }
     
-    .methodology-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      margin: 2rem 0;
-    }
-    
-    .contact-grid {
+    .resources-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
       margin: 2rem 0;
     }
     
-    .note-section {
-      background: #f8f9fa;
-      border-left: 4px solid var(--accent-color);
-      padding: 1rem 1.5rem;
-      margin-top: 2rem;
-      border-radius: 0 8px 8px 0;
+    .resource-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
     
-    .note-section a {
+    .resource-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .resource-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+    
+    .resource-title {
       color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      font-size: 1.1rem;
     }
     
-    .note-section a:hover {
-      text-decoration: underline;
+    .resource-description {
+      color: #666;
+      font-size: 0.9rem;
+      margin: 0;
     }
     
     .fade-in {
@@ -461,7 +366,7 @@
     }
     
     @media (max-width: 768px) {
-      .about-grid, .methodology-grid, .contact-grid {
+      .about-grid, .resources-grid {
         grid-template-columns: 1fr;
       }
       
