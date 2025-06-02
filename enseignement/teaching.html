@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enseignement & Innovation Pédagogique | Fabien Gouez</title>
-    <link rel="stylesheet" href="/gouez_f/css/research-styles.css">
-    <script src="/gouez_f/scripts/include.js" defer></script>
+    <link rel="stylesheet" href="../css/research-styles.css">
+    <script src="../scripts/include.js" defer></script>
   </head>
   <body>
     <div class="research-container">
       <div class="research-header">
-        <h1 class="research-title">Enseignement & Innovation Pédagogique</h1>
-        <p class="research-subtitle">Formation FLE, jeux éducatifs et technologies adaptatives</p>
-        <div data-include="/gouez_f/partials/header.html"></div>
+        <h1 class="research-title">FLE - Français Langue Étrangère</h1>
+        <p class="research-subtitle">Enseignement, jeux éducatifs et innovation pédagogique</p>
+        <div data-include="../partials/header.html"></div>
       </div>
 
       <div class="research-content">
         <section class="section active-section">
-          <h2 class="section-title">Projets Pédagogiques</h2>
+          <div class="citation">
+            <p>Développement d'outils numériques et de jeux pédagogiques pour l'enseignement du FLE, avec une attention particulière aux contextes sinophones et à l'innovation didactique.</p>
+            <span class="citation-author">Innovation pédagogique</span>
+          </div>
+
+          <h2 class="section-title">Ressources FLE</h2>
           <div class="projects-grid">
-            <a href="/gouez_f/enseignement/jeu/index_jeu.html" class="project-card">
+            <a href="jeu/index_jeu.html" class="project-card">
               <div class="project-header">
-                <span class="project-type">Jeux pédagogiques</span>
-                <h3 class="project-title">Plateforme de Jeux FLE</h3>
+                <span class="project-type">Plateforme</span>
+                <h3 class="project-title">Jeux Pédagogiques</h3>
                 <p class="project-description">Collection de jeux interactifs pour l'apprentissage du français</p>
               </div>
               <div class="project-body">
@@ -30,12 +35,33 @@
                   <span>2024-2025</span>
                   <span class="project-status status-en-cours">En cours</span>
                 </div>
-                <p>8 jeux développés : connecteurs logiques, association lexicale, cartes FLE, memory, phonétique, verbe slicer...</p>
+                <p>8 jeux développés : connecteurs logiques, association lexicale, cartes FLE, memory, phonétique, verbe slicer, quiz interactifs...</p>
                 <ul class="game-features">
                   <li>Interface responsive et intuitive</li>
                   <li>Niveaux CECRL adaptés</li>
                   <li>Feedback immédiat</li>
                   <li>Progression gamifiée</li>
+                </ul>
+              </div>
+            </a>
+
+            <a href="../garden/FLE/" class="project-card">
+              <div class="project-header">
+                <span class="project-type">Notes</span>
+                <h3 class="project-title">Garden FLE</h3>
+                <p class="project-description">Réflexions théoriques et pratiques sur l'enseignement du FLE</p>
+              </div>
+              <div class="project-body">
+                <div class="project-meta">
+                  <span>2024-2025</span>
+                  <span class="project-status status-en-cours">En développement</span>
+                </div>
+                <p>Notes de recherche, expérimentations pédagogiques et réflexions critiques sur la didactique du français langue étrangère.</p>
+                <ul class="game-features">
+                  <li>Jeux pédagogiques en FLE</li>
+                  <li>Contexte sinophone</li>
+                  <li>Technologies éducatives</li>
+                  <li>Notes de terrain</li>
                 </ul>
               </div>
             </a>
@@ -81,35 +107,13 @@
                 </ul>
               </div>
             </div>
-
-.</p>
-      
-<!---
-          <div class="research-stats">
-            <h2 style="text-align: center; margin-bottom: 2rem; color: white;">📊 Statistiques d'Enseignement</h2>
-            <div class="stats-grid">
-              <div class="stat-item">
-                <span class="stat-number">8</span>
-                <span class="stat-label">Jeux développés</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">200+</span>
-                <span class="stat-label">Étudiants formés</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">4</span>
-                <span class="stat-label">Années d'expérience</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">3</span>
-                <span class="stat-label">Universités partenaires</span>
-              </div>
-            </div>
           </div>
--->
+        </section>
+      </div>
+    </div>
 
     <footer style="text-align: center; padding: 2rem; background: #f8f9fa; margin-top: 2rem;">
-      <div data-include="/gouez_f/partials/footer.html"></div>
+      <div data-include="../partials/footer.html"></div>
     </footer>
 
     <script>
@@ -128,10 +132,40 @@
           });
         }, observerOptions);
         
-        document.querySelectorAll('.project-card, .resource-card, .research-stats').forEach(el => {
+        document.querySelectorAll('.project-card, .resource-card').forEach(el => {
           observer.observe(el);
         });
       });
     </script>
+
+    <style>
+      .project-status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      
+      .status-en-cours {
+        background: var(--success-color);
+        color: white;
+      }
+      
+      .fade-in {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
   </body>
 </html>
