@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden FLE | Notes sur l'enseignement du français</title>
+    <link rel="stylesheet" href="../../css/research-styles.css">
+    <script src="../../scripts/include.js" defer></script>
+</head>
+<body>
+    <div class="research-container">
+        <div class="research-header">
+            <h1 class="research-title">Garden FLE</h1>
+            <p class="research-subtitle">Notes et réflexions sur l'enseignement du français langue étrangère</p>
+            <div data-include="../../partials/header.html"></div>
+        </div>
+
+        <div class="research-content">
+            <section class="notes-section">
+                <h2 class="section-title">📝 Notes de Terrain et Réflexions</h2>
+                
+                <div class="citation">
+                    <p>Ce dossier rassemble des notes de recherche, des expérimentations pédagogiques et des réflexions critiques sur la didactique du français langue étrangère, particulièrement en contexte sinophone.</p>
+                    <span class="citation-author">Garden FLE</span>
+                </div>
+
+                <div class="notes-grid">
+                    <div class="note-card">
+                        <div class="note-header">
+                            <span class="note-type">Innovation</span>
+                            <h3 class="note-title">Jeux Pédagogiques en FLE</h3>
+                            <p class="note-description">Développement et évaluation de jeux interactifs</p>
+                        </div>
+                        <div class="note-content">
+                            <p>Notes sur la conception, l'implémentation et l'évaluation des jeux pédagogiques pour l'apprentissage du français. Observations sur l'engagement des apprenants et l'efficacité didactique.</p>
+                            <div class="note-tags">
+                                <span class="tag">Gamification</span>
+                                <span class="tag">Interactivité</span>
+                                <span class="tag">Motivation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="note-card">
+                        <div class="note-header">
+                            <span class="note-type">Contexte</span>
+                            <h3 class="note-title">FLE en Contexte Sinophone</h3>
+                            <p class="note-description">Spécificités et défis de l'enseignement en Chine</p>
+                        </div>
+                        <div class="note-content">
+                            <p>Réflexions sur les particularités culturelles, linguistiques et institutionnelles de l'enseignement du français en contexte universitaire chinois.</p>
+                            <div class="note-tags">
+                                <span class="tag">Interculturel</span>
+                                <span class="tag">Adaptation</span>
+                                <span class="tag">Contextualisation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="note-card">
+                        <div class="note-header">
+                            <span class="note-type">Numérique</span>
+                            <h3 class="note-title">Technologies Éducatives</h3>
+                            <p class="note-description">IA et outils numériques en didactique du FLE</p>
+                        </div>
+                        <div class="note-content">
+                            <p>Expérimentation avec l'intelligence artificielle, plateformes LMS et outils de détection automatique d'erreurs pour l'apprentissage adaptatif.</p>
+                            <div class="note-tags">
+                                <span class="tag">IA éducative</span>
+                                <span class="tag">Adaptatif</span>
+                                <span class="tag">Automatisation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="upcoming-notes">
+                    <h3>🚧 Notes en développement</h3>
+                    <ul class="upcoming-list">
+                        <li>Analyse des erreurs récurrentes d'apprenants sinophones</li>
+                        <li>Stratégies de remédiation adaptées au contexte</li>
+                        <li>Évaluation de l'impact des jeux sur l'acquisition</li>
+                        <li>Retours d'expérience sur les formations d'enseignants</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; background: #f8f9fa; margin-top: 2rem;">
+        <div data-include="../../partials/footer.html"></div>
+    </footer>
+
+    <style>
+        .notes-section {
+            margin: 2rem 0;
+        }
+        
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .note-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .note-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .note-header {
+            margin-bottom: 1rem;
+        }
+        
+        .note-type {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .note-title {
+            margin: 1rem 0 0.5rem 0;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+        }
+        
+        .note-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .note-content p {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .note-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            background: #f0f0f0;
+            color: #666;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .upcoming-notes {
+            background: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-top: 3rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .upcoming-list {
+            margin: 1rem 0 0 1rem;
+            color: #666;
+        }
+        
+        .upcoming-list li {
+            margin: 0.5rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html> 
