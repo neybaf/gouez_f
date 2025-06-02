@@ -24,7 +24,7 @@
                     <h2 class="section-title">Sections principales</h2>
                     
                     <div class="sections-grid">
-                        <a href="#fle" class="section-card" data-section="fle">
+                        <a href="enseignement/teaching.html" class="section-card">
                             <div class="card-icon">🎓</div>
                             <h3 class="card-title">FLE</h3>
                             <p class="card-description">Enseignement du français langue étrangère : jeux pédagogiques, innovation numérique et ressources didactiques</p>
@@ -55,39 +55,6 @@
                         </a>
                     </div>
                 </section>
-
-                <section id="fle" class="section" style="display: none;">
-                    <h2 class="section-title">FLE - Français Langue Étrangère</h2>
-                    
-                    <div class="citation">
-                        <p>Développement d'outils numériques et de jeux pédagogiques pour l'enseignement du FLE, avec une attention particulière aux contextes sinophones et à l'innovation didactique.</p>
-                        <span class="citation-author">Innovation pédagogique</span>
-                    </div>
-
-                    <div class="fle-resources">
-                        <a href="enseignement/jeu/index_jeu.html" class="fle-card">
-                            <div class="card-header">
-                                <span class="card-type">Plateforme</span>
-                                <h3 class="card-title">Jeux Pédagogiques</h3>
-                                <p class="card-description">Collection de jeux interactifs pour l'apprentissage du français</p>
-                            </div>
-                            <div class="card-body">
-                                <p>8 jeux développés : connecteurs logiques, association lexicale, cartes FLE, memory, phonétique, verbe slicer, quiz interactifs...</p>
-                            </div>
-                        </a>
-
-                        <a href="garden/FLE/" class="fle-card">
-                            <div class="card-header">
-                                <span class="card-type">Notes</span>
-                                <h3 class="card-title">Garden FLE</h3>
-                                <p class="card-description">Réflexions théoriques et pratiques sur l'enseignement du FLE</p>
-                            </div>
-                            <div class="card-body">
-                                <p>Notes de recherche, expérimentations pédagogiques et réflexions critiques sur la didactique du français langue étrangère.</p>
-                            </div>
-                        </a>
-                    </div>
-                </section>
             </div>
         </div>
 
@@ -97,27 +64,6 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const sectionCards = document.querySelectorAll('.section-card[data-section]');
-                const sections = document.querySelectorAll('.section');
-                
-                sectionCards.forEach(card => {
-                    card.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        
-                        const targetSection = this.getAttribute('data-section');
-                        const section = document.getElementById(targetSection);
-                        
-                        // Cacher toutes les sections
-                        sections.forEach(s => s.style.display = 'none');
-                        
-                        // Montrer la section cible
-                        if (section) {
-                            section.style.display = 'block';
-                            section.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    });
-                });
-
                 const observerOptions = {
                     threshold: 0.1,
                     rootMargin: '0px 0px -50px 0px'
@@ -130,7 +76,7 @@
                     });
                 }, observerOptions);
                 
-                document.querySelectorAll('.section-card, .fle-card').forEach(el => {
+                document.querySelectorAll('.section-card').forEach(el => {
                     observer.observe(el);
                 });
             });
@@ -184,43 +130,6 @@
                 margin: 0;
             }
             
-            .fle-resources {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 2rem;
-                margin: 2rem 0;
-            }
-            
-            .fle-card {
-                background: white;
-                border-radius: 12px;
-                padding: 1.5rem;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s ease;
-                text-decoration: none;
-                color: inherit;
-                display: block;
-            }
-            
-            .fle-card:hover {
-                transform: translateY(-5px);
-                text-decoration: none;
-            }
-            
-            .card-header {
-                margin-bottom: 1rem;
-            }
-            
-            .card-type {
-                background: var(--primary-color);
-                color: white;
-                padding: 4px 12px;
-                border-radius: 20px;
-                font-size: 0.8rem;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
-            
             .fade-in {
                 animation: fadeInUp 0.6s ease forwards;
             }
@@ -237,7 +146,7 @@
             }
             
             @media (max-width: 768px) {
-                .sections-grid, .fle-resources {
+                .sections-grid {
                     grid-template-columns: 1fr;
                 }
             }
