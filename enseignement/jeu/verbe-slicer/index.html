@@ -669,6 +669,286 @@
         }
         
         /* Debug styles - maintenu pour le développement */
+        
+        /* STYLES LEADERBOARD */
+        .leaderboard-content {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .leaderboard-list {
+            margin: 30px 0;
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .leaderboard-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .leaderboard-item.current-player {
+            background: rgba(78, 205, 196, 0.2);
+            border-color: #4ecdc4;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(78, 205, 196, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(78, 205, 196, 0.6); }
+        }
+        
+        .leaderboard-rank {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            width: 50px;
+            text-align: center;
+        }
+        
+        .leaderboard-rank.first { color: #ffd700; }
+        .leaderboard-rank.second { color: #c0c0c0; }
+        .leaderboard-rank.third { color: #cd7f32; }
+        
+        .leaderboard-info {
+            flex: 1;
+            text-align: left;
+            margin-left: 20px;
+        }
+        
+        .leaderboard-pseudo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4ecdc4;
+            margin-bottom: 5px;
+        }
+        
+        .leaderboard-details {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        
+        .leaderboard-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-align: right;
+            min-width: 80px;
+        }
+        
+        .leaderboard-input {
+            background: rgba(78, 205, 196, 0.1);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .leaderboard-input h3 {
+            color: #4ecdc4;
+            margin-bottom: 15px;
+        }
+        
+        .leaderboard-input input {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .leaderboard-input input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+        
+        .leaderboard-input input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .leaderboard-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        /* STYLES ONGLETS MENU PAUSE */
+        .pause-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-btn:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .tab-btn.active {
+            color: #4ecdc4;
+            border-bottom-color: #4ecdc4;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .game-rules {
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .game-rules h3 {
+            color: #4ecdc4;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+        
+        .game-rules h3:first-child {
+            margin-top: 0;
+        }
+        
+        .game-rules p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .game-rules ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        
+        .game-rules li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .level-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+        }
+        
+        /* RESPONSIVE POUR LEADERBOARD */
+        @media (max-width: 768px) {
+            .leaderboard-content {
+                padding: 20px;
+                max-width: 95%;
+            }
+            
+            .leaderboard-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+            }
+            
+            .leaderboard-info {
+                margin: 10px 0;
+                text-align: center;
+            }
+            
+            .leaderboard-score {
+                text-align: center;
+                margin-top: 5px;
+            }
+            
+            .pause-tabs {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .game-rules {
+                max-height: 300px;
+                padding: 15px;
+            }
+            
+            .level-info {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .leaderboard-content {
+                padding: 15px;
+            }
+            
+            .leaderboard-item {
+                padding: 10px;
+            }
+            
+            .leaderboard-pseudo {
+                font-size: 1rem;
+            }
+            
+            .leaderboard-score {
+                font-size: 1.2rem;
+            }
+            
+            .game-rules {
+                max-height: 250px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -709,6 +989,11 @@
         <button id="start-game-btn" class="game-btn primary">
             <span class="btn-icon">🚀</span>
             Commencer l'aventure
+        </button>
+        
+        <button id="main-leaderboard-btn" class="game-btn secondary">
+            <span class="btn-icon">🏆</span>
+            Voir le classement
         </button>
     </div>
 
@@ -761,25 +1046,69 @@
     <div id="pause-screen" class="game-screen overlay">
         <div class="pause-content">
             <h2>⏸️ Jeu en pause</h2>
-            <div class="pause-stats">
-                <div class="stat-item">
-                    <span class="stat-label">Score actuel</span>
-                    <span id="pause-score" class="stat-value">0</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Niveau</span>
-                    <span id="pause-level" class="stat-value">1</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Précision</span>
-                    <span id="pause-accuracy" class="stat-value">100%</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Progression</span>
-                    <span id="pause-progress" class="stat-value">0%</span>
-                    <span id="pause-progress-text" class="stat-label">0 / 25</span>
+            
+            <!-- Onglets -->
+            <div class="pause-tabs">
+                <button id="stats-tab" class="tab-btn active" data-tab="stats">📊 Statistiques</button>
+                <button id="rules-tab" class="tab-btn" data-tab="rules">📋 Règles du jeu</button>
+            </div>
+            
+            <!-- Contenu des statistiques -->
+            <div id="stats-content" class="tab-content active">
+                <div class="pause-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Score actuel</span>
+                        <span id="pause-score" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Niveau</span>
+                        <span id="pause-level" class="stat-value">1</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Précision</span>
+                        <span id="pause-accuracy" class="stat-value">100%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Progression</span>
+                        <span id="pause-progress" class="stat-value">0%</span>
+                        <span id="pause-progress-text" class="stat-label">0 / 25</span>
+                    </div>
                 </div>
             </div>
+            
+            <!-- Contenu des règles -->
+            <div id="rules-content" class="tab-content">
+                <div class="game-rules">
+                    <h3>🎯 Objectif du jeu</h3>
+                    <p>Cliquez <strong>uniquement</strong> sur les verbes irréguliers qui tombent pour marquer des points.</p>
+                    
+                    <h3>📜 Règles</h3>
+                    <ul>
+                        <li>✅ <strong>Bon clic</strong> : Verbe irrégulier → +1 point + récupération de vie</li>
+                        <li>❌ <strong>Mauvais clic</strong> : Verbe régulier → -1 vie</li>
+                        <li>💔 <strong>Verbe raté</strong> : Verbe irrégulier qui tombe → -1 vie</li>
+                    </ul>
+                    
+                    <h3>🎮 Contrôles</h3>
+                    <ul>
+                        <li>🖱️ <strong>Clic</strong> : Trancher un verbe</li>
+                        <li>⏸️ <strong>Espace</strong> : Mettre en pause</li>
+                        <li>🔄 <strong>R</strong> : Redémarrer</li>
+                    </ul>
+                    
+                    <h3>📈 Progression</h3>
+                    <p>Progressez à travers 6 niveaux :</p>
+                    <div class="level-info">
+                        <span class="level-badge">1</span> Infinitifs
+                        <span class="level-badge">2</span> Participes passés
+                        <span class="level-badge">3</span> Futur
+                        <span class="level-badge">4</span> Imparfait
+                        <span class="level-badge">5</span> Subjonctif
+                        <span class="level-badge">6</span> Conditionnel
+                    </div>
+                </div>
+            </div>
+            
             <div class="pause-buttons">
                 <button id="resume-btn" class="game-btn primary">
                     <span class="btn-icon">▶️</span>
@@ -841,14 +1170,46 @@
 
             <div id="performance-message" class="performance-message"></div>
 
+            <!-- Saisie du pseudo pour le leaderboard -->
+            <div id="leaderboard-input" class="leaderboard-input" style="display: none;">
+                <h3>🎉 Nouveau record ! Entrez votre pseudo :</h3>
+                <input type="text" id="player-pseudo" placeholder="Votre pseudo..." maxlength="15">
+                <button id="save-score-btn" class="game-btn primary">
+                    <span class="btn-icon">💾</span>
+                    Enregistrer
+                </button>
+            </div>
+
             <div class="game-over-buttons">
                 <button id="play-again-btn" class="game-btn primary">
                     <span class="btn-icon">🔄</span>
                     Rejouer
                 </button>
+                <button id="leaderboard-btn" class="game-btn secondary">
+                    <span class="btn-icon">🏆</span>
+                    Classement
+                </button>
                 <button id="back-to-menu-btn" class="game-btn secondary">
                     <span class="btn-icon">🏠</span>
                     Menu principal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de leaderboard -->
+    <div id="leaderboard-screen" class="game-screen overlay">
+        <div class="leaderboard-content">
+            <h2>🏆 Classement des Maîtres Verbes</h2>
+            
+            <div id="leaderboard-list" class="leaderboard-list">
+                <!-- Les scores seront chargés dynamiquement -->
+            </div>
+
+            <div class="leaderboard-buttons">
+                <button id="close-leaderboard-btn" class="game-btn secondary">
+                    <span class="btn-icon">🔙</span>
+                    Retour
                 </button>
             </div>
         </div>
@@ -954,6 +1315,15 @@
                 this.lastSpawnTime = 0;
                 this.spawnInterval = 1000;
                 
+                // NOUVEAU : Système de timing pour les verbes irréguliers
+                this.minIrregularInterval = 3000; // 3 secondes minimum entre verbes irréguliers
+                this.lastIrregularSpawnTime = 0;
+                
+                // NOUVEAU : Système de leaderboard
+                this.leaderboardData = [];
+                this.currentPlayerScore = null;
+                this.previousScreen = 'start-screen'; // Pour revenir au bon écran depuis le leaderboard
+                
                 // Niveaux - SEUILS AJUSTÉS POUR PROGRESSION PLUS RAPIDE
                 this.levels = [
                     { name: 'Infinitifs', threshold: 0, verbType: 'infinitif', color: '#3498db' },
@@ -981,22 +1351,29 @@
             
             async init() {
                 try {
-                    this.setupEventListeners();
-                    
-                    this.initializeCurrentVerbs();
-                    
-                    this.setupCanvas();
-                    
-                    console.log('✅ Verbe Slicer Simple initialisé !');
-                } catch (error) {
-                    console.error('❌ Erreur:', error);
-                }
+                                    this.setupEventListeners();
+                
+                this.initializeCurrentVerbs();
+                
+                this.setupCanvas();
+                
+                // NOUVEAU : Charger le leaderboard au démarrage
+                this.loadLeaderboard();
+                
+                console.log('✅ Verbe Slicer Simple initialisé !');
+            } catch (error) {
+                console.error('❌ Erreur:', error);
             }
+        }
             
             setupEventListeners() {
                 const startBtn = document.getElementById('start-game-btn');
+                const mainLeaderboardBtn = document.getElementById('main-leaderboard-btn');
                 if (startBtn) {
                     startBtn.addEventListener('click', () => this.startGame());
+                }
+                if (mainLeaderboardBtn) {
+                    mainLeaderboardBtn.addEventListener('click', () => this.showLeaderboard());
                 }
                 
                 const difficultyBtns = document.querySelectorAll('.difficulty-btn');
@@ -1016,6 +1393,15 @@
                 const backToMenuBtn = document.getElementById('back-to-menu-btn');
                 const menuGamesBtn = document.getElementById('menu-games-btn');
                 
+                // NOUVEAUX : Boutons leaderboard
+                const leaderboardBtn = document.getElementById('leaderboard-btn');
+                const saveScoreBtn = document.getElementById('save-score-btn');
+                const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
+                
+                // NOUVEAUX : Onglets menu pause
+                const statsTab = document.getElementById('stats-tab');
+                const rulesTab = document.getElementById('rules-tab');
+                
                 if (pauseBtn) pauseBtn.addEventListener('click', () => this.togglePause());
                 if (resumeBtn) resumeBtn.addEventListener('click', () => this.togglePause());
                 if (restartBtn) restartBtn.addEventListener('click', () => this.startGame());
@@ -1023,6 +1409,25 @@
                 if (playAgainBtn) playAgainBtn.addEventListener('click', () => this.startGame());
                 if (backToMenuBtn) backToMenuBtn.addEventListener('click', () => this.quitToMenu());
                 if (menuGamesBtn) menuGamesBtn.addEventListener('click', () => this.goToGamesMenu());
+                
+                // NOUVEAUX : Event listeners leaderboard
+                if (leaderboardBtn) leaderboardBtn.addEventListener('click', () => this.showLeaderboard());
+                if (saveScoreBtn) saveScoreBtn.addEventListener('click', () => this.savePlayerScore());
+                if (closeLeaderboardBtn) closeLeaderboardBtn.addEventListener('click', () => this.closeLeaderboard());
+                
+                // NOUVEAUX : Event listeners onglets
+                if (statsTab) statsTab.addEventListener('click', () => this.switchTab('stats'));
+                if (rulesTab) rulesTab.addEventListener('click', () => this.switchTab('rules'));
+                
+                // NOUVEAU : Event listener pour la saisie du pseudo (Entrée pour valider)
+                const pseudoInput = document.getElementById('player-pseudo');
+                if (pseudoInput) {
+                    pseudoInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            this.savePlayerScore();
+                        }
+                    });
+                }
                 
                 document.addEventListener('keydown', (e) => {
                     switch(e.code) {
@@ -1179,9 +1584,52 @@
             spawnWord() {
                 if (this.currentVerbs.length === 0) return;
                 
-                const word = this.currentVerbs[Math.floor(Math.random() * this.currentVerbs.length)];
+                const now = Date.now();
+                let word, isIrregular;
+                let attempts = 0;
+                const maxWordAttempts = 20;
+                
+                // NOUVEAU : Système de timing pour les verbes irréguliers
+                do {
+                    word = this.currentVerbs[Math.floor(Math.random() * this.currentVerbs.length)];
+                    isIrregular = this.isIrregularVerb(word);
+                    attempts++;
+                    
+                    // Si c'est un verbe irrégulier, vérifier le timing
+                    if (isIrregular) {
+                        const timeSinceLastIrregular = now - this.lastIrregularSpawnTime;
+                        if (timeSinceLastIrregular < this.minIrregularInterval) {
+                            // Trop tôt pour un verbe irrégulier, essayer un autre mot
+                            console.log(`⏰ Verbe irrégulier "${word}" rejeté - délai minimum non respecté (${timeSinceLastIrregular}ms < ${this.minIrregularInterval}ms)`);
+                            continue;
+                        }
+                    }
+                    
+                    // Mot valide trouvé
+                    break;
+                    
+                } while (attempts < maxWordAttempts);
+                
+                // Si on n'a pas trouvé de mot valide, prendre un mot régulier
+                if (attempts >= maxWordAttempts) {
+                    const regularWords = this.currentVerbs.filter(w => !this.isIrregularVerb(w));
+                    if (regularWords.length > 0) {
+                        word = regularWords[Math.floor(Math.random() * regularWords.length)];
+                        isIrregular = false;
+                        console.log(`🔄 Fallback vers mot régulier: "${word}"`);
+                    } else {
+                        console.log(`⚠️ Aucun mot valide trouvé après ${maxWordAttempts} tentatives`);
+                        return;
+                    }
+                }
+                
+                // Enregistrer le timestamp si c'est un verbe irrégulier
+                if (isIrregular) {
+                    this.lastIrregularSpawnTime = now;
+                    console.log(`📝 Timestamp verbe irrégulier enregistré: ${now}`);
+                }
+                
                 const currentLevel = this.getCurrentLevel();
-                const isIrregular = this.isIrregularVerb(word);
                 
                 // AMÉLIORATION : Éviter les spawns trop proches dès le départ
                 let attemptCount = 0;
@@ -1697,6 +2145,192 @@
                 document.getElementById('verbs-sliced').textContent = this.verbsSliced;
                 document.getElementById('game-time').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
                 document.getElementById('best-streak').textContent = this.bestStreak;
+                
+                // NOUVEAU : Vérifier si c'est un record pour le leaderboard
+                this.currentPlayerScore = {
+                    score: this.score,
+                    level: this.level,
+                    accuracy: accuracy,
+                    date: new Date().toISOString().split('T')[0],
+                    difficulty: this.difficulty,
+                    gameTime: `${minutes}:${seconds.toString().padStart(2, '0')}`,
+                    verbsSliced: this.verbsSliced
+                };
+                
+                this.checkForNewRecord();
+            }
+            
+            // NOUVELLES FONCTIONS LEADERBOARD
+            async loadLeaderboard() {
+                try {
+                    const response = await fetch('./leaderboard.json');
+                    if (!response.ok) {
+                        throw new Error('Erreur lors du chargement du leaderboard');
+                    }
+                    const data = await response.json();
+                    this.leaderboardData = data.scores || [];
+                    console.log('📊 Leaderboard chargé:', this.leaderboardData.length, 'scores');
+                } catch (error) {
+                    console.warn('⚠️ Impossible de charger le leaderboard:', error);
+                    // Données par défaut si le fichier n'existe pas
+                    this.leaderboardData = [];
+                }
+            }
+            
+            checkForNewRecord() {
+                this.loadLeaderboard().then(() => {
+                    const isNewRecord = this.isNewRecord(this.currentPlayerScore.score);
+                    const leaderboardInput = document.getElementById('leaderboard-input');
+                    
+                    if (isNewRecord && leaderboardInput) {
+                        leaderboardInput.style.display = 'block';
+                        console.log('🎉 Nouveau record détecté ! Score:', this.currentPlayerScore.score);
+                    }
+                });
+            }
+            
+            isNewRecord(score) {
+                // Vérifier si le score mérite d'être dans le top 10
+                if (this.leaderboardData.length < 10) {
+                    return true; // Moins de 10 scores, toujours accepter
+                }
+                
+                // Vérifier si le score est meilleur que le plus faible du top 10
+                const lowestScore = Math.min(...this.leaderboardData.map(s => s.score));
+                return score > lowestScore;
+            }
+            
+            async savePlayerScore() {
+                const pseudoInput = document.getElementById('player-pseudo');
+                const pseudo = pseudoInput.value.trim();
+                
+                if (!pseudo) {
+                    alert('Veuillez entrer un pseudo !');
+                    return;
+                }
+                
+                if (pseudo.length > 15) {
+                    alert('Le pseudo ne peut pas dépasser 15 caractères !');
+                    return;
+                }
+                
+                // Ajouter le pseudo au score actuel
+                this.currentPlayerScore.pseudo = pseudo;
+                
+                // Ajouter le nouveau score
+                this.leaderboardData.push(this.currentPlayerScore);
+                
+                // Trier par score décroissant
+                this.leaderboardData.sort((a, b) => b.score - a.score);
+                
+                // Garder seulement le top 10
+                this.leaderboardData = this.leaderboardData.slice(0, 10);
+                
+                try {
+                    // Sauvegarder dans le localStorage comme fallback
+                    localStorage.setItem('verbe-slicer-leaderboard', JSON.stringify(this.leaderboardData));
+                    console.log('💾 Score sauvegardé dans localStorage');
+                    
+                    // Cacher l'input et afficher un message de confirmation
+                    const leaderboardInput = document.getElementById('leaderboard-input');
+                    if (leaderboardInput) {
+                        leaderboardInput.style.display = 'none';
+                    }
+                    
+                    // Afficher une notification
+                    alert(`🎉 Score enregistré ! Félicitations ${pseudo} !`);
+                    
+                } catch (error) {
+                    console.error('❌ Erreur lors de la sauvegarde:', error);
+                    alert('Erreur lors de la sauvegarde du score');
+                }
+            }
+            
+            showLeaderboard() {
+                // Enregistrer l'écran actuel pour pouvoir y revenir
+                if (this.gameState === 'gameOver') {
+                    this.previousScreen = 'game-over-screen';
+                } else {
+                    this.previousScreen = 'start-screen';
+                }
+                
+                this.loadLeaderboard().then(() => {
+                    this.displayLeaderboard();
+                    this.showScreen('leaderboard-screen');
+                });
+            }
+            
+            displayLeaderboard() {
+                const leaderboardList = document.getElementById('leaderboard-list');
+                if (!leaderboardList) return;
+                
+                // Charger du localStorage si disponible
+                const savedScores = localStorage.getItem('verbe-slicer-leaderboard');
+                if (savedScores) {
+                    try {
+                        const parsedScores = JSON.parse(savedScores);
+                        // Fusionner avec les scores existants
+                        const allScores = [...this.leaderboardData, ...parsedScores];
+                        // Supprimer les doublons et trier
+                        const uniqueScores = allScores.filter((score, index, arr) => 
+                            arr.findIndex(s => s.pseudo === score.pseudo && s.score === score.score) === index
+                        );
+                        uniqueScores.sort((a, b) => b.score - a.score);
+                        this.leaderboardData = uniqueScores.slice(0, 10);
+                    } catch (error) {
+                        console.warn('⚠️ Erreur lors du parsing du localStorage:', error);
+                    }
+                }
+                
+                if (this.leaderboardData.length === 0) {
+                    leaderboardList.innerHTML = '<p style="color: #888; padding: 20px;">Aucun score enregistré pour le moment.<br>Soyez le premier à établir un record !</p>';
+                    return;
+                }
+                
+                let html = '';
+                this.leaderboardData.forEach((scoreData, index) => {
+                    const rank = index + 1;
+                    const rankClass = rank === 1 ? 'first' : rank === 2 ? 'second' : rank === 3 ? 'third' : '';
+                    const isCurrentPlayer = this.currentPlayerScore && 
+                                          scoreData.pseudo === this.currentPlayerScore.pseudo && 
+                                          scoreData.score === this.currentPlayerScore.score;
+                    
+                    html += `
+                        <div class="leaderboard-item ${isCurrentPlayer ? 'current-player' : ''}">
+                            <div class="leaderboard-rank ${rankClass}">${rank}</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-pseudo">${scoreData.pseudo}</div>
+                                <div class="leaderboard-details">
+                                    Niveau ${scoreData.level} • ${scoreData.accuracy}% précision • ${scoreData.difficulty}
+                                    <br><small>${scoreData.date}</small>
+                                </div>
+                            </div>
+                            <div class="leaderboard-score">${scoreData.score}</div>
+                        </div>
+                    `;
+                });
+                
+                leaderboardList.innerHTML = html;
+            }
+            
+            closeLeaderboard() {
+                this.showScreen(this.previousScreen);
+            }
+            
+            // NOUVELLES FONCTIONS ONGLETS MENU PAUSE
+            switchTab(tabName) {
+                // Supprimer la classe active de tous les onglets et contenus
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Activer l'onglet et le contenu sélectionnés
+                const selectedTab = document.querySelector(`[data-tab="${tabName}"]`);
+                const selectedContent = document.getElementById(`${tabName}-content`);
+                
+                if (selectedTab) selectedTab.classList.add('active');
+                if (selectedContent) selectedContent.classList.add('active');
+                
+                console.log('📑 Onglet changé vers:', tabName);
             }
             
             showScreen(screenId) {
