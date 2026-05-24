@@ -15,21 +15,47 @@ function shuffle(array) {
 
 // Fonction pour charger les questions depuis un fichier CSV
 function loadQuestions(csvFile) {
-  return fetch(csvFile)
+  return fetch(csvFile, { cache: 'no-cache' })
     .then(response => response.text())
     .then(data => {
       const lines = data.trim().split('\n');
       questions = lines.slice(1).map(line => {
-        const [text, options, answers] = line.split('","');
+        const [text, options, answers] = parseCsvLine(line);
         return {
-          text: text.replace(/"/g, ''),
+          text,
           options: options.split(','),
-          answers: answers.replace(/"/g, '').split(',')
+          answers: answers.split(',')
         };
       });
       shuffle(questions);
       loadQuestion();
     });
+}
+
+function parseCsvLine(line) {
+  const values = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const next = line[i + 1];
+
+    if (char === '"' && next === '"') {
+      current += '"';
+      i++;
+    } else if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      values.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+
+  values.push(current);
+  return values;
 }
 
 function allowDrop(ev) {

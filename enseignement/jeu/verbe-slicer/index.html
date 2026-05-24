@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verbe Slicer - Version Simple</title>
+    <link rel="stylesheet" href="../../../../../shared/css/foundation.css">
+    <link rel="stylesheet" href="../../../../../shared/css/components.css">
     <!-- CSS AUTONOME - Nécessaire car le jeu était perturbé par le CSS des autres jeux -->
     <!-- Toutes les améliorations mobiles sont intégrées directement ici pour maintenir l'autonomie -->
     <style>
@@ -951,7 +953,14 @@
         }
     </style>
 </head>
-<body>
+<body
+    data-site-title="Blog enseignement"
+    data-site-subtitle="Verbe Slicer - Version Simple"
+    data-site-section="Blog enseignement"
+    data-site-mark="BLOG"
+    data-site-footer="SITE_H3I · Blog enseignement"
+>
+    <div data-site-shell="header"></div>
     <!-- Écran de démarrage -->
     <div id="start-screen" class="game-screen active">
         <div class="game-header">
@@ -2402,5 +2411,7 @@
             window.game = game;
         });
     </script>
+    <div data-site-shell="footer"></div>
+    <script src="../../../../../shared/js/site-shell.js"></script>
 </body>
 </html> 

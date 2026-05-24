@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jeux Éducatifs FLE</title>
+    <link rel="stylesheet" href="../../../../shared/css/foundation.css">
+    <link rel="stylesheet" href="../../../../shared/css/components.css">
   <style>
     * {
       margin: 0;
@@ -105,6 +107,18 @@
       box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
     }
 
+    .quiz-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .quiz-buttons .game-btn {
+      padding: 10px 20px;
+      font-size: 0.95rem;
+    }
+
     .footer {
       text-align: center;
       margin-top: 3rem;
@@ -131,12 +145,19 @@
     }
   </style>
 </head>
-<body>
+<body
+    data-site-title="Blog enseignement"
+    data-site-subtitle="Jeux Éducatifs FLE"
+    data-site-section="Blog enseignement"
+    data-site-mark="BLOG"
+    data-site-footer="SITE_H3I · Blog enseignement"
+>
+    <div data-site-shell="header"></div>
   <div class="container">
-    <header class="header">
+    <div class="header">
       <h1>🎮 Jeux Éducatifs FLE</h1>
       <p>Apprenez le français avec des jeux interactifs et amusants</p>
-    </header>
+    </div>
 
     <main class="games-grid">
       <div class="game-card">
@@ -186,7 +207,7 @@
           Améliorez votre prononciation française avec des exercices phonétiques interactifs.
           Entraînement audio et visuel.
         </p>
-        <a href="jeu-phonetique/index.html" class="game-btn">Pratiquer la Phonétique</a>
+        <a href="jeu-phonetique/jeu-phonetique.html" class="game-btn">Pratiquer la Phonétique</a>
       </div>
 
       <div class="game-card">
@@ -196,7 +217,10 @@
           Testez vos connaissances avec des quiz variés couvrant grammaire, vocabulaire et culture.
           Multiple choix et feedback immédiat.
         </p>
-        <a href="quiz-interactifs/jeu.html" class="game-btn">Faire un Quiz</a>
+        <div class="quiz-buttons">
+          <a href="quiz-interactifs/jeu.html?game=passe-compose" class="game-btn">Passé composé</a>
+          <a href="quiz-interactifs/jeu.html?game=villes-de-france" class="game-btn">Villes de France</a>
+        </div>
       </div>
     </main>
 
@@ -204,5 +228,7 @@
       <p>© 2024 Jeux Éducatifs FLE - Apprentissage ludique du français</p>
     </footer>
   </div>
+    <div data-site-shell="footer"></div>
+    <script src="../../../../shared/js/site-shell.js"></script>
 </body>
 </html>

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeu de discrimination phonétique</title>
-    <link rel="stylesheet" href="../../../css/game-styles.css">
+    <link rel="stylesheet" href="../../../../../shared/css/foundation.css">
+    <link rel="stylesheet" href="../../../../../shared/css/components.css">
+    <link rel="stylesheet" href="../../css/game-styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,7 +53,14 @@
         }
     </style>
 </head>
-<body>
+<body
+    data-site-title="Blog enseignement"
+    data-site-subtitle="Jeu de discrimination phonétique"
+    data-site-section="Blog enseignement"
+    data-site-mark="BLOG"
+    data-site-footer="SITE_H3I · Blog enseignement"
+>
+    <div data-site-shell="header"></div>
     <h1>Jeu de discrimination phonétique</h1>
     <div id="game-container" class="container">
         <audio id="audio-player" controls>
@@ -68,5 +77,7 @@
         <p id="result"></p>
     </div>
     <script src="jeu-phonetique.js"></script>
+    <div data-site-shell="footer"></div>
+    <script src="../../../../../shared/js/site-shell.js"></script>
 </body>
 </html>
