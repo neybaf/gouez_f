@@ -37,12 +37,12 @@
 </head>
 <body>
     <h1>🔧 Diagnostic Verbe Slicer</h1>
-    
+
     <button onclick="runAllTests()">Lancer tous les tests</button>
     <button onclick="clearResults()">Effacer</button>
-    
+
     <div id="results"></div>
-    
+
     <canvas id="canvas" width="300" height="100"></canvas>
 
     <script>
@@ -55,7 +55,7 @@
 
         function displayResults() {
             const container = document.getElementById('results');
-            container.innerHTML = results.map(r => 
+            container.innerHTML = results.map(r =>
                 `<div class="test ${r.status}">
                     <strong>${r.name}:</strong> ${r.message}
                 </div>`
@@ -69,7 +69,7 @@
 
         async function runAllTests() {
             clearResults();
-            
+
             // Test 1: Canvas
             try {
                 const canvas = document.getElementById('canvas');
@@ -86,10 +86,10 @@
 
             // Test 2: JSON
             try {
-                const response = await fetch('jeu-verbes.json');
+                const response = await fetch('../../enseignement/jeu/verbe-slicer/jeu-verbes.json');
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
-                
+
                 if (data.verbesIrreguliers && data.motsDivers) {
                     const total = Object.values(data.verbesIrreguliers).flat().length + data.motsDivers.length;
                     addResult('Données JSON', 'success', `${total} mots chargés`);
@@ -102,7 +102,7 @@
 
             // Test 3: CSS
             try {
-                const response = await fetch('../../../css/game-styles.css');
+                const response = await fetch('../../css/game-styles.css');
                 if (response.ok) {
                     addResult('CSS Global', 'success', 'CSS global accessible');
                 } else {
@@ -114,7 +114,7 @@
 
             // Test 4: Script principal
             try {
-                const response = await fetch('verbe-slicer-game.js');
+                const response = await fetch('../../enseignement/jeu/verbe-slicer/verbe-slicer-game.js');
                 if (response.ok) {
                     const content = await response.text();
                     if (content.includes('class VerbeSlicer')) {
@@ -151,4 +151,4 @@
         window.onload = runAllTests;
     </script>
 </body>
-</html> 
+</html>

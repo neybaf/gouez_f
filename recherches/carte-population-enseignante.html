@@ -1855,11 +1855,10 @@ var _leaflet2 = _interopRequireDefault(_leaflet);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// In RMarkdown's self-contained mode, we don't have a way to carry around the
-// images that Leaflet needs but doesn't load into the page. Instead, we'll use
-// the unpkg CDN.
+// In RMarkdown's self-contained mode, Leaflet marker images need an explicit
+// path. Use the local copies to avoid CDN failures.
 if (typeof _leaflet2["default"].Icon.Default.imagePath === "undefined") {
-  _leaflet2["default"].Icon.Default.imagePath = "https://unpkg.com/leaflet@1.3.1/dist/images/";
+  _leaflet2["default"].Icon.Default.imagePath = "../css/leaflet-images/";
 }
 
 

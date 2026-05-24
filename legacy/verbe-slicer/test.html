@@ -12,7 +12,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
-        
+
         .test-container {
             max-width: 800px;
             margin: 0 auto;
@@ -21,7 +21,7 @@
             padding: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        
+
         .test-button {
             background: #e74c3c;
             color: white;
@@ -33,37 +33,37 @@
             margin: 10px;
             transition: all 0.3s ease;
         }
-        
+
         .test-button:hover {
             background: #c0392b;
             transform: translateY(-2px);
         }
-        
+
         .status {
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
             font-weight: bold;
         }
-        
+
         .success {
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        
+
         .error {
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        
+
         .info {
             background: #d1ecf1;
             color: #0c5460;
             border: 1px solid #bee5eb;
         }
-        
+
         #test-canvas {
             border: 2px solid #ddd;
             border-radius: 8px;
@@ -75,36 +75,36 @@
 <body>
     <div class="test-container">
         <h1>🧪 Test Verbe Slicer</h1>
-        
+
         <div id="status-container">
             <div class="status info">Initialisation des tests...</div>
         </div>
-        
+
         <div class="test-controls">
             <button class="test-button" onclick="testCanvas()">Test Canvas</button>
             <button class="test-button" onclick="testJSON()">Test JSON</button>
             <button class="test-button" onclick="testAudio()">Test Audio</button>
             <button class="test-button" onclick="testGame()">Test Jeu Complet</button>
-            <button class="test-button" onclick="window.location.href='index.html'">Lancer le Jeu</button>
+            <button class="test-button" onclick="window.location.href='../../enseignement/jeu/verbe-slicer/index.html'">Lancer le Jeu</button>
         </div>
-        
+
         <canvas id="test-canvas" width="400" height="200"></canvas>
-        
+
         <div id="test-results"></div>
     </div>
 
     <script>
         let testResults = [];
-        
+
         function addResult(test, success, message) {
             testResults.push({test, success, message});
             updateResults();
         }
-        
+
         function updateResults() {
             const container = document.getElementById('test-results');
             container.innerHTML = '<h3>Résultats des tests :</h3>';
-            
+
             testResults.forEach(result => {
                 const div = document.createElement('div');
                 div.className = `status ${result.success ? 'success' : 'error'}`;
@@ -112,12 +112,12 @@
                 container.appendChild(div);
             });
         }
-        
+
         function testCanvas() {
             try {
                 const canvas = document.getElementById('test-canvas');
                 const ctx = canvas.getContext('2d');
-                
+
                 // Test de dessin simple
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = '#e74c3c';
@@ -125,18 +125,18 @@
                 ctx.fillStyle = 'white';
                 ctx.font = '20px Arial';
                 ctx.fillText('Test Canvas', 20, 40);
-                
+
                 addResult('Canvas HTML5', true, 'Canvas fonctionne correctement');
             } catch (error) {
                 addResult('Canvas HTML5', false, `Erreur: ${error.message}`);
             }
         }
-        
+
         async function testJSON() {
             try {
-                const response = await fetch('jeu-verbes.json');
+                const response = await fetch('../../enseignement/jeu/verbe-slicer/jeu-verbes.json');
                 const data = await response.json();
-                
+
                 if (data.verbesIrreguliers && data.motsDivers) {
                     const irregularCount = Object.values(data.verbesIrreguliers).reduce((sum, arr) => sum + arr.length, 0);
                     const regularCount = data.motsDivers.length;
@@ -148,41 +148,41 @@
                 addResult('Données JSON', false, `Erreur de chargement: ${error.message}`);
             }
         }
-        
+
         function testAudio() {
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
+
                 // Test de génération de son
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
-                
+
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
-                
+
                 oscillator.frequency.value = 440;
                 oscillator.type = 'sine';
                 gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                
+
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 0.1);
-                
+
                 addResult('Audio Web API', true, 'Audio fonctionne correctement');
             } catch (error) {
                 addResult('Audio Web API', false, `Erreur: ${error.message}`);
             }
         }
-        
+
         async function testGame() {
             try {
                 // Test de chargement du script principal
                 const script = document.createElement('script');
                 script.src = 'verbe-slicer-game.js';
-                
+
                 script.onload = () => {
                     addResult('Script Principal', true, 'Script chargé avec succès');
-                    
+
                     // Test d'instanciation de la classe
                     try {
                         if (typeof VerbeSlicer !== 'undefined') {
@@ -194,17 +194,17 @@
                         addResult('Classe VerbeSlicer', false, `Erreur: ${error.message}`);
                     }
                 };
-                
+
                 script.onerror = () => {
                     addResult('Script Principal', false, 'Erreur de chargement du script');
                 };
-                
+
                 document.head.appendChild(script);
             } catch (error) {
                 addResult('Test Jeu Complet', false, `Erreur: ${error.message}`);
             }
         }
-        
+
         // Tests automatiques au chargement
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
@@ -215,4 +215,4 @@
         });
     </script>
 </body>
-</html> 
+</html>

@@ -73,41 +73,41 @@
 </head>
 <body>
     <h1>🔧 Test des Corrections - Verbe Slicer</h1>
-    
+
     <div class="file-links">
-        <a href="index.html" class="file-link" target="_blank">Jeu Principal</a>
+        <a href="../../enseignement/jeu/verbe-slicer/index.html" class="file-link" target="_blank">Jeu Principal</a>
         <a href="test-simple.html" class="file-link" target="_blank">Version Simple</a>
         <a href="debug.html" class="file-link" target="_blank">Debug</a>
-        <a href="legacy/jeu-verbes.html" class="file-link" target="_blank">Legacy</a>
+        <a href="jeu-verbes.html" class="file-link" target="_blank">Legacy</a>
     </div>
-    
+
     <div class="test-container">
         <h2>📋 Tests Automatiques</h2>
         <button onclick="runAllTests()">Lancer tous les tests</button>
         <button onclick="clearResults()">Effacer les résultats</button>
         <div id="test-results"></div>
     </div>
-    
+
     <div class="test-container">
         <h2>🎮 Test du Jeu Principal</h2>
         <p>Cliquez pour tester le chargement et l'initialisation du jeu principal :</p>
         <button onclick="testMainGame()">Tester le Jeu Principal</button>
         <div id="main-game-test"></div>
     </div>
-    
+
     <div class="test-container">
         <h2>📊 Test JSON et Données</h2>
         <button onclick="testJSON()">Tester les Données JSON</button>
         <div id="json-test"></div>
     </div>
-    
+
     <div class="test-container">
         <h2>🎯 Test Spawn et GameLoop</h2>
         <p>Test de la logique de spawn et de la boucle de jeu :</p>
         <button onclick="testSpawnLogic()">Tester Spawn & GameLoop</button>
         <div id="spawn-test"></div>
     </div>
-    
+
     <div class="test-container">
         <h2>📄 Log de la Console</h2>
         <button onclick="clearConsoleLog()">Effacer le log</button>
@@ -119,36 +119,36 @@
         const originalLog = console.log;
         const originalError = console.error;
         const originalWarn = console.warn;
-        
+
         console.log = function(...args) {
             originalLog.apply(console, args);
             addToConsoleLog('log', args.join(' '));
         };
-        
+
         console.error = function(...args) {
             originalError.apply(console, args);
             addToConsoleLog('error', args.join(' '));
         };
-        
+
         console.warn = function(...args) {
             originalWarn.apply(console, args);
             addToConsoleLog('warning', args.join(' '));
         };
-        
+
         function addToConsoleLog(type, message) {
             const logDiv = document.getElementById('console-output');
             const entry = document.createElement('div');
-            entry.style.color = type === 'error' ? '#ff6b6b' : 
+            entry.style.color = type === 'error' ? '#ff6b6b' :
                                type === 'warning' ? '#ffd93d' : '#74c0fc';
             entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
             logDiv.appendChild(entry);
             logDiv.scrollTop = logDiv.scrollHeight;
         }
-        
+
         function clearConsoleLog() {
             document.getElementById('console-output').innerHTML = '';
         }
-        
+
         function addResult(containerId, type, message) {
             const container = document.getElementById(containerId);
             const div = document.createElement('div');
@@ -156,21 +156,21 @@
             div.textContent = message;
             container.appendChild(div);
         }
-        
+
         function clearResults() {
             document.getElementById('test-results').innerHTML = '';
             document.getElementById('main-game-test').innerHTML = '';
             document.getElementById('json-test').innerHTML = '';
             document.getElementById('spawn-test').innerHTML = '';
         }
-        
+
         async function runAllTests() {
             clearResults();
             console.log('🔍 Lancement de tous les tests...');
-            
+
             // Test 1: Fichiers de base
             try {
-                const response = await fetch('./jeu-verbes.json');
+                const response = await fetch('../../enseignement/jeu/verbe-slicer/jeu-verbes.json');
                 if (response.ok) {
                     addResult('test-results', 'success', '✅ Fichier JSON accessible');
                 } else {
@@ -179,10 +179,10 @@
             } catch (error) {
                 addResult('test-results', 'error', '❌ Erreur réseau JSON: ' + error.message);
             }
-            
+
             // Test 2: Scripts
             try {
-                const scriptResponse = await fetch('./verbe-slicer-game.js');
+                const scriptResponse = await fetch('../../enseignement/jeu/verbe-slicer/verbe-slicer-game.js');
                 if (scriptResponse.ok) {
                     addResult('test-results', 'success', '✅ Script principal accessible');
                 } else {
@@ -191,57 +191,57 @@
             } catch (error) {
                 addResult('test-results', 'error', '❌ Erreur script: ' + error.message);
             }
-            
+
             // Test 3: Chargement de la classe
             const testFrame = document.createElement('iframe');
             testFrame.style.display = 'none';
-            testFrame.src = './index.html';
+            testFrame.src = '../../enseignement/jeu/verbe-slicer/index.html';
             document.body.appendChild(testFrame);
-            
+
             setTimeout(() => {
                 try {
                     if (testFrame.contentWindow.game) {
                         addResult('test-results', 'success', '✅ Classe VerbeSlicer chargée dans iframe');
-                        
+
                         // Test des données
                         if (testFrame.contentWindow.game.isDataLoaded) {
                             addResult('test-results', 'success', '✅ Données chargées avec succès');
                         } else {
                             addResult('test-results', 'warning', '⚠️ Données non encore chargées');
                         }
-                        
+
                         // Test des verbes
                         if (testFrame.contentWindow.game.currentVerbs && testFrame.contentWindow.game.currentVerbs.length > 0) {
                             addResult('test-results', 'success', `✅ Verbes initialisés (${testFrame.contentWindow.game.currentVerbs.length} verbes)`);
                         } else {
                             addResult('test-results', 'warning', '⚠️ Verbes non initialisés');
                         }
-                        
+
                     } else {
                         addResult('test-results', 'error', '❌ Classe VerbeSlicer non accessible');
                     }
                 } catch (error) {
                     addResult('test-results', 'error', '❌ Erreur test iframe: ' + error.message);
                 }
-                
+
                 document.body.removeChild(testFrame);
             }, 3000);
         }
-        
+
         async function testMainGame() {
             document.getElementById('main-game-test').innerHTML = '';
-            
+
             try {
                 // Créer un iframe pour tester le jeu
                 const testFrame = document.createElement('iframe');
                 testFrame.style.width = '100%';
                 testFrame.style.height = '400px';
                 testFrame.style.border = '1px solid #ccc';
-                testFrame.src = './index.html';
-                
+                testFrame.src = '../../enseignement/jeu/verbe-slicer/index.html';
+
                 document.getElementById('main-game-test').appendChild(testFrame);
                 addResult('main-game-test', 'info', '📺 Jeu principal chargé dans iframe ci-dessus');
-                
+
                 // Test après chargement
                 setTimeout(() => {
                     try {
@@ -255,56 +255,56 @@
                         addResult('main-game-test', 'warning', '⚠️ Erreur accès iframe: ' + error.message);
                     }
                 }, 2000);
-                
+
             } catch (error) {
                 addResult('main-game-test', 'error', '❌ Erreur test jeu: ' + error.message);
             }
         }
-        
+
         async function testJSON() {
             document.getElementById('json-test').innerHTML = '';
-            
+
             try {
-                const response = await fetch('./jeu-verbes.json');
-                
+                const response = await fetch('../../enseignement/jeu/verbe-slicer/jeu-verbes.json');
+
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-                
+
                 const data = await response.json();
-                
+
                 if (data.verbesIrreguliers && data.motsDivers) {
                     const irregularCount = Object.values(data.verbesIrreguliers).flat().length;
                     const regularCount = data.motsDivers.length;
-                    
+
                     addResult('json-test', 'success', `✅ JSON valide: ${irregularCount} verbes irréguliers, ${regularCount} mots réguliers`);
-                    
+
                     // Test de chaque type de verbe
                     Object.keys(data.verbesIrreguliers).forEach(type => {
                         const count = data.verbesIrreguliers[type].length;
                         addResult('json-test', 'info', `📋 ${type}: ${count} verbes`);
                     });
-                    
+
                     // Afficher quelques exemples
                     const sample = data.verbesIrreguliers.infinitif?.slice(0, 5) || [];
                     addResult('json-test', 'info', `🎲 Échantillon infinitifs: ${sample.join(', ')}`);
-                    
+
                 } else {
                     addResult('json-test', 'error', '❌ Structure JSON invalide');
                 }
-                
+
             } catch (error) {
                 addResult('json-test', 'error', `❌ Erreur JSON: ${error.message}`);
             }
         }
-        
+
         async function testSpawnLogic() {
             document.getElementById('spawn-test').innerHTML = '';
-            
+
             // Simuler la logique de spawn
             try {
                 addResult('spawn-test', 'info', '🧪 Test de simulation de spawn...');
-                
+
                 // Simuler les données
                 const mockData = {
                     verbesIrreguliers: {
@@ -312,40 +312,40 @@
                     },
                     motsDivers: ['parler', 'aimer']
                 };
-                
+
                 const mockCurrentVerbs = [...mockData.verbesIrreguliers.infinitif, ...mockData.motsDivers];
-                
+
                 if (mockCurrentVerbs.length > 0) {
                     addResult('spawn-test', 'success', `✅ Liste de verbes créée: ${mockCurrentVerbs.length} verbes`);
-                    
+
                     // Simuler 5 spawns
                     for (let i = 0; i < 5; i++) {
                         const word = mockCurrentVerbs[Math.floor(Math.random() * mockCurrentVerbs.length)];
                         const isIrregular = mockData.verbesIrreguliers.infinitif.includes(word);
                         addResult('spawn-test', 'info', `🎲 Spawn ${i+1}: "${word}" (${isIrregular ? 'irrégulier' : 'régulier'})`);
                     }
-                    
+
                     addResult('spawn-test', 'success', '✅ Logique de spawn validée');
                 } else {
                     addResult('spawn-test', 'error', '❌ Liste de verbes vide');
                 }
-                
+
                 // Test du timing
                 const spawnInterval = 1000;
                 const lastSpawnTime = Date.now() - 1100; // Simuler 1.1 seconde
                 const now = Date.now();
-                
+
                 if (now - lastSpawnTime > spawnInterval) {
                     addResult('spawn-test', 'success', '✅ Timing de spawn validé');
                 } else {
                     addResult('spawn-test', 'warning', '⚠️ Timing de spawn trop rapide');
                 }
-                
+
             } catch (error) {
                 addResult('spawn-test', 'error', `❌ Erreur test spawn: ${error.message}`);
             }
         }
-        
+
         // Auto-log du chargement
         window.addEventListener('load', () => {
             console.log('🔧 Page de test des corrections chargée');
@@ -353,4 +353,4 @@
         });
     </script>
 </body>
-</html> 
+</html>

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://neybaf.github.io/ga">
-    <title>Digital Garden</title>
-    <link href="https://neybaf.github.io/ga/feed.xml" rel="self" >
-    <link href="https://neybaf.github.io/ga" >
-    <updated>2025-05-28T17:47:28Z</updated>
-    <id>https://neybaf.github.io/ga</id>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://neybaf.github.io/gouez_f/garden/">
+    <title>Jardin numérique - Fabien Gouez</title>
+    <link href="https://neybaf.github.io/gouez_f/garden/feed.xml" rel="self" />
+    <link href="https://neybaf.github.io/gouez_f/garden/" />
+    <updated>2026-05-24T00:00:00Z</updated>
+    <id>https://neybaf.github.io/gouez_f/garden/</id>
+    <entry>
+        <title>Garden FLE</title>
+        <link href="https://neybaf.github.io/gouez_f/garden/FLE/" />
+        <id>https://neybaf.github.io/gouez_f/garden/FLE/</id>
+        <updated>2026-05-24T00:00:00Z</updated>
+        <summary>Notes et réflexions sur l'enseignement du français langue étrangère.</summary>
+    </entry>
 </feed>

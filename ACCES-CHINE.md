@@ -2,10 +2,10 @@
 
 ## 🚫 Problèmes identifiés
 
-### **1. CDN unpkg.com (CRITIQUE)**
+### **1. CDN unpkg.com (corrigé)**
 - **Localisation** : `recherches/mymap.html` et `recherches/carte-population-enseignante.html`
-- **Problème** : `https://unpkg.com/leaflet@1.3.1/dist/images/`
-- **Impact** : Les icônes des cartes Leaflet ne se chargent pas
+- **Ancien problème** : `https://unpkg.com/leaflet@1.3.1/dist/images/`
+- **Impact évité** : Les icônes des cartes Leaflet ne dépendant plus de ce CDN
 - **Status** : unpkg.com est souvent bloqué en Chine
 
 ### **2. Serveurs de tuiles cartographiques**
@@ -23,7 +23,7 @@
 ### **1. Images Leaflet locales**
 - ✅ Téléchargé `marker-icon.png`, `marker-shadow.png`, `marker-icon-2x.png`
 - ✅ Stockées dans `css/leaflet-images/`
-- 🔧 **À faire** : Modifier les fichiers HTML pour pointer vers ces ressources locales
+- ✅ `recherches/mymap.html` et `recherches/carte-population-enseignante.html` pointent vers ces ressources locales
 
 ### **2. Serveurs de tuiles alternatifs**
 - 🔧 **À faire** : Configurer des serveurs de tuiles accessibles depuis la Chine
@@ -35,7 +35,7 @@
 ## 🔧 Actions recommandées
 
 ### **Priorité 1 - Fixes critiques**
-1. **Remplacer unpkg.com** dans les cartes Leaflet
+1. ✅ **Remplacer unpkg.com** dans les cartes Leaflet
 2. **Tester serveurs de tuiles alternatifs**
 3. **Ajouter détection géolocalisation** pour servir différents contenus
 
@@ -52,10 +52,10 @@
 ## 📋 Fichiers à modifier
 
 ### **Cartes Leaflet**
-- `recherches/mymap.html` (ligne 1639)
-- `recherches/carte-population-enseignante.html` (ligne 1861)
+- `recherches/mymap.html`
+- `recherches/carte-population-enseignante.html`
 
-### **Changement requis**
+### **Changement appliqué**
 ```javascript
 // Remplacer
 _leaflet2["default"].Icon.Default.imagePath = "https://unpkg.com/leaflet@1.3.1/dist/images/";
@@ -79,7 +79,7 @@ _leaflet2["default"].Icon.Default.imagePath = "../css/leaflet-images/";
 ## 📊 Tests recommandés
 
 1. **VPN chinois** pour simuler l'accès
-2. **Outils de test** : 
+2. **Outils de test** :
    - chinafirewalltest.com
    - comparitech.com/privacy-security-tools/blockedinchina/
 3. **Monitoring continu** de l'accessibilité
@@ -93,4 +93,4 @@ Une fois les modifications effectuées :
 4. Mettre en place monitoring
 
 ---
-*Dernière mise à jour : Décembre 2024* 
+*Dernière mise à jour : Mai 2026*

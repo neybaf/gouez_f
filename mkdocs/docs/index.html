@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation technique | Fabien Gouez</title>
+    <link rel="stylesheet" href="../../css/research-styles.css">
+    <script src="../../scripts/include.js" defer></script>
+</head>
+<body>
+    <div class="research-container">
+        <div class="research-header">
+            <h1 class="research-title">Documentation technique</h1>
+            <p class="research-subtitle">Protocoles, notes de travail et ressources méthodologiques</p>
+            <div data-include="../../partials/header.html"></div>
+        </div>
+
+        <div class="research-content">
+            <section class="section active-section">
+                <h2 class="section-title">Ressources disponibles</h2>
+
+                <div class="docs-grid">
+                    <a href="../../recherches/index.html" class="doc-card">
+                        <span class="doc-type">Recherche</span>
+                        <h3>Cadre de recherche</h3>
+                        <p>Retour vers les axes épistémologie et sinofrancophonie.</p>
+                    </a>
+
+                    <a href="../../recherches/mymap.html" class="doc-card">
+                        <span class="doc-type">Carte</span>
+                        <h3>Carte interactive</h3>
+                        <p>Visualisation des données cartographiques de la sinofrancophonie.</p>
+                    </a>
+
+                    <a href="../../enseignement/jeu/index_jeu.html" class="doc-card">
+                        <span class="doc-type">FLE</span>
+                        <h3>Jeux pédagogiques</h3>
+                        <p>Collection d'activités et de prototypes pour l'enseignement du FLE.</p>
+                    </a>
+
+                    <a href="../../garden/" class="doc-card">
+                        <span class="doc-type">Garden</span>
+                        <h3>Jardin numérique</h3>
+                        <p>Notes publiques et chantiers de réflexion en cours.</p>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; background: #f8f9fa; margin-top: 2rem;">
+        <div data-include="../../partials/footer.html"></div>
+    </footer>
+
+    <style>
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .doc-card {
+            display: block;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+
+        .doc-card:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            text-decoration: none;
+        }
+
+        .doc-type {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .doc-card h3 {
+            color: var(--primary-color);
+            margin: 0 0 0.75rem 0;
+        }
+
+        .doc-card p {
+            color: #666;
+            margin: 0;
+        }
+    </style>
+</body>
+</html>
