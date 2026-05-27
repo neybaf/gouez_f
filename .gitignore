@@ -27,4 +27,12 @@ tmp/
 *.sublime-*
 
 # Cache navigateur
-.cache/ 
+.cache/
+
+# Quartz (garden source build artifacts)
+quartz-source/node_modules/
+quartz-source/public/
+quartz-source/.quartz-cache/
+
+# Claude Code local config
+.claude/

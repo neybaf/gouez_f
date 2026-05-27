@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>Garden — Fabien Gouez</title>
+      <link>https://neybaf.github.io/gouez_f/garden</link>
+      <description>Les dernières 10 notes on Garden — Fabien Gouez</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>Obsidian, Icloud &amp; Github</title>
+    <link>https://neybaf.github.io/gouez_f/garden/Obsidian,-Icloud--and--Github</link>
+    <guid>https://neybaf.github.io/gouez_f/garden/Obsidian,-Icloud--and--Github</guid>
+    <description><![CDATA[ Ce fichier permet à toute personne utilisant à la fois iCloud Drive et GitHub pour son Vault Obsidian pourra rapidement : Déplacer le dossier .git hors d’iCloud, Créer le fichier pointeur .git dans le Vault iCloud, Configurer et forcer le push vers GitHub, Éviter les blocages de synchronisation et g... ]]></description>
+    <pubDate>Wed, 27 May 2026 09:06:34 GMT</pubDate>
+  </item><item>
+    <title>Garden</title>
+    <link>https://neybaf.github.io/gouez_f/garden/</link>
+    <guid>https://neybaf.github.io/gouez_f/garden/</guid>
+    <description><![CDATA[ Notes de recherche et de lecture en didactique des langues-cultures, glottopolitique, et enseignement du français en contexte sinophone. ]]></description>
+    <pubDate>Wed, 27 May 2026 09:06:24 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>

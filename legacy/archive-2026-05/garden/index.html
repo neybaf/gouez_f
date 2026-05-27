@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jardin numérique | Fabien Gouez</title>
+    <link rel="stylesheet" href="../css/research-styles.css">
+    <script src="../scripts/include.js" defer></script>
+    <meta name="description" content="Jardin numérique de notes, ressources et chantiers de recherche en didactologie, FLE et sinofrancophonie.">
+</head>
+<body>
+    <div class="research-container">
+        <div class="research-header">
+            <h1 class="research-title">Jardin numérique</h1>
+            <p class="research-subtitle">Notes, chantiers et ressources en développement</p>
+            <div data-include="../partials/header.html"></div>
+        </div>
+
+        <div class="research-content">
+            <section class="section active-section">
+                <h2 class="section-title">Entrées du jardin</h2>
+
+                <div class="citation">
+                    <p>Cette section sert de carnet public pour relier les notes de terrain, les ressources FLE, les cadres théoriques et les outils de recherche.</p>
+                    <span class="citation-author">Garden</span>
+                </div>
+
+                <div class="garden-grid">
+                    <a href="FLE/" class="garden-card">
+                        <span class="garden-icon">🌱</span>
+                        <h3>Garden FLE</h3>
+                        <p>Notes et réflexions sur l'enseignement du français langue étrangère en contexte sinophone.</p>
+                    </a>
+
+                    <a href="../recherches/ddlc/epistemologie/index.html" class="garden-card">
+                        <span class="garden-icon">📚</span>
+                        <h3>Épistémologie</h3>
+                        <p>Cadres théoriques, positionnement méthodologique et concepts de recherche.</p>
+                    </a>
+
+                    <a href="../recherches/sinofrancophonie/index.html" class="garden-card">
+                        <span class="garden-icon">🗺️</span>
+                        <h3>Sinofrancophonie</h3>
+                        <p>Cartographies, analyses et ressources autour de l'espace sinofrancophone éducatif.</p>
+                    </a>
+
+                    <a href="../mkdocs/docs/" class="garden-card">
+                        <span class="garden-icon">🧭</span>
+                        <h3>Documentation</h3>
+                        <p>Point d'entrée vers les notes techniques, protocoles et traces de travail à structurer.</p>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; background: #f8f9fa; margin-top: 2rem;">
+        <div data-include="../partials/footer.html"></div>
+    </footer>
+
+    <style>
+        .garden-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .garden-card {
+            display: block;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            color: inherit;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+
+        .garden-card:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            text-decoration: none;
+        }
+
+        .garden-icon {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .garden-card h3 {
+            color: var(--primary-color);
+            margin: 0 0 0.75rem 0;
+            font-size: 1.25rem;
+        }
+
+        .garden-card p {
+            color: #666;
+            margin: 0;
+            line-height: 1.5;
+        }
+    </style>
+</body>
+</html>
