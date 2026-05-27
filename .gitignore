@@ -33,6 +33,7 @@ tmp/
 quartz-source/node_modules/
 quartz-source/public/
 quartz-source/.quartz-cache/
+quartz-source/content
 
 # Claude Code local config
 .claude/
